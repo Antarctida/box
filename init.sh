@@ -216,7 +216,8 @@ rm -rf ~/vendor
 echo "export PTOOLSPATH=/opt/phalcon-tools/" >> /home/vagrant/.bashrc
 echo "export PATH=\$PATH:/opt/phalcon-tools/" >> /home/vagrant/.bashrc
 chmod +x /opt/phalcon-tools/phalcon.sh
-ln -s /opt/phalcon-tools/phalcon.sh /usr/bin/phalcon
+ln -s /opt/phalcon-tools/phalcon.php /usr/bin/phalcon
+chmod ugo+x /usr/bin/phalcon
 
 #
 # Tune UP PHP

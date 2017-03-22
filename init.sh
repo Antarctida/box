@@ -10,11 +10,33 @@ export LC_ALL=en_US.UTF-8
 #
 # Add Swap
 #
-dd if=/dev/zero of=/swapspace bs=1M count=4000
-mkswap /swapspace
-swapon /swapspace
-echo "/swapspace none swap defaults 0 0" >> /etc/fstab
 
+# size of swapfile in megabytes
+swapsize=2048
+
+# does the swap file already exist?
+grep -q "swapfile" /etc/fstab
+
+# if not then create it
+if [ $? -ne 0 ]; then
+  echo 'swapfile not found. Adding swapfile.'
+  fallocate -l ${swapsize}M /swapfile
+  chmod 600 /swapfile
+  mkswap /swapfile
+  swapon /swapfile
+  echo '/swapfile none swap defaults 0 0' >> /etc/fstab
+else
+  echo 'swapfile found. No changes made.'
+fi
+
+# output results to terminal
+cat /proc/swaps
+cat /proc/meminfo | grep Swap
+
+
+#
+# DNS resolving
+#
 echo nameserver 8.8.8.8 > /etc/resolv.conf
 echo nameserver 8.8.4.4 > /etc/resolv.conf
 
@@ -152,18 +174,23 @@ echo 'extension=libsodium.so' | tee /etc/php/5.6/mods-available/libsodium.ini &>
 #
 # Zephir
 #
-echo "export ZEPHIRDIR=/usr/share/zephir" >> /home/vagrant/.bashrc
+echo "ZEPHIRDIR=/usr/share/zephir" >> /etc/environment
 mkdir -p ${ZEPHIRDIR}
 phpdismod xdebug redis
-(cd /tmp && git clone git://github.com/phalcon/zephir.git && cd zephir && ./install -c)
+git clone https://github.com/phalcon/zephir.git ${ZEPHIRDIR}
 chown -R vagrant:vagrant ${ZEPHIRDIR}
+chmod 755 ${ZEPHIRDIR}/bin/zephir
+sed -i "s#%ZEPHIRDIR%#$ZEPHIRDIR#g" ${ZEPHIRDIR}/bin/zephir
+ln -s bash ${ZEPHIRDIR}/bin/zephir /usr/local/bin
+if [[ -d "/etc/bash_completion.d/" && $EUID = 0 ]]; then
+  cp ${ZEPHIRDIR}/bin/bash_completion /etc/bash_completion.d/zephir
+fi
 
 #
 # Install Phalcon Framework
 #
 git clone --depth=1 git://github.com/phalcon/cphalcon.git
-(cd cphalcon && zephir build)
-touch /etc/php/5.6/mods-available/phalcon.ini
+(cd cphalcon/build && ./install)
 echo -e "extension=phalcon.so" | tee /etc/php/5.6/mods-available/phalcon.ini &>/dev/null
 
 #
@@ -183,6 +210,7 @@ mysql -u root -Bse "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '' W
 # Composer for PHP
 #
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+chown -R vagrant:vagrant /usr/local/bin/composer
 
 #
 # Apache VHost

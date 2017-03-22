@@ -43,17 +43,17 @@ v.customize ["modifyvm", :id, "--ioapic", "on"]
 - LAMP Stack
   - Ubuntu 14.04.5 LTS
   - Apache 2.4.7
-  - PHP 5.6.26
+  - PHP 5.6.30
   - MySQL 5.6.33
 - Git 1.9.1
 - Memcached 1.4.14
 - [Beanstalkd][11] 1.9
-- [Zephir][10] 0.9.4a-dev
+- [Zephir][10] 0.9.6a-dev-1bad5e7742
 - [SQLite][8] 3.8.2
-- [PostgreSQL][9] 9.4.9
+- [PostgreSQL][9] 9.4.11
 - [Phalcon][2] (latest stable)
 - [Phalcon Dev Tools][3] (latest stable)
-- [Redis][4] 3.0.7
+- [Redis][4] 3.2.8
 - [MongoDB][5] 2.4.9
 - [Composer][6] (latest stable)
 

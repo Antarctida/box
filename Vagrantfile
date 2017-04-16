@@ -12,16 +12,18 @@ VAGRANTFILE_API_VERSION ||= 2
 Vagrant.require_version '>= 1.9.0'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  if File.exist?(path + '/vm.yml')
-    settings = YAML.safe_load(File.read(path + '/vm.yml'))
-  else
-    settings = {}
-    abort "Vagrant settings file not found in #{path}"
+  settings = {}
+  if File.exist?(path + '/settings.yml')
+    settings = YAML.safe_load(File.read(path + '/settings.yml'))
   end
+
+  settings ||= {}
 
   Phalcon::Configurator.configure(config, settings)
 
   if defined? VagrantPlugins::HostsUpdater
-    config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
+    if settings.has_key?('sites')
+      config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
+    end
   end
 end

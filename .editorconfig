@@ -19,3 +19,9 @@ indent_style = tab
 
 [*.zep]
 indent_style = tab
+
+[*.rb]
+indent_size = 2
+
+[Vagrantfile]
+indent_size = 2

@@ -30,7 +30,7 @@ if [ ! -f "${CURRENT_DIR}/settings.yml" ]; then
 	cp -i "${CURRENT_DIR}/src/settings.yml" "${CURRENT_DIR}/settings.yml"
 fi
 
-if [ ! -f "${CURRENT_DIR}/after.sh" ]; then
+if [ ! -f "${CURRENT_DIR}/after_provision.sh" ]; then
 	cp -i "${CURRENT_DIR}/src/after_provision.sh" "${CURRENT_DIR}/after_provision.sh"
 fi
 
@@ -38,4 +38,4 @@ if [ ! -f "${CURRENT_DIR}/bash_aliases" ]; then
 	cp -i "${CURRENT_DIR}/src/bash_aliases" "${CURRENT_DIR}/bash_aliases"
 fi
 
-echo -ne "\nPhalcon Vagrant initialized!\n"
+echo -ne "\nPhalcon Vagrant initialized\n"

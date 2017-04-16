@@ -24,7 +24,7 @@ class Configurator
     config.ssh.forward_agent = true
 
     # Configure The Box
-    config.vm.define settings['name'] ||= 'phalcon-vm'
+    config.vm.define settings['name'] ||= 'box'
     config.vm.box = settings['box'] ||= 'phalconphp/xenial64'
     config.vm.box_version = settings['version'] ||= '>= 1.0.0'
     config.vm.hostname = settings['hostname'] ||= 'phalcon.local'
@@ -42,7 +42,7 @@ class Configurator
 
     # Configure A Few VirtualBox Settings
     config.vm.provider 'virtualbox' do |vb|
-      vb.name = settings['name'] ||= 'phalcon-vm'
+      vb.name = settings['name'] ||= 'box'
       vb.customize ['modifyvm', :id, '--memory', settings['memory'] ||= '2048']
       vb.customize ['modifyvm', :id, '--cpus', settings['cpus'] ||= '1']
       vb.customize ['modifyvm', :id, '--ioapic', 'on']
@@ -155,16 +155,22 @@ class Configurator
     if settings.key?('databases')
       settings['databases'].each do |db|
         config.vm.provision 'shell' do |s|
-          # @todo Creating MySQL Database
+          s.name = "Creating MySQL Database: #{db}"
+          s.path = "#{SRC_DIR}/mysql_provision.sh"
+          s.args = [db]
         end
 
         config.vm.provision 'shell' do |s|
-          # @todo Creating Postgres Database
+          s.name = "Creating Postgres Database: #{db}"
+          s.path = "#{SRC_DIR}/mysql_provision.sh"
+          s.args = [db]
         end
 
         if settings.key?('mongodb') && settings['mongodb']
           config.vm.provision 'shell' do |s|
-            # @todo Creating Mongo Database
+            s.name = "Creating Mongo Database: #{db}"
+            s.path = "#{SRC_DIR}/mysql_provision.sh"
+            s.args = [db]
           end
         end
       end

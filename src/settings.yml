@@ -1,0 +1,20 @@
+---
+ip: "192.168.50.4"
+memory: 2048
+cpus: 1
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: ~/workspace
+      to: /home/vagrant/workspace
+
+sites:
+    - map: phalcon.local
+      to:  /home/vagrant/workspace/phalcon/public
+
+databases:
+    - phalconvm

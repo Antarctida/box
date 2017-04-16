@@ -7,3 +7,6 @@
 
 /.vagrant
 *.box
+/settings.yml
+/after_provision.sh
+/bash_aliases

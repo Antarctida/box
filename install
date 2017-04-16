@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Phalcon Vagrant
+# Phalcon Box
 #
 # Copyright (c) 2011-2017, Phalcon Framework Team
 #
@@ -38,4 +38,4 @@ if [ ! -f "${CURRENT_DIR}/bash_aliases" ]; then
 	cp -i "${CURRENT_DIR}/src/bash_aliases" "${CURRENT_DIR}/bash_aliases"
 fi
 
-echo -ne "\nPhalcon Vagrant initialized\n"
+echo -ne "\nPhalcon Box initialized\n"

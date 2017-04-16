@@ -1,6 +1,6 @@
 @echo off
 rem
-rem Phalcon Vagrant
+rem Phalcon Box
 rem
 rem Copyright (c) 2011-2017, Phalcon Framework Team
 rem
@@ -26,5 +26,5 @@ If Not Exist %cd%\bash_aliases (
 )
 
 echo
-echo Phalcon Vagrant initialized
+echo Phalcon Box initialized
 echo

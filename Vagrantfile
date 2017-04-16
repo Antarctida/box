@@ -16,8 +16,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     settings = YAML.safe_load(File.read(path + '/vm.yml'))
   else
     settings = {}
-    warn "Vagrant settings file not found in #{path}"
+    abort "Vagrant settings file not found in #{path}"
   end
 
-  Phalcon.configure(config, settings)
+  Phalcon::Configurator.configure(config, settings)
+
+  if defined? VagrantPlugins::HostsUpdater
+    config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
+  end
 end

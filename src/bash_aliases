@@ -1,0 +1,14 @@
+#@IgnoreInspection BashAddShebang
+alias cls=clear
+
+function _psgrep
+{
+    if [ -z $1 ]; then
+        echo -e "Usage: psgrep <appname> | awk '{print \$2}' | xargs kill"
+        exit 2
+    fi
+
+    ps aux | grep $1 | grep -v grep
+}
+
+alias psgrep="_psgrep"

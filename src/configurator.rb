@@ -68,7 +68,7 @@ class Configurator
     # Use Default Port Forwarding Unless Overridden
     unless settings.key?('default_ports') && settings['default_ports'] == false
       DEFAULT_PORTS.each do |guest, host|
-        unless settings['ports'].any? {|m| m['guest'] == guest}
+        unless settings['ports'].any? { |m| m['guest'] == guest }
           config.vm.network 'forwarded_port', guest: guest, host: host, auto_correct: true
         end
       end
@@ -101,8 +101,10 @@ class Configurator
         end
       end
     end
+  end
 
-    # Copy User Files Over to VM
+  # Copy User Files Over to VM
+  def self.try_copy(config, settings)
     if settings.include? 'copy'
       settings['copy'].each do |file|
         config.vm.provision 'file' do |f|
@@ -113,10 +115,71 @@ class Configurator
     end
   end
 
-  def self.aliases(config, aliases)
-    config.vm.provision 'file', source: aliases, destination: '/tmp/bash_aliases'
-    config.vm.provision "shell" do |s|
-      s.inline = "awk '{ sub(\"\r$\", \"\"); print }' /tmp/bash_aliases > /home/vagrant/.bash_aliases"
+  # Register All Of The Configured Shared Folders
+  def self.try_folders(config, settings)
+    if settings.include? 'folders'
+      settings['folders'].each do |f|
+        if File.exist? File.expand_path(f['map'])
+          mount_opts = []
+
+          if f['type'] == 'nfs'
+            mount_opts = f['mount_options'] ? f['mount_options'] : ['actimeo=1', 'nolock']
+          elsif f['type'] == 'smb'
+            mount_opts = f['mount_options'] ? f['mount_options'] : ['vers=3.02', 'mfsymlinks']
+          end
+
+          # For b/w compatibility keep separate 'mount_opts', but merge with options
+          options = (f['options'] || {}).merge mount_options: mount_opts
+
+          # Double-splat (**) operator only works with symbol keys, so convert
+          options.keys.each { |k| options[k.to_sym] = options.delete(k) }
+
+          config.vm.synced_folder f['map'], f['to'], type: f['type'] ||= nil, **options
+
+          # Bindfs support to fix shared folder (NFS) permission issue on Mac
+          if Vagrant.has_plugin?('vagrant-bindfs')
+            config.bindfs.bind_folder f['to'], f['to']
+          end
+        else
+          config.vm.provision 'shell' do |s|
+            s.inline = '>&2 echo \"Unable to mount one of your folders.\"'
+            s.inline = '>&2 echo \"Please check your folders in settings.yml\"'
+          end
+        end
+      end
+    end
+  end
+
+  # Configure All Of The Configured Databases
+  def self.try_databases(config, settings)
+    if settings.key?('databases')
+      settings['databases'].each do |db|
+        config.vm.provision 'shell' do |s|
+          # @todo Creating MySQL Database
+        end
+
+        config.vm.provision 'shell' do |s|
+          # @todo Creating Postgres Database
+        end
+
+        if settings.key?('mongodb') && settings['mongodb']
+          config.vm.provision 'shell' do |s|
+            # @todo Creating Mongo Database
+          end
+        end
+      end
+    end
+  end
+
+  # Configure BASH aliases
+  def self.try_aliases(config, path)
+    aliases = path + '/bash_aliases'
+
+    if File.exist?(aliases)
+      config.vm.provision 'file', source: aliases, destination: '/tmp/bash_aliases'
+      config.vm.provision "shell" do |s|
+        s.inline = "awk '{ sub(\"\r$\", \"\"); print }' /tmp/bash_aliases > /home/vagrant/.bash_aliases"
+      end
     end
   end
 end

@@ -1,7 +1,7 @@
-require_relative 'constants'
 require_relative 'prober'
 require_relative 'settings'
 require_relative 'authorize'
+require_relative 'ports'
 require_relative 'keys'
 require_relative 'aliases'
 require_relative 'files'
@@ -29,6 +29,7 @@ class Phalcon
 
     init
 
+    try_ports
     try_authorize
     try_keys
     try_aliases
@@ -79,33 +80,12 @@ class Phalcon
       vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
       vb.gui = true if settings['gui']
     end
+  end
 
-    # Standardize Ports Naming Schema
-    if settings.key?('ports')
-      settings['ports'].each do |port|
-        port['guest'] ||= port['to']
-        port['host'] ||= port['send']
-        port['protocol'] ||= 'tcp'
-      end
-    else
-      settings['ports'] = []
-    end
-
-    # Use Default Port Forwarding Unless Overridden
-    unless settings.key?('default_ports') && settings['default_ports'] == false
-      PHALCON_DEFAULT_PORTS.each do |ports|
-        unless settings['ports'].any? { |m| m['guest'] == ports[:guest] }
-          config.vm.network 'forwarded_port', guest: ports[:guest], host: ports[:host], auto_correct: true
-        end
-      end
-    end
-
-    # Add Custom Ports From Configuration
-    if settings.key?('ports')
-      settings['ports'].each do |p|
-        config.vm.network 'forwarded_port', guest: p['guest'], host: p['host'], protocol: p['protocol'], auto_correct: true
-      end
-    end
+  # Add Custom Ports From Configuration
+  def try_ports
+    ports = Ports.new(config, settings)
+    ports.configure
   end
 
   # Configure The Public Key For SSH Access

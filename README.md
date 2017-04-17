@@ -40,7 +40,7 @@ cpus: 1
 
 **Installing The Vagrant Box**
 
-Once VirtualBox / VMware and Vagrant have been installed, you should add the `phalconphp/xenial64` box to your Vagrant
+Once VirtualBox and Vagrant have been installed, you should add the `phalconphp/xenial64` box to your Vagrant
 installation using the following command in your terminal. It will take a few minutes to download the box, depending
 on your Internet connection speed:
 

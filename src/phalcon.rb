@@ -1,11 +1,13 @@
 require_relative 'constants'
 require_relative 'prober'
 require_relative 'settings'
-require_relative 'database'
+require_relative 'authorize'
 require_relative 'keys'
 require_relative 'aliases'
 require_relative 'files'
 require_relative 'folders'
+require_relative 'database'
+require_relative 'sites'
 
 # The main Phalcon Box class
 class Phalcon
@@ -24,6 +26,7 @@ class Phalcon
 
     init
 
+    try_authorize
     try_keys
     try_aliases
     try_copy
@@ -100,16 +103,12 @@ class Phalcon
         config.vm.network 'forwarded_port', guest: p['guest'], host: p['host'], protocol: p['protocol'], auto_correct: true
       end
     end
+  end
 
-    # Configure The Public Key For SSH Access
-    if settings.include? 'authorize'
-      if File.exist? File.expand_path(settings['authorize'])
-        config.vm.provision 'shell' do |s|
-          s.inline = 'echo $1 | grep -xq "$1" /home/vagrant/.ssh/authorized_keys || echo "\n$1" | tee -a /home/vagrant/.ssh/authorized_keys'
-          s.args = [File.read(File.expand_path(settings['authorize']))]
-        end
-      end
-    end
+  # Configure The Public Key For SSH Access
+  def try_authorize
+    authorize = Authorize.new(config, settings)
+    authorize.configure
   end
 
   # Copy The SSH Private Keys To The Box
@@ -142,11 +141,9 @@ class Phalcon
     db.configure
   end
 
+  # Configure user sites
   def try_sites
-    if defined? VagrantPlugins::HostsUpdater
-      if settings.key?('sites')
-        config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
-      end
-    end
+    sites = Sites.new(config, settings)
+    sites.configure
   end
 end

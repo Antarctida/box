@@ -2,6 +2,9 @@ require_relative 'constants'
 require_relative 'prober'
 require_relative 'settings'
 require_relative 'database'
+require_relative 'keys'
+require_relative 'aliases'
+require_relative 'files'
 require_relative 'folders'
 
 # The main Phalcon Box class
@@ -21,6 +24,7 @@ class Phalcon
 
     init
 
+    try_keys
     try_aliases
     try_copy
     try_folders
@@ -106,41 +110,24 @@ class Phalcon
         end
       end
     end
+  end
 
-    # Copy The SSH Private Keys To The Box
-    if settings.include? 'keys'
-      settings['keys'].each do |key|
-        config.vm.provision 'shell' do |s|
-          s.privileged = false
-          s.inline = 'echo "$1" > /home/vagrant/.ssh/$2 && chmod 600 /home/vagrant/.ssh/$2'
-          s.args = [File.read(File.expand_path(key)), key.split('/').last]
-        end
-      end
-    end
+  # Copy The SSH Private Keys To The Box
+  def try_keys
+    aliases = Keys.new(config, settings)
+    aliases.configure
   end
 
   # Configure BASH aliases
   def try_aliases
-    aliases = application_root + '/../bash_aliases'
-
-    if File.exist?(aliases)
-      config.vm.provision 'file', source: aliases, destination: '/tmp/bash_aliases'
-      config.vm.provision "shell" do |s|
-        s.inline = "awk '{ sub(\"\r$\", \"\"); print }' /tmp/bash_aliases > /home/vagrant/.bash_aliases"
-      end
-    end
+    aliases = Aliases.new(application_root, config)
+    aliases.configure
   end
 
   # Copy User Files Over to VM
   def try_copy
-    if settings.include? 'copy'
-      settings['copy'].each do |file|
-        config.vm.provision 'file' do |f|
-          f.source = File.expand_path(file['from'])
-          f.destination = file['to'].chomp('/') + '/' + file['from'].split('/').last
-        end
-      end
-    end
+    files = Files.new(config, settings)
+    files.configure
   end
 
   # Register All Of The Configured Shared Folders

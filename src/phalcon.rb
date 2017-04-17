@@ -1,14 +1,21 @@
-# Configurator class
-class Configurator
+require_relative 'prober'
+
+# The main Phalcon Box module
+module Phalcon
+  class << self
+    # @return [String]
+    attr_accessor :application_root
+  end
+
   # Default Port Forwarding
-  DEFAULT_PORTS = {
-    80 => 8000,
-    443 => 44300,
-    3306 => 33060,
-    5432 => 54320,
-    8025 => 8025,
-    27017 => 27017
-  }.freeze
+  DEFAULT_PORTS = [
+    { guest: 80,    host: 8000  },
+    { guest: 443,   host: 44300 },
+    { guest: 3306,  host: 33060 },
+    { guest: 5432,  host: 54320 },
+    { guest: 8025,  host: 8025  },
+    { guest: 27017, host: 27017 }
+  ].freeze
 
   SRC_DIR = File.dirname(__FILE__)
 
@@ -26,7 +33,7 @@ class Configurator
     # Configure The Box
     config.vm.define settings['name'] ||= 'box'
     config.vm.box = settings['box'] ||= 'phalconphp/xenial64'
-    config.vm.box_version = settings['version'] ||= '>= 1.0.0'
+    config.vm.box_version = settings['version'] ||= '>= 2.0.1'
     config.vm.hostname = settings['hostname'] ||= 'phalcon.local'
     config.vm.box_check_update = true
 
@@ -67,9 +74,9 @@ class Configurator
 
     # Use Default Port Forwarding Unless Overridden
     unless settings.key?('default_ports') && settings['default_ports'] == false
-      DEFAULT_PORTS.each do |guest, host|
-        unless settings['ports'].any? { |m| m['guest'] == guest }
-          config.vm.network 'forwarded_port', guest: guest, host: host, auto_correct: true
+      DEFAULT_PORTS.each do |ports|
+        unless settings['ports'].any? { |m| m['guest'] == ports[:guest] }
+          config.vm.network 'forwarded_port', guest: ports[:guest], host: ports[:host], auto_correct: true
         end
       end
     end
@@ -178,8 +185,8 @@ class Configurator
   end
 
   # Configure BASH aliases
-  def self.try_aliases(config, path)
-    aliases = path + '/bash_aliases'
+  def self.try_aliases(config)
+    aliases = application_root + '/bash_aliases'
 
     if File.exist?(aliases)
       config.vm.provision 'file', source: aliases, destination: '/tmp/bash_aliases'

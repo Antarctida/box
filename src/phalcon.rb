@@ -142,7 +142,7 @@ class Phalcon
 
   # Configure user sites
   def try_sites
-    sites = Sites.new(config, settings)
+    sites = Sites.new(application_root, config, settings)
     sites.configure
   end
 

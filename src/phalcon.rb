@@ -1,4 +1,5 @@
 require_relative 'prober'
+require_relative 'version'
 
 # The main Phalcon Box module
 module Phalcon
@@ -17,8 +18,6 @@ module Phalcon
     { guest: 27017, host: 27017 }
   ].freeze
 
-  SRC_DIR = File.dirname(__FILE__)
-
   def self.configure(config, settings)
     # Set The VM Provider
     # @todo
@@ -33,7 +32,7 @@ module Phalcon
     # Configure The Box
     config.vm.define settings['name'] ||= 'box'
     config.vm.box = settings['box'] ||= 'phalconphp/xenial64'
-    config.vm.box_version = settings['version'] ||= '>= 2.0.1'
+    config.vm.box_version = settings['version'] ||= ">= #{BOX_VERSION}"
     config.vm.hostname = settings['hostname'] ||= 'phalcon.local'
     config.vm.box_check_update = true
 
@@ -163,20 +162,20 @@ module Phalcon
       settings['databases'].each do |db|
         config.vm.provision 'shell' do |s|
           s.name = "Creating MySQL Database: #{db}"
-          s.path = "#{SRC_DIR}/mysql_provision.sh"
+          s.path = "#{application_root}/provision/mysql_provision.sh"
           s.args = [db]
         end
 
         config.vm.provision 'shell' do |s|
           s.name = "Creating Postgres Database: #{db}"
-          s.path = "#{SRC_DIR}/mysql_provision.sh"
+          s.path = "#{application_root}/provision/mysql_provision.sh"
           s.args = [db]
         end
 
         if settings.key?('mongodb') && settings['mongodb']
           config.vm.provision 'shell' do |s|
             s.name = "Creating Mongo Database: #{db}"
-            s.path = "#{SRC_DIR}/mysql_provision.sh"
+            s.path = "#{application_root}/provision/mysql_provision.sh"
             s.args = [db]
           end
         end

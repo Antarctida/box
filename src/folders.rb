@@ -41,8 +41,8 @@ class Folders
 
   def notify
     config.vm.provision 'shell' do |s|
-      s.inline = '>&2 echo \"Unable to mount one of your folders.\"'
-      s.inline = '>&2 echo \"Please check your folders in settings.yml\"'
+      s.inline = '>&2 echo "Unable to mount one of your folders. ' \
+                 'Please check your folders in settings.yml"'
     end
   end
 

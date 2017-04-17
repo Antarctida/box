@@ -1,6 +1,8 @@
 require_relative 'constants'
 require_relative 'prober'
+require_relative 'settings'
 require_relative 'database'
+require_relative 'folders'
 
 # The main Phalcon Box class
 class Phalcon
@@ -14,7 +16,8 @@ class Phalcon
   end
 
   def configure
-    init_settings
+    s = Settings.new(application_root)
+    @settings = s.init_settings
 
     init
 
@@ -26,17 +29,6 @@ class Phalcon
   end
 
   private
-
-  def init_settings
-    settings = {}
-    if File.exist?(application_root + '/../settings.yml')
-      settings = YAML.safe_load(File.read(application_root + '/../settings.yml'))
-    end
-
-    settings ||= {}
-
-    @settings = settings
-  end
 
   def init
     # Set The VM Provider
@@ -50,14 +42,14 @@ class Phalcon
     config.ssh.forward_agent = true
 
     # Configure The Box
-    config.vm.define settings['name'] ||= 'box'
-    config.vm.box = settings['box'] ||= 'phalconphp/xenial64'
-    config.vm.box_version = settings['version'] ||= ">= #{PHALCON_BOX_VERSION}"
-    config.vm.hostname = settings['hostname'] ||= 'phalcon.local'
-    config.vm.box_check_update = true
+    config.vm.define settings['name']
+    config.vm.box = settings['box']
+    config.vm.box_version = settings['version']
+    config.vm.hostname = settings['hostname']
+    config.vm.box_check_update = settings['check_update']
 
     # Configure A Private Network IP
-    config.vm.network :private_network, ip: settings['ip'] ||= PHALCON_DEFAULT_IP.to_s
+    config.vm.network :private_network, ip: settings['ip']
 
     # Configure Additional Networks
     if settings.key?('networks')
@@ -69,11 +61,11 @@ class Phalcon
     # Configure A Few VirtualBox Settings
     config.vm.provider 'virtualbox' do |vb|
       vb.name = settings['name'] ||= 'box'
-      vb.customize ['modifyvm', :id, '--memory', settings['memory'] ||= '2048']
-      vb.customize ['modifyvm', :id, '--cpus', settings['cpus'] ||= '1']
+      vb.customize ['modifyvm', :id, '--memory', settings['memory']]
+      vb.customize ['modifyvm', :id, '--cpus', settings['cpus']]
       vb.customize ['modifyvm', :id, '--ioapic', 'on']
       vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
-      vb.customize ['modifyvm', :id, '--natdnshostresolver1', settings['natdnshostresolver'] ||= 'on']
+      vb.customize ['modifyvm', :id, '--natdnshostresolver1', settings['natdnshostresolver']]
       vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
       vb.gui = true if settings['gui']
     end
@@ -153,37 +145,8 @@ class Phalcon
 
   # Register All Of The Configured Shared Folders
   def try_folders
-    if settings.include? 'folders'
-      settings['folders'].each do |f|
-        if File.exist? File.expand_path(f['map'])
-          mount_opts = if f['type'] == 'nfs'
-                         f['mount_options'] || %w[actimeo=1 nolock]
-                       elsif f['type'] == 'smb'
-                         f['mount_options'] || %w[vers=3.02 mfsymlinks]
-                       else
-                         []
-                       end
-
-          # For b/w compatibility keep separate 'mount_opts', but merge with options
-          options = (f['options'] || {}).merge mount_options: mount_opts
-
-          # Double-splat (**) operator only works with symbol keys, so convert
-          options.keys.each { |k| options[k.to_sym] = options.delete(k) }
-
-          config.vm.synced_folder f['map'], f['to'], type: f['type'] ||= nil, **options
-
-          # Bindfs support to fix shared folder (NFS) permission issue on Mac
-          if Vagrant.has_plugin?('vagrant-bindfs')
-            config.bindfs.bind_folder f['to'], f['to']
-          end
-        else
-          config.vm.provision 'shell' do |s|
-            s.inline = '>&2 echo \"Unable to mount one of your folders.\"'
-            s.inline = '>&2 echo \"Please check your folders in settings.yml\"'
-          end
-        end
-      end
-    end
+    folders = Folders.new(application_root, config, settings)
+    folders.configure
   end
 
   # Configure All Of The Configured Databases

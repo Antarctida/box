@@ -9,7 +9,7 @@ require File.expand_path(path + '/src/phalcon.rb')
 
 VAGRANTFILE_API_VERSION ||= 2
 
-Phalcon.application_root = File.dirname(__FILE__).to_s
+Phalcon.application_root = path + '/src'
 Vagrant.require_version '>= 1.9.0'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|

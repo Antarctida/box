@@ -1,5 +1,7 @@
-require_relative 'prober'
+require_relative 'constants'
 require_relative 'version'
+require_relative 'prober'
+require_relative 'database'
 
 # The main Phalcon Box module
 module Phalcon
@@ -8,20 +10,10 @@ module Phalcon
     attr_accessor :application_root
   end
 
-  # Default Port Forwarding
-  DEFAULT_PORTS = [
-    { guest: 80,    host: 8000  },
-    { guest: 443,   host: 44300 },
-    { guest: 3306,  host: 33060 },
-    { guest: 5432,  host: 54320 },
-    { guest: 8025,  host: 8025  },
-    { guest: 27017, host: 27017 }
-  ].freeze
-
   def self.configure(config, settings)
     # Set The VM Provider
     # @todo
-    ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = DEFAULT_PROVIDER.to_s
 
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
@@ -37,7 +29,7 @@ module Phalcon
     config.vm.box_check_update = true
 
     # Configure A Private Network IP
-    config.vm.network :private_network, ip: settings['ip'] ||= '192.168.50.4'
+    config.vm.network :private_network, ip: settings['ip'] ||= DEFAULT_IP.to_s
 
     # Configure Additional Networks
     if settings.key?('networks')
@@ -126,13 +118,13 @@ module Phalcon
     if settings.include? 'folders'
       settings['folders'].each do |f|
         if File.exist? File.expand_path(f['map'])
-          mount_opts = []
-
-          if f['type'] == 'nfs'
-            mount_opts = f['mount_options'] ? f['mount_options'] : ['actimeo=1', 'nolock']
-          elsif f['type'] == 'smb'
-            mount_opts = f['mount_options'] ? f['mount_options'] : ['vers=3.02', 'mfsymlinks']
-          end
+          mount_opts = if f['type'] == 'nfs'
+                         f['mount_options'] || %w[actimeo=1 nolock]
+                       elsif f['type'] == 'smb'
+                         f['mount_options'] || %w[vers=3.02 mfsymlinks]
+                       else
+                         []
+                       end
 
           # For b/w compatibility keep separate 'mount_opts', but merge with options
           options = (f['options'] || {}).merge mount_options: mount_opts
@@ -158,29 +150,8 @@ module Phalcon
 
   # Configure All Of The Configured Databases
   def self.try_databases(config, settings)
-    if settings.key?('databases')
-      settings['databases'].each do |db|
-        config.vm.provision 'shell' do |s|
-          s.name = "Creating MySQL Database: #{db}"
-          s.path = "#{application_root}/provision/mysql_provision.sh"
-          s.args = [db]
-        end
-
-        config.vm.provision 'shell' do |s|
-          s.name = "Creating Postgres Database: #{db}"
-          s.path = "#{application_root}/provision/mysql_provision.sh"
-          s.args = [db]
-        end
-
-        if settings.key?('mongodb') && settings['mongodb']
-          config.vm.provision 'shell' do |s|
-            s.name = "Creating Mongo Database: #{db}"
-            s.path = "#{application_root}/provision/mysql_provision.sh"
-            s.args = [db]
-          end
-        end
-      end
-    end
+    db = Database.new(application_root, config, settings)
+    db.configure
   end
 
   # Configure BASH aliases

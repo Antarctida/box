@@ -1,4 +1,4 @@
-# Copy User Files Over to VM
+# Copy user files over to VM
 class Files
   attr_accessor :config, :settings
 

@@ -1,4 +1,4 @@
-# Configure Additional Networks
+# Configure networks
 class Networks
   attr_accessor :config, :settings
 
@@ -8,6 +8,8 @@ class Networks
   end
 
   def configure
+    config.vm.network :private_network, ip: settings['ip']
+
     if settings.key?('networks')
       settings['networks'].each do |n|
         config.vm.network n['type'], ip: n['ip'], bridge: n['bridge'] ||= nil

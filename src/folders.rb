@@ -1,4 +1,4 @@
-# Register All Of The Configured Shared Folders
+# Register all of the configured shared folders
 class Folders
   attr_accessor :application_root, :config, :settings
 

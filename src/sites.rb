@@ -21,7 +21,7 @@ class Sites
   private
 
   def update_host
-    if defined? VagrantPlugins::HostsUpdater
+    if Vagrant.has_plugin?('vagrant-hostsupdater')
       config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
     end
   end

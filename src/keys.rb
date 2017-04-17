@@ -1,4 +1,4 @@
-# Copy The SSH Private Keys To The Box
+# Copy the SSH private keys to the box
 class Keys
   attr_accessor :config, :settings
 

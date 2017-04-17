@@ -1,6 +1,6 @@
-# Add Custom Ports From Configuration
+# Configure custom ports
 class Ports
-  # Default Port Forwarding
+  # Default port forwarding
   DEFAULT_PORTS = [
     { guest: 80,     host: 8000 },
     { guest: 443,    host: 44_300 },
@@ -31,7 +31,7 @@ class Ports
 
   private
 
-  # Standardize Ports Naming Schema
+  # Standardize ports naming schema
   def standardize
     if settings.key?('ports')
       settings['ports'].each do |port|
@@ -44,7 +44,7 @@ class Ports
     end
   end
 
-  # Use Default Port Forwarding Unless Overridden
+  # Use default port forwarding unless overridden
   def default_ports
     unless settings.key?('default_ports') && settings['default_ports'] == false
       DEFAULT_PORTS.each do |ports|

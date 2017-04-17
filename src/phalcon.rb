@@ -46,30 +46,46 @@ class Phalcon
     # @todo
     ENV['VAGRANT_DEFAULT_PROVIDER'] = DEFAULT_PROVIDER.to_s
 
+    init_ssh
+    init_box
+    init_network
+    init_networks
+    init_virtualbox
+  end
+
+  # Configure SSH
+  def init_ssh
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     # Allow SSH Agent Forward from The Box
     config.ssh.forward_agent = true
+  end
 
-    # Configure The Box
+  # Configure The Box
+  def init_box
     config.vm.define settings['name']
     config.vm.box = settings['box']
     config.vm.box_version = settings['version']
     config.vm.hostname = settings['hostname']
     config.vm.box_check_update = settings['check_update']
+  end
 
-    # Configure A Private Network IP
+  def init_network
     config.vm.network :private_network, ip: settings['ip']
+  end
 
-    # Configure Additional Networks
+  # Configure Additional Networks
+  def init_networks
     if settings.key?('networks')
       settings['networks'].each do |n|
         config.vm.network n['type'], ip: n['ip'], bridge: n['bridge'] ||= nil
       end
     end
+  end
 
-    # Configure A Few VirtualBox Settings
+  # Configure A Few VirtualBox Settings
+  def init_virtualbox
     config.vm.provider 'virtualbox' do |vb|
       vb.name = settings['name'] ||= 'box'
       vb.customize ['modifyvm', :id, '--memory', settings['memory']]

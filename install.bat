@@ -14,15 +14,15 @@ rem
 cls
 
 If Not Exist %cd%\settings.yml (
-    copy /-y %cd%\src\settings.yml %cd%\settings.yml
+    copy /-y %cd%\src\templates\settings.yml %cd%\settings.yml
 )
 
 If Not Exist %cd%\after_provision.sh (
-    copy /-y %cd%\src\after_provision.sh %cd%\after_provision.sh
+    copy /-y %cd%\src\templates\after_provision.sh %cd%\after_provision.sh
 )
 
 If Not Exist %cd%\bash_aliases (
-    copy /-y %cd%\src\bash_aliases %cd%\bash_aliases
+    copy /-y %cd%\src\templates\bash_aliases %cd%\bash_aliases
 )
 
 echo

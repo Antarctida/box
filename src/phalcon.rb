@@ -8,6 +8,7 @@ require_relative 'files'
 require_relative 'folders'
 require_relative 'database'
 require_relative 'sites'
+require_relative 'networks'
 
 # The main Phalcon Box class
 class Phalcon
@@ -49,7 +50,7 @@ class Phalcon
     init_ssh
     init_box
     init_network
-    init_networks
+    try_networks
     init_virtualbox
   end
 
@@ -76,12 +77,9 @@ class Phalcon
   end
 
   # Configure Additional Networks
-  def init_networks
-    if settings.key?('networks')
-      settings['networks'].each do |n|
-        config.vm.network n['type'], ip: n['ip'], bridge: n['bridge'] ||= nil
-      end
-    end
+  def try_networks
+    networks = Networks.new(config, settings)
+    networks.configure
   end
 
   # Configure A Few VirtualBox Settings

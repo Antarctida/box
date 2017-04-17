@@ -41,6 +41,6 @@ host = localhost
 pager  = grcat ~/.grcat
 EOF
 
-DB=$1;
-
-mysql -e "CREATE DATABASE IF NOT EXISTS \`$DB\` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci";
+if [ -n "$1" ]; then
+	mysql -e "CREATE DATABASE IF NOT EXISTS \`$1\` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci";
+fi

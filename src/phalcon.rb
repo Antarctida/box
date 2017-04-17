@@ -25,7 +25,7 @@ class Phalcon
 
   def configure
     s = Settings.new(application_root)
-    @settings = s.init_settings
+    @settings = s.settings
 
     init
 

@@ -29,6 +29,4 @@ if [ -n "$1" ] && [ ! -z ${TPL_SERVER_NAME+x} ]; then
 	goreplace --mode=template "/etc/nginx/sites-available/${TPL_SERVER_NAME}"
 
 	ln -fs "/etc/nginx/sites-available/${TPL_SERVER_NAME}" "/etc/nginx/sites-enabled/${TPL_SERVER_NAME}"
-
-	/usr/sbin/nginx -t
 fi

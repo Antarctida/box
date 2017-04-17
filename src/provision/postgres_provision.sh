@@ -23,3 +23,9 @@ set -o nounset
 
 # set -e : exit the script if any statement returns a non-true return value
 set -o errexit
+
+if [ -n "$1" ]; then
+	if ! su postgres -c "psql $1 -c '\q' 2>/dev/null"; then
+    	su postgres -c "createdb -O phalcon '$1'"
+	fi
+fi

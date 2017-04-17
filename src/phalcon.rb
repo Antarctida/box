@@ -63,9 +63,7 @@ class Phalcon
       vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
       vb.customize ['modifyvm', :id, '--natdnshostresolver1', settings['natdnshostresolver'] ||= 'on']
       vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
-      if settings.key?('gui') && settings['gui']
-        vb.gui = true
-      end
+      vb.gui = true if settings['gui']
     end
 
     # Standardize Ports Naming Schema

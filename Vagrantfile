@@ -9,9 +9,7 @@ require File.expand_path(path + '/src/phalcon.rb')
 
 VAGRANTFILE_API_VERSION ||= 2
 
-Phalcon.application_root = path + '/src'
 Vagrant.require_version '>= 1.9.0'
-
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   settings = {}
   if File.exist?(path + '/settings.yml')
@@ -19,23 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   settings ||= {}
-  Phalcon.configure(config, settings)
 
-  # Configure BASH aliases
-  Phalcon.try_aliases(config)
-
-  # Copy User Files Over to VM
-  Phalcon.try_copy(config, settings)
-
-  # Register All Of The Configured Shared Folders
-  Phalcon.try_folders(config, settings)
-
-  # Configure All Of The Configured Databases
-  Phalcon.try_databases(config, settings)
-
-  if defined? VagrantPlugins::HostsUpdater
-    if settings.key?('sites')
-      config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
-    end
-  end
+  phalcon = Phalcon.new(config, settings)
+  phalcon.configure
 end

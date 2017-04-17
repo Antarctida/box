@@ -21,12 +21,12 @@ class Phalcon
   def initialize(config)
     @config = config
     @application_root = File.dirname(__FILE__).to_s
+
+    s = Settings.new(application_root)
+    @settings = s.settings
   end
 
   def configure
-    s = Settings.new(application_root)
-    @settings = s.settings
-
     init
 
     try_ports

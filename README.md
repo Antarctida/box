@@ -18,7 +18,7 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
 ## Contents
 
 - [Overview](#overview)
-- [Install](#overview)
+- [Install](#install)
 
 ### Overview
 

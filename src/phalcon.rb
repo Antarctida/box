@@ -8,13 +8,16 @@ class Phalcon
 
   attr_reader :application_root
 
-  def initialize(config, settings)
+  def initialize(config)
     @config = config
-    @settings = settings
+    @application_root = File.dirname(__FILE__).to_s
   end
 
   def configure
+    init_settings
+
     init
+
     try_aliases
     try_copy
     try_folders
@@ -24,9 +27,18 @@ class Phalcon
 
   private
 
-  def init
-    @application_root = File.dirname(__FILE__).to_s
+  def init_settings
+    settings = {}
+    if File.exist?(application_root + '/../settings.yml')
+      settings = YAML.safe_load(File.read(application_root + '/../settings.yml'))
+    end
 
+    settings ||= {}
+
+    @settings = settings
+  end
+
+  def init
     # Set The VM Provider
     # @todo
     ENV['VAGRANT_DEFAULT_PROVIDER'] = PHALCON_DEFAULT_PROVIDER.to_s

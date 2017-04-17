@@ -9,7 +9,7 @@ class Composer
   def configure
     config.vm.provision 'shell' do |s|
       s.name = 'Update Composer'
-      s.inline = 'sudo /usr/local/bin/composer self-update && ' \
+      s.inline = 'sudo /usr/local/bin/composer self-update -q && ' \
                  'sudo chown -R vagrant:vagrant /home/vagrant/.composer'
       s.privileged = false
     end

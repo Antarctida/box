@@ -11,6 +11,9 @@ require_relative 'sites'
 
 # The main Phalcon Box class
 class Phalcon
+  VERSION = '2.0.0'.freeze
+  DEFAULT_PROVIDER = 'virtualbox'.freeze
+
   attr_accessor :config, :settings
 
   attr_reader :application_root
@@ -40,7 +43,7 @@ class Phalcon
   def init
     # Set The VM Provider
     # @todo
-    ENV['VAGRANT_DEFAULT_PROVIDER'] = PHALCON_DEFAULT_PROVIDER.to_s
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = DEFAULT_PROVIDER.to_s
 
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"

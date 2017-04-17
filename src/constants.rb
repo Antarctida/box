@@ -7,11 +7,3 @@ PHALCON_DEFAULT_PORTS = [
   { guest: 8025,   host: 8025 },
   { guest: 27_017, host: 27_017 }
 ].freeze
-
-PHALCON_DEFAULT_IP = '192.168.50.4'.freeze
-
-PHALCON_DEFAULT_PROVIDER = 'virtualbox'.freeze
-
-PHALCON_VERSION = '2.0.0'.freeze
-
-PHALCON_BOX_VERSION = '1.0.1'.freeze

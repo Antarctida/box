@@ -1,5 +1,8 @@
 # Initialize user settings
 class Settings
+  DEFAULT_IP = '192.168.50.4'.freeze
+  BOX_VERSION = '1.0.1'.freeze
+
   attr_accessor :application_root
 
   def initialize(application_root)
@@ -19,10 +22,10 @@ class Settings
     settings ||= {}
     settings['name']               ||= 'box'
     settings['box']                ||= 'phalconphp/xenial64'
-    settings['version']            ||= ">= #{PHALCON_BOX_VERSION}"
+    settings['version']            ||= ">= #{BOX_VERSION}"
     settings['hostname']           ||= 'phalcon.local'
     settings['check_update']         = true
-    settings['ip']                 ||= PHALCON_DEFAULT_IP.to_s
+    settings['ip']                 ||= DEFAULT_IP.to_s
     settings['memory']             ||= 2048
     settings['cpus']               ||= 1
     settings['natdnshostresolver'] ||= 'on'

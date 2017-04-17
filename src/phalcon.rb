@@ -1,19 +1,35 @@
 require_relative 'constants'
-require_relative 'version'
 require_relative 'prober'
 require_relative 'database'
 
-# The main Phalcon Box module
-module Phalcon
-  class << self
-    # @return [String]
-    attr_accessor :application_root
+# The main Phalcon Box class
+class Phalcon
+  attr_accessor :config, :settings
+
+  attr_reader :application_root
+
+  def initialize(config, settings)
+    @config = config
+    @settings = settings
   end
 
-  def self.configure(config, settings)
+  def configure
+    init
+    try_aliases
+    try_copy
+    try_folders
+    try_databases
+    try_sites
+  end
+
+  private
+
+  def init
+    @application_root = File.dirname(__FILE__).to_s
+
     # Set The VM Provider
     # @todo
-    ENV['VAGRANT_DEFAULT_PROVIDER'] = DEFAULT_PROVIDER.to_s
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = PHALCON_DEFAULT_PROVIDER.to_s
 
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
@@ -24,12 +40,12 @@ module Phalcon
     # Configure The Box
     config.vm.define settings['name'] ||= 'box'
     config.vm.box = settings['box'] ||= 'phalconphp/xenial64'
-    config.vm.box_version = settings['version'] ||= ">= #{BOX_VERSION}"
+    config.vm.box_version = settings['version'] ||= ">= #{PHALCON_BOX_VERSION}"
     config.vm.hostname = settings['hostname'] ||= 'phalcon.local'
     config.vm.box_check_update = true
 
     # Configure A Private Network IP
-    config.vm.network :private_network, ip: settings['ip'] ||= DEFAULT_IP.to_s
+    config.vm.network :private_network, ip: settings['ip'] ||= PHALCON_DEFAULT_IP.to_s
 
     # Configure Additional Networks
     if settings.key?('networks')
@@ -65,7 +81,7 @@ module Phalcon
 
     # Use Default Port Forwarding Unless Overridden
     unless settings.key?('default_ports') && settings['default_ports'] == false
-      DEFAULT_PORTS.each do |ports|
+      PHALCON_DEFAULT_PORTS.each do |ports|
         unless settings['ports'].any? { |m| m['guest'] == ports[:guest] }
           config.vm.network 'forwarded_port', guest: ports[:guest], host: ports[:host], auto_correct: true
         end
@@ -101,8 +117,20 @@ module Phalcon
     end
   end
 
+  # Configure BASH aliases
+  def try_aliases
+    aliases = application_root + '/../bash_aliases'
+
+    if File.exist?(aliases)
+      config.vm.provision 'file', source: aliases, destination: '/tmp/bash_aliases'
+      config.vm.provision "shell" do |s|
+        s.inline = "awk '{ sub(\"\r$\", \"\"); print }' /tmp/bash_aliases > /home/vagrant/.bash_aliases"
+      end
+    end
+  end
+
   # Copy User Files Over to VM
-  def self.try_copy(config, settings)
+  def try_copy
     if settings.include? 'copy'
       settings['copy'].each do |file|
         config.vm.provision 'file' do |f|
@@ -114,7 +142,7 @@ module Phalcon
   end
 
   # Register All Of The Configured Shared Folders
-  def self.try_folders(config, settings)
+  def try_folders
     if settings.include? 'folders'
       settings['folders'].each do |f|
         if File.exist? File.expand_path(f['map'])
@@ -149,19 +177,15 @@ module Phalcon
   end
 
   # Configure All Of The Configured Databases
-  def self.try_databases(config, settings)
+  def try_databases
     db = Database.new(application_root, config, settings)
     db.configure
   end
 
-  # Configure BASH aliases
-  def self.try_aliases(config)
-    aliases = application_root + '/bash_aliases'
-
-    if File.exist?(aliases)
-      config.vm.provision 'file', source: aliases, destination: '/tmp/bash_aliases'
-      config.vm.provision "shell" do |s|
-        s.inline = "awk '{ sub(\"\r$\", \"\"); print }' /tmp/bash_aliases > /home/vagrant/.bash_aliases"
+  def try_sites
+    if defined? VagrantPlugins::HostsUpdater
+      if settings.key?('sites')
+        config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
       end
     end
   end

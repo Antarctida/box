@@ -9,6 +9,7 @@ require_relative 'folders'
 require_relative 'database'
 require_relative 'sites'
 require_relative 'networks'
+require_relative 'composer'
 
 # The main Phalcon Box class
 class Phalcon
@@ -38,6 +39,7 @@ class Phalcon
     try_folders
     try_databases
     try_sites
+    try_composer
   end
 
   private
@@ -142,5 +144,11 @@ class Phalcon
   def try_sites
     sites = Sites.new(config, settings)
     sites.configure
+  end
+
+  # Update Composer on every provision
+  def try_composer
+    composer = Composer.new(config)
+    composer.configure
   end
 end

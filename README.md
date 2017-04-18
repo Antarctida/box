@@ -18,8 +18,11 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
 ## Contents
 
 - [Overview](#overview)
+- [Requirements](#requirements)
 - [Install](#install)
+- [Packages Included](#packages-included)
 - [Troubleshooting](#troubleshooting)
+- [License](#license)
 
 ### Overview
 
@@ -36,6 +39,12 @@ You can also use more than one core if you like, simply change this line in the 
 ```yaml
 cpus: 1
 ```
+
+### Requirements
+
+* Operating System: Windows, Linux, or OSX
+* Virtualbox >= 5.0
+* Vagrant >= 1.9
 
 ### Install
 
@@ -87,6 +96,24 @@ Now you are ready to provision your Virtual Machine, run:
 ```bash
 vagrant up
 ```
+
+## Packages Included
+
+* Ubuntu 16.04
+* Git
+* PHP 7.1
+* Nginx
+* MySQL
+* Sqlite3
+* PostgreSQL
+* Composer
+* Phalcon
+* Phalcon DevTools
+* Redis
+* Memcached
+* Beanstalkd
+* Zephir
+* MongoDB
 
 ## Troubleshooting
 

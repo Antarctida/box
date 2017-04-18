@@ -9,12 +9,11 @@ class Aliases
 
   def configure
     aliases = application_root + '/../bash_aliases'
+    return unless File.exist?(aliases)
 
-    if File.exist?(aliases)
-      config.vm.provision 'file', source: aliases, destination: '/tmp/bash_aliases'
-      config.vm.provision "shell" do |s|
-        s.inline = "awk '{ sub(\"\r$\", \"\"); print }' /tmp/bash_aliases > /home/vagrant/.bash_aliases"
-      end
+    config.vm.provision 'file', source: aliases, destination: '/tmp/bash_aliases'
+    config.vm.provision "shell" do |s|
+      s.inline = "awk '{ sub(\"\r$\", \"\"); print }' /tmp/bash_aliases > /home/vagrant/.bash_aliases"
     end
   end
 end

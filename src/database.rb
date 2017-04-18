@@ -9,15 +9,14 @@ class Database
   end
 
   def configure
-    if settings.key?('databases')
-      settings['databases'].each do |db|
-        mysql(db)
+    return unless settings.key?('databases')
 
-        postgres(db)
+    settings['databases'].each do |db|
+      mysql(db)
+      postgres(db)
 
-        if settings.key?('mongodb') && settings['mongodb']
-          mongo(db)
-        end
+      if settings.key?('mongodb') && settings['mongodb']
+        mongo(db)
       end
     end
   end
@@ -28,11 +27,11 @@ class Database
     config.vm.provision 'shell' do |s|
       s.name = "Creating MySQL Database: #{db}"
       s.path = "#{application_root}/provision/mysql.sh"
-
-      vagrant_cnf = File.open("#{application_root}/templates/.my.vagrant.cnf", 'rb')
-      root_cnf = File.open("#{application_root}/templates/.my.root.cnf", 'rb')
-
-      s.args = [db, vagrant_cnf.read, root_cnf.read]
+      s.args = [
+        db,
+        File.read("#{application_root}/templates/.my.vagrant.cnf"),
+        File.read("#{application_root}/templates/.my.root.cnf")
+      ]
     end
   end
 

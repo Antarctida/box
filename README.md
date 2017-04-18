@@ -19,6 +19,7 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
 
 - [Overview](#overview)
 - [Install](#install)
+- [Troubleshooting](#troubleshooting)
 
 ### Overview
 
@@ -85,6 +86,23 @@ Now you are ready to provision your Virtual Machine, run:
 
 ```bash
 vagrant up
+```
+
+## Troubleshooting
+
+Problem:
+
+> An error occurred in the underlying SSH library that Vagrant uses.
+  The error message is shown below. In many cases, errors from this
+  library are caused by ssh-agent issues. Try disabling your SSH
+  agent or removing some keys and try again.
+  If the problem persists, please report a bug to the net-ssh project.
+  timeout during server version negotiating
+
+Solution:
+
+```bash
+vagrant plugin install vagrant-vbguest
 ```
 
 ## License

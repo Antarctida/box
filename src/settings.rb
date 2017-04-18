@@ -1,7 +1,7 @@
 # Initialize user settings
 class Settings
   DEFAULT_IP = '192.168.50.4'.freeze
-  BOX_VERSION = '1.0.2'.freeze
+  BOX_VERSION = '1.0.3'.freeze
 
   attr_accessor :application_root, :settings
 

@@ -38,7 +38,7 @@ cpus: 1
 
 ### Install
 
-**Installing The Vagrant Box**
+**Installing the Vagrant Box**
 
 Once VirtualBox and Vagrant have been installed, you should add the `phalconphp/xenial64` box to your Vagrant
 installation using the following command in your terminal. It will take a few minutes to download the box, depending
@@ -50,7 +50,7 @@ vagrant box add phalconphp/xenial64
 
 If this command fails, make sure your Vagrant installation is up to date.
 
-**Installing The Phalcon Box**
+**Installing the Phalcon Box**
 
 You may install Phalcon Box by simply cloning the repository. Consider cloning the repository into a `workspace`
 folder within your "home" directory, as the Phalcon Box box will serve as the host to all of your Phalcon projects:
@@ -79,6 +79,12 @@ bash install
 ```cmd
 rem Windows
 install.bat
+```
+
+Now you are ready to provision your Virtual Machine, run:
+
+```bash
+vagrant up
 ```
 
 ## License

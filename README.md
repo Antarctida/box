@@ -78,7 +78,7 @@ You can find the latest stable version on the [Github Release Page](https://gith
 git checkout v2.0.0
 ```
 
-Once you have cloned the Phalcon Box repository, run the `bash install` command from the Phalcon Box directory to
+Once you have cloned the Phalcon Box repository, run the install command from the Phalcon Box root directory to
 create the `settings.yml` configuration file. The `settings.yml` file will be placed in the Phalcon Box directory:
 
 ```bash

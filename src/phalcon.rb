@@ -7,9 +7,10 @@ require_relative 'aliases'
 require_relative 'files'
 require_relative 'folders'
 require_relative 'database'
-require_relative 'sites'
 require_relative 'networks'
 require_relative 'virtualbox'
+require_relative 'variables'
+require_relative 'sites'
 require_relative 'composer'
 
 # The main Phalcon Box class
@@ -41,6 +42,7 @@ class Phalcon
     try_copy
     try_folders
     try_databases
+    try_variables
     try_sites
     try_composer
   end
@@ -126,6 +128,12 @@ class Phalcon
   def try_databases
     db = Database.new(application_root, config, settings)
     db.configure
+  end
+
+  # Configure environment variables
+  def try_variables
+    variables = Variables.new(application_root, config, settings)
+    variables.configure
   end
 
   # Configure user sites

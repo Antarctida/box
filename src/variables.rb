@@ -21,7 +21,6 @@ class Variables
 
   def env_var(var)
     config.vm.provision 'shell' do |s|
-      s.name = 'Add environment variables to the PHP-FPM'
       s.inline = "echo \"\n; Phalcon Box environment variable\nenv[$1]='$2'\" >> /etc/php/7.1/fpm/php-fpm.conf"
       s.args = [var['key'], var['value']]
     end
@@ -29,7 +28,6 @@ class Variables
 
   def fpm_var(var)
     config.vm.provision 'shell' do |s|
-      s.name = 'Add environment variables to the BASH profile'
       s.inline = "echo \"\n# Phalcon Box environment variable\nexport $1=$2\" >> /home/vagrant/.profile"
       s.args = [var['key'], var['value']]
     end

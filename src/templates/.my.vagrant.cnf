@@ -1,0 +1,7 @@
+[client]
+user = phalcon
+password = secret
+host = localhost
+
+[mysql]
+pager  = grcat ~/.grcat

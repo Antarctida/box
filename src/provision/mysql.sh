@@ -24,23 +24,14 @@ set -o nounset
 # set -e : exit the script if any statement returns a non-true return value
 set -o errexit
 
-cat > /root/.my.cnf << EOF
-[client]
-user = root
-password = root
-host = localhost
-EOF
-
-cat > /home/vagrant/.my.cnf << EOF
-[client]
-user = phalcon
-password = secret
-host = localhost
-
-[mysql]
-pager  = grcat ~/.grcat
-EOF
-
 if [ -n "$1" ]; then
 	mysql -e "CREATE DATABASE IF NOT EXISTS \`$1\` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci";
+fi
+
+if [ -n "$2" ]; then
+	echo "$2" | tee /home/vagrant/.my.cnf  > /dev/null 2>&1
+fi
+
+if [ -n "$3" ]; then
+	echo "$3" | tee /root/.my.cnf  > /dev/null 2>&1
 fi

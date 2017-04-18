@@ -60,7 +60,7 @@ class Sites
   def create_certificate(site)
     config.vm.provision 'shell' do |s|
       s.name = 'Creating certificate for: ' + site['map']
-      s.path = "#{application_root}/provision/certificate_provision.sh"
+      s.path = "#{application_root}/provision/certificate.sh"
       s.args = [site['map']]
     end
   end
@@ -72,7 +72,7 @@ class Sites
       site['ssl']  ||= 443
 
       s.name = 'Configuring site: ' + site['map']
-      s.path = "#{application_root}/provision/nginx_provision.sh"
+      s.path = "#{application_root}/provision/nginx.sh"
       s.env  = server_env(site)
 
       file = File.open("#{application_root}/templates/nginx.conf", 'rb')

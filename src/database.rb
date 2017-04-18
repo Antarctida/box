@@ -27,7 +27,7 @@ class Database
   def mysql(db)
     config.vm.provision 'shell' do |s|
       s.name = "Creating MySQL Database: #{db}"
-      s.path = "#{application_root}/provision/mysql_provision.sh"
+      s.path = "#{application_root}/provision/mysql.sh"
       s.args = [db]
     end
   end
@@ -35,7 +35,7 @@ class Database
   def postgres(db)
     config.vm.provision 'shell' do |s|
       s.name = "Creating Postgres Database: #{db}"
-      s.path = "#{application_root}/provision/postgres_provision.sh"
+      s.path = "#{application_root}/provision/postgres.sh"
       s.args = [db]
     end
   end
@@ -43,7 +43,7 @@ class Database
   def mongo(db)
     config.vm.provision 'shell' do |s|
       s.name = "Creating Mongo Database: #{db}"
-      s.path = "#{application_root}/provision/mongo_provision.sh"
+      s.path = "#{application_root}/provision/mongo.sh"
       s.args = [db]
     end
   end

@@ -9,13 +9,13 @@ class Folders
   end
 
   def configure
-    if settings.include? 'folders'
-      settings['folders'].each do |folder|
-        if File.exist? File.expand_path(folder['map'])
-          user_folder(folder)
-        else
-          notify
-        end
+    return unless settings.include? 'folders'
+
+    settings['folders'].each do |folder|
+      if File.exist? File.expand_path(folder['map'])
+        user_folder(folder)
+      else
+        notify
       end
     end
   end
@@ -34,9 +34,8 @@ class Folders
     config.vm.synced_folder folder['map'], folder['to'], type: folder['type'] ||= nil, **options
 
     # Bindfs support to fix shared folder (NFS) permission issue on Mac
-    if Vagrant.has_plugin?('vagrant-bindfs')
-      config.bindfs.bind_folder folder['to'], folder['to']
-    end
+    return unless Vagrant.has_plugin?('vagrant-bindfs')
+    config.bindfs.bind_folder folder['to'], folder['to']
   end
 
   def notify

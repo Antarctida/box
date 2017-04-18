@@ -9,15 +9,14 @@ class Database
   end
 
   def configure
-    if settings.key?('databases')
-      settings['databases'].each do |db|
-        mysql(db)
+    return unless settings.key?('databases')
 
-        postgres(db)
+    settings['databases'].each do |db|
+      mysql(db)
+      postgres(db)
 
-        if settings.key?('mongodb') && settings['mongodb']
-          mongo(db)
-        end
+      if settings.key?('mongodb') && settings['mongodb']
+        mongo(db)
       end
     end
   end

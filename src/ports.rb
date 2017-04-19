@@ -22,10 +22,10 @@ class Ports
   def configure
     default_ports
 
-    if settings.key?('ports')
-      settings['ports'].each do |p|
-        config.vm.network 'forwarded_port', guest: p['guest'], host: p['host'], protocol: p['protocol'], auto_correct: true
-      end
+    return unless settings.key?('ports')
+
+    settings['ports'].each do |p|
+      config.vm.network :forwarded_port, guest: p['guest'], host: p['host'], protocol: p['protocol'], auto_correct: true
     end
   end
 
@@ -49,7 +49,7 @@ class Ports
     unless settings.key?('default_ports') && settings['default_ports'] == false
       DEFAULT_PORTS.each do |ports|
         unless settings['ports'].any? { |m| m['guest'] == ports[:guest] }
-          config.vm.network 'forwarded_port', guest: ports[:guest], host: ports[:host], auto_correct: true
+          config.vm.network :forwarded_port, guest: ports[:guest], host: ports[:host], auto_correct: true
         end
       end
     end

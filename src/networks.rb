@@ -10,10 +10,10 @@ class Networks
   def configure
     config.vm.network :private_network, ip: settings['ip']
 
-    if settings.key?('networks')
-      settings['networks'].each do |n|
-        config.vm.network n['type'], ip: n['ip'], bridge: n['bridge'] ||= nil
-      end
+    return unless settings.key?('networks')
+
+    settings['networks'].each do |n|
+      config.vm.network n['type'], ip: n['ip'], bridge: n['bridge'] ||= nil
     end
   end
 end

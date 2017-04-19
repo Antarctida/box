@@ -25,7 +25,7 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 
-### Overview
+## Overview
 
 We use the default Phalcon xenial64 ISO from [Vagrant Cloud](https://atlas.hashicorp.com/phalconphp/boxes/xenial64/)
 for compatibility. If you choose to use a 64-bit ISO you may need to update your BIOS to enable
@@ -41,7 +41,7 @@ You can also use more than one core if you like, simply change this line in the 
 cpus: 1
 ```
 
-### Requirements
+## Requirements
 
 * Operating System: Windows, Linux, or OSX
 * [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.1
@@ -65,9 +65,9 @@ cpus: 1
 * Zephir
 * MongoDB
 
-### Install
+## Install
 
-**Installing the Vagrant Box**
+### Installing the Vagrant Box
 
 Once VirtualBox and Vagrant have been installed, you should add the `phalconphp/xenial64` box to your Vagrant
 installation using the following command in your terminal. It will take a few minutes to download the box, depending
@@ -79,7 +79,7 @@ vagrant box add phalconphp/xenial64
 
 If this command fails, make sure your Vagrant installation is up to date.
 
-**Installing the Phalcon Box**
+### Installing the Phalcon Box
 
 You may install Phalcon Box by simply cloning the repository. Consider cloning the repository into a `workspace`
 folder within your "home" directory, as the Phalcon Box box will serve as the host to all of your Phalcon projects:
@@ -120,7 +120,7 @@ vagrant up
 
 ## Configuring
 
-**Shared folders**
+### Shared folders
 
 The `folders` property of the `settings.yml` file lists all of the folders you wish to share with your
 Phalcon Box environment. As files within these folders are changed, they will be kept in sync between your local
@@ -161,7 +161,7 @@ folders:
 vagrant plugin install vagrant-bindfs
 ```
 
-**Nginx sites**
+### Nginx sites
 
 The `sites` property allows you to easily map a "domain" to a folder on your Phalcon Box environment. A sample site
 configuration is included in the `settings.yml` file. You may add as many sites to your Phalcon Box environment as
@@ -176,7 +176,26 @@ sites:
 If you change the `sites` property after provisioning the Phalcon Box, you should re-run `vagrant reload --provision`
 to update the Nginx configuration on the virtual machine.
 
-**NOTE:** To have an ability automatically add new sites to the `/etc/hosts` use `vagrant-hostsupdater` plugin:
+
+### Configuring the `hosts` file
+
+You must add the "domains" for your Nginx sites to the hosts file on your machine. The hosts file will redirect requests
+for your Phalcon sites into your Phalcon Box machine. On Mac and Linux, this file is located at `/etc/hosts`.
+On Windows, it is located at `C:\Windows\System32\drivers\etc\hosts`. The lines you add to this file will look like the
+following:
+
+```
+192.168.50.4  phalcon.local
+```
+
+Make sure the IP address listed is the one set in your `settings.yaml` file. Once you have added the domain to your
+`hosts` file and launched the Vagrant box you will be able to access the site via your web browser:
+
+```
+http://phalcon.local
+```
+
+**NOTE:** To have an ability automatically add new sites to the `hosts` file use `vagrant-hostsupdater` plugin:
 
 ```bash
 vagrant plugin install vagrant-hostsupdater

@@ -89,7 +89,9 @@ cd ~
 git clone https://github.com/phalcon/box.git workspace
 ```
 
-You should check out a tagged version of Phalcon Box since the `master` branch may not always be stable.
+The `master` branch will always contain the latest stable version of Phalcon Box. If you wish to check older versions
+or newer ones currently under development, please switch to the relevant branch/tag.
+
 You can find the latest stable version on the [Github Release Page](https://github.com/phalcon/box/releases):
 
 ```bash
@@ -173,6 +175,12 @@ sites:
 
 If you change the `sites` property after provisioning the Phalcon Box, you should re-run `vagrant reload --provision`
 to update the Nginx configuration on the virtual machine.
+
+**NOTE:** To have an ability automatically add new sites to the `/etc/hosts` use `vagrant-hostsupdater` plugin:
+
+```bash
+vagrant plugin install vagrant-hostsupdater
+```
 
 ## Troubleshooting
 

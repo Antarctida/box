@@ -18,11 +18,16 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
 ## Contents
 
 - [Overview](#overview)
-- [Requirements](#requirements)
-- [Packages Included](#packages-included)
+  - [Requirements](#requirements)
+  - [Packages Included](#packages-included)
 - [Install](#install)
-- [Configuring](#configuring)
-- [Launching the Phalcon Box](#launching-the-phalcon-box)
+  - [Installing the Vagrant Box](#installing-the-vagrant-box)
+  - [Installing the Phalcon Box](#installing-the-phalcon-box)
+  - [Configuring](#configuring)
+    - [Shared folders](#shared-folders)
+    - [Nginx sites](#nginx-sites)
+    - [Configuring the `hosts` file](#configuring-the-hosts-file)
+  - [Launching the Phalcon Box](#launching-the-phalcon-box)
 - [Daily usage](#packages-included)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
@@ -43,13 +48,13 @@ You can also use more than one core if you like, simply change this line in the 
 cpus: 1
 ```
 
-## Requirements
+### Requirements
 
 * Operating System: Windows, Linux, or OSX
 * [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.1
 * [Vagrant](https://www.vagrantup.com/downloads.html) >= 1.9
 
-## Packages Included
+### Packages Included
 
 * Ubuntu 16.04
 * Git

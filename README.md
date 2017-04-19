@@ -21,6 +21,7 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
 - [Requirements](#requirements)
 - [Install](#install)
 - [Packages Included](#packages-included)
+- [Configuring](#configuring)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 
@@ -43,8 +44,8 @@ cpus: 1
 ### Requirements
 
 * Operating System: Windows, Linux, or OSX
-* Virtualbox >= 5.0
-* Vagrant >= 1.9
+* [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.1
+* [Vagrant](https://www.vagrantup.com/downloads.html) >= 1.9
 
 ### Install
 
@@ -114,6 +115,49 @@ vagrant up
 * Beanstalkd
 * Zephir
 * MongoDB
+
+## Configuring
+
+**Shared folders**
+
+The `folders` property of the `settings.yaml` file lists all of the folders you wish to share with your
+Phalcon Box environment. As files within these folders are changed, they will be kept in sync between your local
+machine and the Phalcon Box environment. You may configure as many shared folders as necessary:
+
+```yaml
+folders:
+    - map: ~/workspace
+      to: /home/vagrant/workspace
+```
+
+To enable [NFS](https://www.vagrantup.com/docs/synced-folders/nfs.html), just add a simple flag to your synced folder
+configuration:
+
+```yaml
+folders:
+    - map: ~/workspace
+      to: /home/vagrant/workspace
+      type: "nfs"
+```
+
+You may also pass any options supported by Vagrant's
+[Synced Folders](https://www.vagrantup.com/docs/synced-folders/basic_usage.html) by listing them under the `options` key:
+
+```yaml
+folders:
+    - map: ~/workspace
+      to: /home/vagrant/workspace
+      type: "nfs"
+      options:
+            rsync__args: ["--verbose", "--archive", "--delete", "-zz"]
+            rsync__exclude: ["node_modules"]
+```
+
+**NOTE:** macOS users probably will need to install `vagrant-bindfs` plugin to fix shared folder (NFS) permission issue:
+
+```bash
+vagrant plugin install vagrant-bindfs
+```
 
 ## Troubleshooting
 

@@ -33,7 +33,7 @@ class Folders
 
     config.vm.synced_folder folder['map'], folder['to'], type: folder['type'] ||= nil, **options
 
-    # Bindfs support to fix shared folder (NFS) permission issue on Mac
+    # Bindfs support to fix shared folder (NFS) permission issue on macOS
     return unless Vagrant.has_plugin?('vagrant-bindfs')
     config.bindfs.bind_folder folder['to'], folder['to']
   end

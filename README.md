@@ -18,10 +18,17 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
 ## Contents
 
 - [Overview](#overview)
-- [Requirements](#requirements)
-- [Packages Included](#packages-included)
+  - [Requirements](#requirements)
+  - [Packages Included](#packages-included)
 - [Install](#install)
-- [Configuring](#configuring)
+  - [Installing the Vagrant Box](#installing-the-vagrant-box)
+  - [Installing the Phalcon Box](#installing-the-phalcon-box)
+  - [Configuring](#configuring)
+    - [Shared folders](#shared-folders)
+    - [Nginx sites](#nginx-sites)
+    - [Configuring the `hosts` file](#configuring-the-hosts-file)
+  - [Launching the Phalcon Box](#launching-the-phalcon-box)
+- [Daily usage](#packages-included)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 
@@ -41,13 +48,13 @@ You can also use more than one core if you like, simply change this line in the 
 cpus: 1
 ```
 
-## Requirements
+### Requirements
 
 * Operating System: Windows, Linux, or OSX
 * [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.1
 * [Vagrant](https://www.vagrantup.com/downloads.html) >= 1.9
 
-## Packages Included
+### Packages Included
 
 * Ubuntu 16.04
 * Git
@@ -118,9 +125,9 @@ Now you are ready to provision your Virtual Machine, run:
 vagrant up
 ```
 
-## Configuring
+### Configuring
 
-### Shared folders
+#### Shared folders
 
 The `folders` property of the `settings.yml` file lists all of the folders you wish to share with your
 Phalcon Box environment. As files within these folders are changed, they will be kept in sync between your local
@@ -161,7 +168,7 @@ folders:
 vagrant plugin install vagrant-bindfs
 ```
 
-### Nginx sites
+#### Nginx sites
 
 The `sites` property allows you to easily map a "domain" to a folder on your Phalcon Box environment. A sample site
 configuration is included in the `settings.yml` file. You may add as many sites to your Phalcon Box environment as
@@ -177,7 +184,7 @@ If you change the `sites` property after provisioning the Phalcon Box, you shoul
 to update the Nginx configuration on the virtual machine.
 
 
-### Configuring the `hosts` file
+#### Configuring the `hosts` file
 
 You must add the "domains" for your Nginx sites to the hosts file on your machine. The hosts file will redirect requests
 for your Phalcon sites into your Phalcon Box machine. On Mac and Linux, this file is located at `/etc/hosts`.
@@ -188,7 +195,7 @@ following:
 192.168.50.4  phalcon.local
 ```
 
-Make sure the IP address listed is the one set in your `settings.yaml` file. Once you have added the domain to your
+Make sure the IP address listed is the one set in your `settings.yml` file. Once you have added the domain to your
 `hosts` file and launched the Vagrant box you will be able to access the site via your web browser:
 
 ```
@@ -200,6 +207,57 @@ http://phalcon.local
 ```bash
 vagrant plugin install vagrant-hostsupdater
 ```
+
+### Launching the Phalcon Box
+
+Once you have edited the `settings.yml` to your liking, run the `vagrant up` command from your Phalcon Box directory
+(for example `$HOME/workspace`). Vagrant will boot the virtual machine and automatically configure your shared folders
+and Nginx sites.
+
+To destroy the machine, you may use the `vagrant destroy --force` command.
+
+## Daily usage
+
+### Accessing Phalcon Box globally
+
+Sometimes you may want to `vagrant up` your Phalcon Box machine from anywhere on your filesystem. You can do this on
+Mac or Linux systems by adding a [Bash function](http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-8.html) to your Bash
+profile. On Windows, you may accomplish this by adding a "batch" file to your `PATH`. These scripts will allow you
+to run any Vagrant command from anywhere on your system and will automatically point that command to your Phalcon Box
+installation:
+
+**Mac || Linux**
+
+```bash
+function box() {
+    ( cd $HOME/workspace && vagrant $* )
+}
+```
+
+**NOTE:** Make sure to tweak the `$HOME/workspace` path in the function to the location of your actual Phalcon Box
+installation. Once the function is installed, you may run commands like `box up` or `box ssh` from anywhere on your
+system.
+
+**Windows**
+
+Create a `box.bat` batch file anywhere on your machine with the following contents:
+
+```cmd
+@echo off
+
+set cwd=%cd%
+set box=C:\workspace
+
+cd /d %box% && vagrant %*
+cd /d %cwd%
+
+set cwd=
+set box=
+```
+
+**NOTE:** Make sure to tweak the example `C:\workspace` path in the script to the actual location of your Phalcon Box
+installation. After creating the file, add the file location to your `PATH`. You may then run commands like
+`box up` or `box ssh` from anywhere on your system.
 
 ## Troubleshooting
 

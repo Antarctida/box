@@ -19,8 +19,8 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
 
 - [Overview](#overview)
 - [Requirements](#requirements)
-- [Install](#install)
 - [Packages Included](#packages-included)
+- [Install](#install)
 - [Configuring](#configuring)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
@@ -46,6 +46,24 @@ cpus: 1
 * Operating System: Windows, Linux, or OSX
 * [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.1
 * [Vagrant](https://www.vagrantup.com/downloads.html) >= 1.9
+
+## Packages Included
+
+* Ubuntu 16.04
+* Git
+* PHP 7.1
+* Nginx
+* MySQL
+* Sqlite3
+* PostgreSQL
+* Composer
+* Phalcon
+* Phalcon DevTools
+* Redis
+* Memcached
+* Beanstalkd
+* Zephir
+* MongoDB
 
 ### Install
 
@@ -98,29 +116,11 @@ Now you are ready to provision your Virtual Machine, run:
 vagrant up
 ```
 
-## Packages Included
-
-* Ubuntu 16.04
-* Git
-* PHP 7.1
-* Nginx
-* MySQL
-* Sqlite3
-* PostgreSQL
-* Composer
-* Phalcon
-* Phalcon DevTools
-* Redis
-* Memcached
-* Beanstalkd
-* Zephir
-* MongoDB
-
 ## Configuring
 
 **Shared folders**
 
-The `folders` property of the `settings.yaml` file lists all of the folders you wish to share with your
+The `folders` property of the `settings.yml` file lists all of the folders you wish to share with your
 Phalcon Box environment. As files within these folders are changed, they will be kept in sync between your local
 machine and the Phalcon Box environment. You may configure as many shared folders as necessary:
 
@@ -158,6 +158,21 @@ folders:
 ```bash
 vagrant plugin install vagrant-bindfs
 ```
+
+**Nginx sites**
+
+The `sites` property allows you to easily map a "domain" to a folder on your Phalcon Box environment. A sample site
+configuration is included in the `settings.yml` file. You may add as many sites to your Phalcon Box environment as
+necessary. Phalcon Box can serve as a convenient, virtualized environment for every Phalcon project you are working on:
+
+```yaml
+sites:
+    - map: phalcon.local
+      to:  /home/vagrant/workspace/phalcon/public
+```
+
+If you change the `sites` property after provisioning the Phalcon Box, you should re-run `vagrant reload --provision`
+to update the Nginx configuration on the virtual machine.
 
 ## Troubleshooting
 

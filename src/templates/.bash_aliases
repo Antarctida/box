@@ -14,13 +14,31 @@
 
 alias cls=clear
 
-function _psgrep
+function psgrep
 {
 	if [ -z $1 ]; then
 		echo -e "Usage: psgrep <appname> | awk '{print \$2}' | xargs kill"
 	else
-		ps aux | grep $1 | grep -v grep
+		ps aux | grep "$1" | grep -v grep
 	fi
 }
 
-alias psgrep="_psgrep"
+function myexport()
+{
+	FILE=${1:-/vagrant/mysqldump.sql.gz}
+	echo "Exporting databases to '$FILE'"
+
+	mysqldump -uphalcon -psecret --all-databases --skip-lock-tables 2>/dev/null | gzip > "$FILE"
+
+	echo "Done."
+}
+
+function myimport()
+{
+	FILE=${1:-/vagrant/mysqldump.sql.gz}
+	echo "Importing databases from '$FILE'"
+
+	cat "$FILE" | zcat | mysql -uphalcon -psecret 2>/dev/null
+
+	echo "Done."
+}

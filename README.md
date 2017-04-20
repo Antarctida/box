@@ -28,7 +28,9 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
     - [Nginx sites](#nginx-sites)
     - [Configuring the `hosts` file](#configuring-the-hosts-file)
   - [Launching the Phalcon Box](#launching-the-phalcon-box)
-- [Daily usage](#packages-included)
+- [Daily usage](#daily-usage)
+  - [Accessing Phalcon Box globally](#accessing-phalcon-box-globally)
+  - [Connecting via SSH](#connecting-via-ssh)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 
@@ -258,6 +260,13 @@ set box=
 **NOTE:** Make sure to tweak the example `C:\workspace` path in the script to the actual location of your Phalcon Box
 installation. After creating the file, add the file location to your `PATH`. You may then run commands like
 `box up` or `box ssh` from anywhere on your system.
+
+### Connecting via SSH
+
+You can SSH into your virtual machine by issuing the `vagrant ssh` terminal command from your Phalcon Box directory.
+
+But, since you will probably need to SSH into your Phalcon Box machine frequently, consider adding the "function"
+[described above](#accessing-phalcon-box-globally) to your host machine to quickly SSH into the Phalcon Box.
 
 ## Troubleshooting
 

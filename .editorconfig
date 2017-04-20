@@ -17,6 +17,9 @@ indent_style = tab
 [*.sh]
 indent_style = tab
 
+[.bash_aliases]
+indent_style = tab
+
 [*.zep]
 indent_style = tab
 

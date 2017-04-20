@@ -34,8 +34,8 @@ if [ ! -f "${CURRENT_DIR}/after_provision.sh" ]; then
 	cp -i "${CURRENT_DIR}/src/templates/after_provision.sh" "${CURRENT_DIR}/after_provision.sh"
 fi
 
-if [ ! -f "${CURRENT_DIR}/bash_aliases" ]; then
-	cp -i "${CURRENT_DIR}/src/templates/bash_aliases" "${CURRENT_DIR}/bash_aliases"
+if [ ! -f "${CURRENT_DIR}/.bash_aliases" ]; then
+	cp -i "${CURRENT_DIR}/src/templates/.bash_aliases" "${CURRENT_DIR}/.bash_aliases"
 fi
 
 echo -ne "\nPhalcon Box initialized\n"

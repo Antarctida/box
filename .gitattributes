@@ -1,4 +1,6 @@
 * text eol=lf
 
-Vagrantfile     linguist-language=ruby
-.my.vagrant.cnf linguist-language=INI
+Vagrantfile      linguist-language=ruby
+.my.vagrant.cnf  linguist-language=INI
+.my.root.cnf     linguist-language=INI
+.bash_aliases    linguist-language=Shell

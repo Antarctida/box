@@ -21,8 +21,8 @@ If Not Exist %cd%\after_provision.sh (
     copy /-y %cd%\src\templates\after_provision.sh %cd%\after_provision.sh
 )
 
-If Not Exist %cd%\bash_aliases (
-    copy /-y %cd%\src\templates\bash_aliases %cd%\bash_aliases
+If Not Exist %cd%\.bash_aliases (
+    copy /-y %cd%\src\templates\.bash_aliases %cd%\.bash_aliases
 )
 
 echo

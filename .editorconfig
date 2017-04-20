@@ -14,7 +14,13 @@ indent_size = 4
 [Makefile]
 indent_style = tab
 
+[*.bat]
+indent_style = tab
+
 [*.sh]
+indent_style = tab
+
+[.bash_aliases]
 indent_style = tab
 
 [*.zep]

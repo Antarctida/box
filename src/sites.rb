@@ -74,9 +74,7 @@ class Sites
       s.name = 'Configuring site: ' + site['map']
       s.path = "#{application_root}/provision/nginx.sh"
       s.env  = server_env(site)
-
-      file = File.open("#{application_root}/templates/nginx.conf", 'rb')
-      s.args = [file.read]
+      s.args = [File.read("#{application_root}/templates/nginx.conf")]
     end
   end
 

@@ -24,6 +24,7 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
   - [Installing the Vagrant Box](#installing-the-vagrant-box)
   - [Installing the Phalcon Box](#installing-the-phalcon-box)
   - [Configuring](#configuring)
+    - [Memory and CPU](#memory-and-cpu)
     - [Shared folders](#shared-folders)
     - [Nginx sites](#nginx-sites)
     - [Configuring the `hosts` file](#configuring-the-hosts-file)
@@ -42,13 +43,6 @@ for compatibility. If you choose to use a 64-bit ISO you may need to update your
 
 When you provision Vagrant for the first time it's always the longest procedure (`vagrant up`). Vagrant will download
 the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Box. Afterwards, booting time is fast.
-
-By default this setup uses 2 GB. You can change this in `settings.yml` and simply run `vagrant reload`.
-You can also use more than one core if you like, simply change this line in the same file:
-
-```yaml
-cpus: 1
-```
 
 ### Requirements
 
@@ -128,6 +122,20 @@ vagrant up
 ```
 
 ### Configuring
+
+#### Memory and CPU
+
+By default this setup uses 2GB RAM. You can change this in `settings.yml` and simply run `vagrant reload`:
+
+```yaml
+memory: 4096
+```
+
+You can also use more than one core if you like, simply change this line in the same file:
+
+```yaml
+cpus: 2
+```
 
 #### Shared folders
 

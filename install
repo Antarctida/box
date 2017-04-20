@@ -26,16 +26,16 @@ set -o errexit
 
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-if [ ! -f "${CURRENT_DIR}/settings.yml" ]; then
-	cp -i "${CURRENT_DIR}/src/templates/settings.yml" "${CURRENT_DIR}/settings.yml"
+if [ -f "${CURRENT_DIR}/src/templates/settings.yml" ]; then
+	cp -n "${CURRENT_DIR}/src/templates/settings.yml" "${CURRENT_DIR}/settings.yml"
 fi
 
-if [ ! -f "${CURRENT_DIR}/after_provision.sh" ]; then
-	cp -i "${CURRENT_DIR}/src/templates/after_provision.sh" "${CURRENT_DIR}/after_provision.sh"
+if [ -f "${CURRENT_DIR}/src/templates/after_provision.sh" ]; then
+	cp -n "${CURRENT_DIR}/src/templates/after_provision.sh" "${CURRENT_DIR}/after_provision.sh"
 fi
 
-if [ ! -f "${CURRENT_DIR}/.bash_aliases" ]; then
-	cp -i "${CURRENT_DIR}/src/templates/.bash_aliases" "${CURRENT_DIR}/.bash_aliases"
+if [ -f "${CURRENT_DIR}/src/templates/.bash_aliases" ]; then
+	cp -n "${CURRENT_DIR}/src/templates/.bash_aliases" "${CURRENT_DIR}/.bash_aliases"
 fi
 
 echo -ne "\nPhalcon Box initialized\n"

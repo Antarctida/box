@@ -1,6 +1,6 @@
 # Configure BASH aliases
 class Aliases
-  ALIASES = '/home/vagrant/.bash_aliases'.freeze
+  VM_PATH = '/home/vagrant/.bash_aliases'.freeze
 
   attr_accessor :application_root, :config
 
@@ -10,10 +10,10 @@ class Aliases
   end
 
   def configure
-    aliases = application_root + '/../.bash_aliases'
+    aliases = File.join(File.dirname(application_root), '.bash_aliases')
     return unless File.exist?(aliases)
 
-    config.vm.provision :shell, inline: "rm -f #{ALIASES}"
-    config.vm.provision :file, source: aliases, destination: ALIASES
+    config.vm.provision :shell, inline: "rm -f #{VM_PATH}"
+    config.vm.provision :file, source: aliases, destination: VM_PATH
   end
 end

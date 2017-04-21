@@ -240,7 +240,8 @@ installation:
 **Mac || Linux**
 
 ```bash
-function box() {
+function box()
+{
     ( cd $HOME/workspace && vagrant $* )
 }
 ```

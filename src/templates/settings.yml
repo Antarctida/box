@@ -10,8 +10,8 @@ keys:
     - ~/.ssh/id_rsa
 
 folders:
-    - map: ~/workspace
-      to: /home/vagrant/workspace
+    - map: ~/workspace/phalcon
+      to: /home/vagrant/workspace/phalcon
 
 sites:
     - map: phalcon.local

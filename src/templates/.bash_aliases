@@ -42,3 +42,16 @@ function myimport()
 
 	echo "Done."
 }
+
+function share()
+{
+	if [[ "$1" ]]; then
+		ngrok http ${@:2} -host-header="$1" 80
+	else
+		echo "Error: missing required parameters."
+		echo "Usage: "
+		echo "  share domain"
+		echo "Invocation with extra params passed directly to ngrok"
+		echo "  share domain -region=eu -subdomain=test1234"
+	fi
+}

@@ -32,6 +32,7 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
 - [Daily usage](#daily-usage)
   - [Accessing Phalcon Box globally](#accessing-phalcon-box-globally)
   - [Connecting via SSH](#connecting-via-ssh)
+  - [Connecting to databases](#connecting-to-databases)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 
@@ -275,6 +276,16 @@ You can SSH into your virtual machine by issuing the `vagrant ssh` terminal comm
 
 But, since you will probably need to SSH into your Phalcon Box machine frequently, consider adding the "function"
 [described above](#accessing-phalcon-box-globally) to your host machine to quickly SSH into the Phalcon Box.
+
+### Connecting to databases
+
+To connect to your MySQL or Postgres database from your host machine's database client, you should connect to
+`127.0.0.1` and port `33060` (MySQL) or `54320` (Postgres). The username and password for both databases is
+`phalcon` / `secret`.
+
+**NOTE:** You should only use these non-standard ports when connecting to the databases from your host machine.
+You will use the default `3306` and `5432` ports in your Phalcon database configuration file since Phalcon is running
+within the virtual machine.
 
 ## Troubleshooting
 

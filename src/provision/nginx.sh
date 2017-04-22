@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #
 # Phalcon Box
 #
@@ -12,21 +12,9 @@
 # so that we can send you a copy immediately.
 #
 
-# trace ERR through pipes
-set -o pipefail
-
-# trace ERR through 'time command' and other functions
-set -o errtrace
-
-# set -u : exit the script if you try to use an uninitialised variable
-set -o nounset
-
-# set -e : exit the script if any statement returns a non-true return value
-set -o errexit
-
 if [ -n "$1" ] && [ ! -z ${TPL_SERVER_NAME+x} ]; then
 	echo "$1" | tee "/etc/nginx/sites-available/${TPL_SERVER_NAME}"  > /dev/null 2>&1
-	goreplace --mode=template "/etc/nginx/sites-available/${TPL_SERVER_NAME}"
+	go-replace --mode=template "/etc/nginx/sites-available/${TPL_SERVER_NAME}"
 
 	ln -fs "/etc/nginx/sites-available/${TPL_SERVER_NAME}" "/etc/nginx/sites-enabled/${TPL_SERVER_NAME}"
 fi

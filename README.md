@@ -135,7 +135,7 @@ memory: 4096
 You can also use more than one core if you like, simply change this line in the same file:
 
 ```yaml
-cpus: 2
+cpus: 4
 ```
 
 #### Shared folders

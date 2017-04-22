@@ -1,4 +1,4 @@
 [client]
 user = root
-password = root
+password = secret
 host = localhost

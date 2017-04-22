@@ -316,6 +316,8 @@ vagrant plugin install vagrant-vbguest
 >
 > mount -t vboxsf -o uid=900,gid=900 vagrant /vagrant
 
+**Solution:**
+
 ```bash
 vagrant plugin install vagrant-vbguest
 ```

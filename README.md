@@ -290,16 +290,31 @@ within the virtual machine.
 
 ## Troubleshooting
 
-Problem:
+**Problem:**
 
 > An error occurred in the underlying SSH library that Vagrant uses.
-  The error message is shown below. In many cases, errors from this
-  library are caused by ssh-agent issues. Try disabling your SSH
-  agent or removing some keys and try again.
-  If the problem persists, please report a bug to the net-ssh project.
-  timeout during server version negotiating
+> The error message is shown below. In many cases, errors from this
+> library are caused by ssh-agent issues. Try disabling your SSH
+> agent or removing some keys and try again.
+> If the problem persists, please report a bug to the net-ssh project.
+> timeout during server version negotiating
 
-Solution:
+**Solution:**
+
+```bash
+vagrant plugin install vagrant-vbguest
+```
+
+**Problem:**
+
+> Vagrant was unable to mount VirtualBox shared folders. This is usually
+  because the filesystem "vboxsf" is not available. This filesystem is
+  made available via the VirtualBox Guest Additions and kernel module.
+  Please verify that these guest additions are properly installed in the
+  guest. This is not a bug in Vagrant and is usually caused by a faulty
+  Vagrant box. For context, the command attempted was:
+>
+> mount -t vboxsf -o uid=900,gid=900 vagrant /vagrant
 
 ```bash
 vagrant plugin install vagrant-vbguest

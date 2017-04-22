@@ -7,6 +7,7 @@ require_relative 'aliases'
 require_relative 'files'
 require_relative 'folders'
 require_relative 'database'
+require_relative 'vbguest'
 require_relative 'networks'
 require_relative 'virtualbox'
 require_relative 'variables'
@@ -33,6 +34,7 @@ class Phalcon
   def configure
     init
 
+    try_vbguest
     try_networks
     try_virtualbox
     try_ports
@@ -74,6 +76,12 @@ class Phalcon
     config.vm.box_version = settings['version']
     config.vm.hostname = settings['hostname']
     config.vm.box_check_update = settings['check_update']
+  end
+
+  # Configure Virtualbox Guest Additions
+  def try_vbguest
+    vbguest = Vbguest.new(config, settings)
+    vbguest.configure
   end
 
   # Configure networks

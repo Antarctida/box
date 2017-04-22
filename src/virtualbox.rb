@@ -8,8 +8,8 @@ class Virtualbox
   end
 
   def configure
-    config.vm.provider 'virtualbox' do |vb|
-      vb.name = settings['name'] ||= 'box'
+    config.vm.provider :virtualbox do |vb|
+      vb.name = settings['name']
       vb.customize ['modifyvm', :id, '--memory', settings['memory']]
       vb.customize ['modifyvm', :id, '--cpus', settings['cpus']]
       vb.customize ['modifyvm', :id, '--ioapic', 'on']

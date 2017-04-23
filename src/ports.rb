@@ -40,8 +40,8 @@ class Ports
   def standardize
     if settings.key?('ports')
       settings['ports'].each do |port|
-        port['guest'] ||= port['to']
-        port['host'] ||= port['send']
+        port['guest'] ||= port['to'].to_i
+        port['host'] ||= port['send'].to_i
         port['protocol'] ||= 'tcp'
       end
     else

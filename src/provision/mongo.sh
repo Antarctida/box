@@ -11,3 +11,15 @@
 # through the world-wide-web, please send an email to license@phalconphp.com
 # so that we can send you a copy immediately.
 #
+
+if [ -n "$1" ] && [ -n "$2" ]; then
+	if [ -n "$3" ]; then
+		PHALCON_COUNT=$(mongo --quiet --eval "db.system.users.find({ user: 'phalcon' }).count();" admin)
+		if [ ${PHALCON_COUNT} = 0 ];then
+			echo "User 'phalcon' does not exist at MongoDB. Creating..."
+			mongo admin --quiet --eval "$3"
+		fi
+	fi
+
+	mongo $1 --quiet --eval "$2"
+fi

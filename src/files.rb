@@ -8,12 +8,12 @@ class Files
   end
 
   def configure
-    return unless settings.include? 'copy'
+    return unless settings['copy']
 
     settings['copy'].each do |file|
       config.vm.provision :file do |f|
         f.source = File.expand_path(file['from'])
-        f.destination = file['to'].chomp('/') + '/' + file['from'].split('/').last
+        f.destination = File.join file['to'], File.basename(file['from'])
       end
     end
   end

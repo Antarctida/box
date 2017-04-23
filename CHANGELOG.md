@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 - Make `Phalcon::init` and `Phalcon::show_banner` public
+- Improved reporting of problems with mounting host folder
+- Code cleanup
+
+### Added
+- Added ability to create databases at MongoDB 
 
 ### Fixed
 - Fixed `Authorize::configure` to correctly configure the public key for SSH access

@@ -12,10 +12,11 @@ class Folders
     return unless settings.include? 'folders'
 
     settings['folders'].each do |folder|
-      if File.exist? File.expand_path(folder['map'])
+      from = File.expand_path(folder['map'])
+      if File.exist? from
         user_folder(folder)
       else
-        notify
+        notify(from)
       end
     end
   end
@@ -38,10 +39,13 @@ class Folders
     config.bindfs.bind_folder folder['to'], folder['to']
   end
 
-  def notify
-    config.vm.provision 'shell' do |s|
-      s.inline = '>&2 echo "Unable to mount one of your folders. ' \
-                 'Please check your folders in settings.yml"'
+  def notify(from)
+    config.vm.provision :shell do |s|
+      s.inline = <<-EOF
+        >&2 echo "Unable to mount '$1' folder"
+        >&2 echo "Please check your folders in settings.yml"
+      EOF
+      s.args = [from]
     end
   end
 

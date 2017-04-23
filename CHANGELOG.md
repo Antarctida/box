@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Make `Phalcon::init` and `Phalcon::show_banner` public
 
+### Fixed
+- Fixed `Authorize::configure` to correctly configure the public key for SSH access
+
 ## [2.0.0] - 2017-04-24
 ### Changed
 - Fully refactored project in Ruby

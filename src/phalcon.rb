@@ -4,6 +4,7 @@ require_relative 'authorize'
 require_relative 'ports'
 require_relative 'keys'
 require_relative 'aliases'
+require_relative 'dotfiles'
 require_relative 'files'
 require_relative 'folders'
 require_relative 'database'
@@ -41,12 +42,15 @@ class Phalcon
     try_authorize
     try_keys
     try_aliases
+    try_dotfiles
     try_copy
     try_folders
     try_databases
     try_variables
     try_sites
     try_composer
+
+    banner
   end
 
   private
@@ -120,6 +124,12 @@ class Phalcon
     aliases.configure
   end
 
+  # Donfigure dotfiles
+  def try_dotfiles
+    dotfiles = Dotfiles.new(application_root, config)
+    dotfiles.configure
+  end
+
   # Copy user files over to VM
   def try_copy
     files = Files.new(config, settings)
@@ -154,5 +164,15 @@ class Phalcon
   def try_composer
     composer = Composer.new(config)
     composer.configure
+  end
+
+  def banner
+    config.vm.provision :shell, privileged: false, inline: <<-EOF
+      echo -en "Done."
+      echo -en "Phalcon Box provisioned!"
+      echo -en "Thank you for using Phalcon Box!"
+      echo -en "We hope that Phalcon Developer Tools helps to make your life easier."
+      echo -en "In case of problems: \033[1;33mhttps://github.com/phalcon/box/issues\033[0m and \033[1;33mhttps://forum.phalconphp.com\033[0m"
+    EOF
   end
 end

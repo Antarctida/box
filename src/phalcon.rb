@@ -1,4 +1,3 @@
-require_relative 'prober'
 require_relative 'settings'
 require_relative 'authorize'
 require_relative 'ports'
@@ -170,16 +169,7 @@ class Phalcon
     config.vm.provision :shell do |s|
       s.privileged = false
       s.keep_color = true
-      s.inline = <<-EOF
-        echo -en "------------------------------------------------------------"
-        echo -en "Phalcon Box provisioned!"
-        echo -en "Thank you for using Phalcon Box!"
-        echo -en "We hope that Phalcon Box helps to make your life easier."
-        echo -en "In case of problems:"
-        echo -en "  * \033[1;33mhttps://github.com/phalcon/box/issues\033[0m"
-        echo -en "  * \033[1;33mhttps://forum.phalconphp.com\033[0m"
-        echo -en "------------------------------------------------------------"
-      EOF
+      s.path = "#{application_root}/provision/banner.sh"
     end
   end
 end

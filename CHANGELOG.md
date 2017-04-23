@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Virtual Machine now use Nginx
 
 ### Added
+- Added [Ansible](https://www.ansible.com)
 - Added [Mailhog](https://github.com/mailhog/MailHog)
 - Added [MongoDB](https://www.mongodb.com)
 - Added [Ngrok](https://ngrok.com)

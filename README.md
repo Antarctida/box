@@ -61,6 +61,7 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 
 ### Packages Included
 
+* Ansible
 * Beanstalkd
 * Composer
 * Git

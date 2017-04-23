@@ -3,7 +3,7 @@ require_relative 'prober'
 # Initialize user settings
 class Settings
   DEFAULT_IP = '192.168.50.4'.freeze
-  BOX_VERSION = '1.1.0'.freeze
+  BOX_VERSION = '1.1.2'.freeze
   DEFAULT_CPUS = 2
   DEFAULT_MEMORY = 2048
 

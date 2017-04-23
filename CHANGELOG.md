@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Make `Phalcon::init` and `Phalcon::show_banner` public
 
 ## [2.0.0] - 2017-04-24
 ### Changed

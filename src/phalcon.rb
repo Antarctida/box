@@ -16,7 +16,7 @@ require_relative 'files'
 
 # The main Phalcon Box class
 class Phalcon
-  VERSION = '2.0.0'.freeze
+  VERSION = '2.0.1'.freeze
   DEFAULT_PROVIDER = 'virtualbox'.freeze
 
   attr_accessor :config, :settings
@@ -32,8 +32,6 @@ class Phalcon
   end
 
   def configure
-    init
-
     try_vbguest
     try_networks
     try_virtualbox
@@ -48,11 +46,7 @@ class Phalcon
     try_sites
     try_composer
     try_files
-
-    banner
   end
-
-  private
 
   def init
     # Set The VM Provider
@@ -63,12 +57,19 @@ class Phalcon
     init_box
   end
 
+  def show_banner
+    config.vm.provision :shell do |s|
+      s.privileged = false
+      s.keep_color = true
+      s.path = "#{application_root}/provision/banner.sh"
+    end
+  end
+
+  private
+
   # Configure SSH
   def init_ssh
-    # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-
-    # Allow SSH Agent Forward from The Box
     config.ssh.forward_agent = true
   end
 
@@ -163,13 +164,5 @@ class Phalcon
   def try_composer
     composer = Composer.new(config)
     composer.configure
-  end
-
-  def banner
-    config.vm.provision :shell do |s|
-      s.privileged = false
-      s.keep_color = true
-      s.path = "#{application_root}/provision/banner.sh"
-    end
   end
 end

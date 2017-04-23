@@ -1,8 +1,30 @@
 ---
+# ------------------------------------------------------------
+# Phalcon Box Configurations
+# ------------------------------------------------------------
+#
+
+# Name of VM
 name: box
+
+# Enable GUI mode (show screen of VM)
+gui: false
+
 ip: "192.168.50.4"
+
+# memory (in MB):
+#   auto -> 1/4 of system RAM
+#   1500 -> 1.5 GB RAM
 memory: 2048
+
+# cpu:
+#   auto -> max number of CPU cores
+#      2 -> 2 CPU cores
 cpus: 2
+
+# vram (in MB):
+#   video memory (currently vbox only)
+vram: 100
 
 authorize: ~/.ssh/id_rsa.pub
 

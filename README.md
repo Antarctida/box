@@ -299,6 +299,11 @@ To connect to your MySQL or Postgres database from your host machine's database 
 You will use the default `3306` and `5432` ports in your Phalcon database configuration file since Phalcon is running
 within the virtual machine.
 
+To access to the interacive db console from Phalcon Box type:
+
+- **Postgres:** `psql -U phalcon -h localhost` (password `secret`)
+- **MySQL:** `mysql` (password not needed for MySQL monitor)
+
 ### Adding additional sites
 
 Once your Phalcon Box environment is provisioned and running, you may want to add additional Nginx sites for your

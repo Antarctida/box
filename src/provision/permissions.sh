@@ -12,6 +12,5 @@
 # so that we can send you a copy immediately.
 #
 
-if [ -n "$1" ]; then
-	mysql -e "CREATE DATABASE IF NOT EXISTS \`$1\` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci" > /dev/null 2>&1
-fi
+chown -R vagrant:vagrant /home/vagrant
+chmod 0600 /home/vagrant/.pgpass

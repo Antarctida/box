@@ -37,6 +37,10 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
   - [Ports](#ports)
     - [Forwarding additional ports](#forwarding-additional-ports)
   - [Sharing your environment](#sharing-your-environment)
+  - [Network interfaces](#network-interfaces)
+  - [Updating Phalcon Box](#updating-phalcon-box)
+  - [Provider specific settings](#provider-specific-settings)
+    - [VirtualBox](#virtualBox)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 
@@ -386,6 +390,74 @@ share blog.local -region=eu -subdomain=phalcongelist
 
 **NOTE:** Remember, Vagrant is inherently insecure and you are exposing your virtual machine to the Internet when
 running the `share` command.
+
+### Network interfaces
+
+The `networks` property of the `settings.yml` configures network interfaces for your Phalcon Box environment.
+You may configure as many interfaces as necessary:
+
+```yaml
+networks:
+    - type: "private_network"
+      ip: "192.168.50.99"
+```
+
+To enable a [bridged](https://www.vagrantup.com/docs/networking/public_network.html) interface, configure a `bridge`
+setting and change the network type to `public_network`:
+
+```yaml
+networks:
+    - type: "private_network"
+      ip: "192.168.50.99"
+      bridge: "en1: Wi-Fi (AirPort)"
+```
+
+To enable [DHCP](https://www.vagrantup.com/docs/networking/public_network.html), just remove the `ip` option from this
+configuration:
+
+```yaml
+networks:
+    - type: "private_network"
+      bridge: "en1: Wi-Fi (AirPort)"
+```
+
+### Updating Phalcon Box
+
+You can update Phalcon Box in two simple steps.
+
+1. First, you should update the Vagrant box using the `vagrant box update` command:
+  ```bash
+  vagrant box update
+  ```
+2. Next, you need to update the Phalcon Box source code. If you cloned the repository you can simply
+  ```bash
+  git pull origin master
+  ```
+at the location you originally cloned the repository.
+
+The new version of Phalcon Box will contain updated or amended configuration files:
+* `settings.yml`
+* `.bash_aliases`
+* `after_provision.sh`
+
+When you run the command `bash install` (or `install.bat`) the Phalcon Box creates these files in the root directory.
+However, if the files already exist, they will not be overwritten.
+
+We recommend that you always take backups of those files, and remove them from the project so that the new updated ones
+can be copied over. You can then compare your own files with the phalcon box ones to apply your personalized changes and
+take advantage of the new features offered by the update.
+
+### Provider specific settings
+
+#### VirtualBox
+
+By default, Phalcon Box configures the `natdnshostresolver` setting to `on`. This allows Phalcon Box to use your host
+operating system's DNS settings. If you would like to override this behavior, add the following lines to your
+`settings.yml` file:
+
+```yaml
+natdnshostresolver: off
+```
 
 ## Troubleshooting
 

@@ -12,17 +12,28 @@ class Dotfiles
   def configure
     try_copy('.inputrc')
     try_copy('.grcat')
+    try_copy('.my.cnf')
+    try_copy('.pgpass')
+
+    fix_permissions
   end
 
   private
 
-  def try_copy(filename)
-    file = File.join(application_root, "templates/#{filename}")
-    return unless File.exist?(file)
+  def try_copy(file)
+    dest = File.join(HOME_PATH, file)
 
-    home_file = File.join(HOME_PATH, filename)
+    src = File.join(application_root, "templates/#{file}")
+    return unless File.exist?(src)
 
-    config.vm.provision :shell, inline: "rm -f #{home_file}"
-    config.vm.provision :file, source: file, destination: home_file
+    config.vm.provision :shell, inline: "rm -f #{dest}"
+    config.vm.provision :file, source: src, destination: dest
+  end
+
+  def fix_permissions
+    config.vm.provision :shell do |s|
+      s.name = 'Fix permissions'
+      s.path = "#{application_root}/provision/permissions.sh"
+    end
   end
 end

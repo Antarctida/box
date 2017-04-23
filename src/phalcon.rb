@@ -4,8 +4,6 @@ require_relative 'authorize'
 require_relative 'ports'
 require_relative 'keys'
 require_relative 'aliases'
-require_relative 'dotfiles'
-require_relative 'files'
 require_relative 'folders'
 require_relative 'database'
 require_relative 'vbguest'
@@ -14,6 +12,8 @@ require_relative 'virtualbox'
 require_relative 'variables'
 require_relative 'sites'
 require_relative 'composer'
+require_relative 'dotfiles'
+require_relative 'files'
 
 # The main Phalcon Box class
 class Phalcon
@@ -167,12 +167,19 @@ class Phalcon
   end
 
   def banner
-    config.vm.provision :shell, privileged: false, inline: <<-EOF
-      echo -en "Done."
-      echo -en "Phalcon Box provisioned!"
-      echo -en "Thank you for using Phalcon Box!"
-      echo -en "We hope that Phalcon Developer Tools helps to make your life easier."
-      echo -en "In case of problems: \033[1;33mhttps://github.com/phalcon/box/issues\033[0m and \033[1;33mhttps://forum.phalconphp.com\033[0m"
-    EOF
+    config.vm.provision :shell do |s|
+      s.privileged = false
+      s.keep_color = true
+      s.inline = <<-EOF
+        echo -en "------------------------------------------------------------"
+        echo -en "Phalcon Box provisioned!"
+        echo -en "Thank you for using Phalcon Box!"
+        echo -en "We hope that Phalcon Box helps to make your life easier."
+        echo -en "In case of problems:"
+        echo -en "  * \033[1;33mhttps://github.com/phalcon/box/issues\033[0m"
+        echo -en "  * \033[1;33mhttps://forum.phalconphp.com\033[0m"
+        echo -en "------------------------------------------------------------"
+      EOF
+    end
   end
 end

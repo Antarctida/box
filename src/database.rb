@@ -27,11 +27,7 @@ class Database
     config.vm.provision 'shell' do |s|
       s.name = "Creating MySQL Database: #{db}"
       s.path = "#{application_root}/provision/mysql.sh"
-      s.args = [
-        db,
-        File.read("#{application_root}/templates/.my.vagrant.cnf"),
-        File.read("#{application_root}/templates/.my.root.cnf")
-      ]
+      s.args = [db]
     end
   end
 

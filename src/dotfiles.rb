@@ -14,8 +14,6 @@ class Dotfiles
     try_copy('.grcat')
     try_copy('.my.cnf')
     try_copy('.pgpass')
-
-    fix_permissions
   end
 
   private
@@ -28,12 +26,5 @@ class Dotfiles
 
     config.vm.provision :shell, inline: "rm -f #{dest}"
     config.vm.provision :file, source: src, destination: dest
-  end
-
-  def fix_permissions
-    config.vm.provision :shell do |s|
-      s.name = 'Fix permissions'
-      s.path = "#{application_root}/provision/permissions.sh"
-    end
   end
 end

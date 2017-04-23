@@ -47,6 +47,8 @@ class Phalcon
     try_variables
     try_sites
     try_composer
+
+    banner
   end
 
   private
@@ -154,5 +156,15 @@ class Phalcon
   def try_composer
     composer = Composer.new(config)
     composer.configure
+  end
+
+  def banner
+    config.vm.provision :shell, privileged: false, inline: <<-EOF
+      echo -en "Done."
+      echo -en "Phalcon Box provisioned!"
+      echo -en "Thank you for using Phalcon Box!"
+      echo -en "We hope that Phalcon Developer Tools helps to make your life easier."
+      echo -en "In case of problems: \033[1;33mhttps://github.com/phalcon/box/issues\033[0m and \033[1;33mhttps://forum.phalconphp.com\033[0m"
+    EOF
   end
 end

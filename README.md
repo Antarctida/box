@@ -70,7 +70,7 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 * MySQL
 * Nginx
 * Ngrok
-* Node (With Yarn, Bower, Grunt, and Gulp)
+* Node.js (with Yarn, Bower, Grunt, and Gulp)
 * PHIVE
 * PHP 7.1
 * PHPMD

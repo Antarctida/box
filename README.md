@@ -76,7 +76,6 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 * PHPMD
 * PHP_CodeSniffer
 * Phalcon
-* Phalcon DevTools
 * Phing
 * PostgreSQL
 * Redis

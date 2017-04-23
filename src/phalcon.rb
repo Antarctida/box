@@ -4,6 +4,7 @@ require_relative 'authorize'
 require_relative 'ports'
 require_relative 'keys'
 require_relative 'aliases'
+require_relative 'dotfiles'
 require_relative 'files'
 require_relative 'folders'
 require_relative 'database'
@@ -41,6 +42,7 @@ class Phalcon
     try_authorize
     try_keys
     try_aliases
+    try_dotfiles
     try_copy
     try_folders
     try_databases
@@ -120,6 +122,12 @@ class Phalcon
   def try_aliases
     aliases = Aliases.new(application_root, config)
     aliases.configure
+  end
+
+  # Donfigure dotfiles
+  def try_dotfiles
+    dotfiles = Dotfiles.new(application_root, config)
+    dotfiles.configure
   end
 
   # Copy user files over to VM

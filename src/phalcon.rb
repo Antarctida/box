@@ -42,12 +42,12 @@ class Phalcon
     try_keys
     try_aliases
     try_dotfiles
-    try_copy
     try_folders
     try_databases
     try_variables
     try_sites
     try_composer
+    try_files
 
     banner
   end
@@ -130,7 +130,7 @@ class Phalcon
   end
 
   # Copy user files over to VM
-  def try_copy
+  def try_files
     files = Files.new(config, settings)
     files.configure
   end

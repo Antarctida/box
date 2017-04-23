@@ -295,18 +295,19 @@ But, since you will probably need to SSH into your Phalcon Box machine frequentl
 
 ### Connecting to databases
 
-To connect to your MySQL or Postgres database from your host machine's database client, you should connect to
-`127.0.0.1` and port `33060` (MySQL) or `54320` (Postgres). The username and password for both databases is
-`phalcon` / `secret`.
+To connect to your MySQL, Postgres or MongoDB database from your host machine's database client, you should connect to
+`127.0.0.1` and port `33060` (MySQL), `54320` (Postgres) or `27017` (MongoDB). The username and password for databases
+is `phalcon` / `secret`.
 
 **NOTE:** You should only use these non-standard ports when connecting to the databases from your host machine.
 You will use the default `3306` and `5432` ports in your Phalcon database configuration file since Phalcon is running
-within the virtual machine.
+within the Virtual Machine.
 
 To access to the interacive db console from Phalcon Box type:
 
 - **Postgres:** `psql -U phalcon -h localhost` (password `secret`)
-- **MySQL:** `mysql` (password not needed for MySQL monitor)
+- **MySQL:** `mysql` (password not needed for CLI tool)
+- **MongoDB:** `mongo` (password not needed for CLI tool)
 
 ### Adding additional sites
 

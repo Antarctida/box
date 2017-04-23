@@ -33,12 +33,16 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
   - [Accessing Phalcon Box globally](#accessing-phalcon-box-globally)
   - [Connecting via SSH](#connecting-via-ssh)
   - [Connecting to databases](#connecting-to-databases)
+  - [Adding additional sites](#adding-additional-sites)
+  - [Ports](#ports)
+    - [Forwarding additional ports](#forwarding-additional-ports)
+  - [Sharing your environment](#sharing-your-environment)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 
 ## Overview
 
-We use the default Phalcon xenial64 ISO from [Vagrant Cloud](https://atlas.hashicorp.com/phalconphp/boxes/xenial64/)
+We use the default **phalcon/xenial64** box from [Vagrant Cloud](https://atlas.hashicorp.com/phalconphp/boxes/xenial64/)
 for compatibility. If you choose to use a 64-bit ISO you may need to update your BIOS to enable
 [virtualization](https://en.wikipedia.org/wiki/X86_virtualization) with `AMD-V`, `Intel VT-x` or `VIA VT`.
 
@@ -53,21 +57,28 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 
 ### Packages Included
 
-* Ubuntu 16.04
-* Git
-* PHP 7.1
-* Nginx
-* MySQL
-* Sqlite3
-* PostgreSQL
+* Beanstalkd
 * Composer
+* Git
+* Mailhog
+* Memcached
+* MongoDB
+* MySQL
+* Nginx
+* Ngrok
+* Node (With Yarn, Bower, Grunt, and Gulp)
+* PHIVE
+* PHP 7.1
+* PHPMD
+* PHP_CodeSniffer
 * Phalcon
 * Phalcon DevTools
+* Phing
+* PostgreSQL
 * Redis
-* Memcached
-* Beanstalkd
+* Sqlite3
+* Ubuntu 16.04
 * Zephir
-* MongoDB
 
 ## Install
 
@@ -213,7 +224,7 @@ Make sure the IP address listed is the one set in your `settings.yml` file. Once
 http://phalcon.local
 ```
 
-**NOTE:** To have an ability automatically add new sites to the `hosts` file use `vagrant-hostsupdater` plugin:
+**NOTE:** To enable adding new sites to the `hosts` file automatically use `vagrant-hostsupdater` plugin:
 
 ```bash
 vagrant plugin install vagrant-hostsupdater
@@ -287,6 +298,89 @@ To connect to your MySQL or Postgres database from your host machine's database 
 **NOTE:** You should only use these non-standard ports when connecting to the databases from your host machine.
 You will use the default `3306` and `5432` ports in your Phalcon database configuration file since Phalcon is running
 within the virtual machine.
+
+### Adding additional sites
+
+Once your Phalcon Box environment is provisioned and running, you may want to add additional Nginx sites for your
+applications. You can run as many Phalcon projects as you wish on a single Phalcon Box environment. To add an additional
+site, simply add the site to your `settings.yml` file:
+
+```yaml
+sites:
+    - map: phalcon.local
+      to:  /home/vagrant/workspace/phalcon/public
+    - map: pdffiller.local
+      to:  /home/vagrant/workspace/pdffiller/public
+    - map: blog.local
+      to:  /home/vagrant/workspace/blog/public
+```
+
+If Vagrant is not managing your "hosts" file automatically, you may need to add the new site to that file as well:
+
+```
+192.168.50.4  phalcon.local
+192.168.50.4  pdffiller.local
+192.168.50.4  blog.local
+```
+
+**NOTE:** To enable adding new sites to the `hosts` file automatically use `vagrant-hostsupdater` plugin:
+
+```bash
+vagrant plugin install vagrant-hostsupdater
+```
+
+Once the site has been added, run the `vagrant reload --provision` command from your Phalcon Box directory.
+
+### Ports
+
+By default, the following ports are forwarded to your Phalcon Box environment:
+
+| Forfarded port | Phalcon Box | Host system |
+| --- | --- | --- |
+| **SSH** | `22` | `2222` |
+| **HTTP** | `80` | `8000` |
+| **HTTPS** | `443` | `44300` |
+| **MySQL** | `3306` | `33060` |
+| **Postgres** | `5432` | `54320` |
+| **Mailhog** | `8025` | `8025` |
+
+#### Forwarding additional ports
+
+If you wish, you may forward additional ports to the Phalcon Box, as well as specify their protocol:
+
+```yaml
+ports:
+    - send: 50000
+      to: 5000
+    - send: 7777
+      to: 777
+      protocol: udp
+```
+
+### Sharing your environment
+
+Sometimes you may wish to share what you're currently working on with coworkers or a client. Vagrant has a built-in way
+to support this via `vagrant share`; however, this will not work if you have multiple sites configured in your
+`settings.yml` file.
+
+To solve this problem, Phalcon Box includes its own `share` command. To get started, SSH into your Phalcon Box machine
+via `vagrant ssh` and run `share <your-site-here>`, for example: `share blog.local`. This will share your site from your
+`settings.yml` configuration file. Of course, you may substitute any of your other configured sites for `blog.local`:
+
+```bash
+share blog.local
+```
+
+After running the command, you will see an [Ngrok](https://ngrok.com) screen appear which contains the activity log and
+the publicly accessible URLs for the shared site. If you would like to specify a custom region, subdomain, or other
+Ngrok runtime option, you may add them to your `share` command:
+
+```bash
+share blog.local -region=eu -subdomain=phalcongelist
+```
+
+**NOTE:** Remember, Vagrant is inherently insecure and you are exposing your virtual machine to the Internet when
+running the `share` command.
 
 ## Troubleshooting
 

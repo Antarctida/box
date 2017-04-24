@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added [PHPMD](https://phpmd.org)
 - Added [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 - Added [Phing](https://www.phing.info)
+- Added [goreplace](https://github.com/webdevops/go-replace)
 - Added a lot of PHP extensions
 - Added ability to customize VM
 - Added ability to create Databases on the fly

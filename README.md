@@ -65,6 +65,7 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 * Beanstalkd
 * Composer
 * Git
+* goreplace
 * Mailhog
 * Memcached
 * MongoDB

@@ -9,6 +9,7 @@ require_relative 'vbguest'
 require_relative 'networks'
 require_relative 'virtualbox'
 require_relative 'variables'
+require_relative 'blackfire'
 require_relative 'sites'
 require_relative 'composer'
 require_relative 'dotfiles'
@@ -44,6 +45,7 @@ class Phalcon
     try_folders
     try_databases
     try_variables
+    try_blackfire
     try_sites
     try_composer
     try_files
@@ -150,6 +152,12 @@ class Phalcon
   def try_variables
     variables = Variables.new(application_root, config, settings)
     variables.configure
+  end
+
+  # Configure Blackfire.io
+  def try_blackfire
+    blackfire = Blackfire.new(application_root, config, settings)
+    blackfire.configure
   end
 
   # Configure user sites

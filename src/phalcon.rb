@@ -16,7 +16,7 @@ require_relative 'files'
 
 # The main Phalcon Box class
 class Phalcon
-  VERSION = '2.0.1'.freeze
+  VERSION = '2.0.2'.freeze
   DEFAULT_PROVIDER = 'virtualbox'.freeze
 
   attr_accessor :config, :settings

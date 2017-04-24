@@ -11,6 +11,8 @@ class Sites
   def configure
     clear_nginx
 
+    config.vm.provision :shell, inline: 'mkdir -p /etc/nginx/ssl'
+
     if settings['sites']
       settings['sites'].each do |site|
         create_certificate(site)
@@ -61,7 +63,10 @@ class Sites
     config.vm.provision :shell do |s|
       s.name = 'Creating certificate for: ' + site['map']
       s.path = "#{application_root}/provision/certificate.sh"
-      s.args = [site['map']]
+      s.args = [
+        site['map'],
+        File.read("#{application_root}/templates/ssl.cnf")
+      ]
     end
   end
 

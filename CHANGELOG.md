@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Make `Phalcon::init` and `Phalcon::show_banner` public
 - Improved reporting of problems with mounting host folder
+- Improved creating SSL certificate
 - Code cleanup
 
 ### Added

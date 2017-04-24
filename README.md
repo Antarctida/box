@@ -63,6 +63,7 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 
 * Ansible
 * Beanstalkd
+* Blackfire
 * Composer
 * Git
 * goreplace

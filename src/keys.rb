@@ -8,7 +8,7 @@ class Keys
   end
 
   def configure
-    return unless settings.include? 'keys'
+    return unless settings['keys']
 
     settings['keys'].each do |key|
       config.vm.provision :shell do |s|

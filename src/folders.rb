@@ -9,7 +9,7 @@ class Folders
   end
 
   def configure
-    return unless settings.include? 'folders'
+    return unless settings['folders']
 
     settings['folders'].each do |folder|
       from = File.expand_path(folder['map'])

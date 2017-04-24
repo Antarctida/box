@@ -11,7 +11,7 @@ class Sites
   def configure
     clear_nginx
 
-    if settings.include? 'sites'
+    if settings['sites']
       settings['sites'].each do |site|
         create_certificate(site)
         create_site(site)

@@ -9,14 +9,16 @@ require_relative 'vbguest'
 require_relative 'networks'
 require_relative 'virtualbox'
 require_relative 'variables'
+require_relative 'blackfire'
 require_relative 'sites'
 require_relative 'composer'
 require_relative 'dotfiles'
 require_relative 'files'
+require_relative 'motd'
 
 # The main Phalcon Box class
 class Phalcon
-  VERSION = '2.0.1'.freeze
+  VERSION = '2.0.2'.freeze
   DEFAULT_PROVIDER = 'virtualbox'.freeze
 
   attr_accessor :config, :settings
@@ -43,9 +45,11 @@ class Phalcon
     try_folders
     try_databases
     try_variables
+    try_blackfire
     try_sites
     try_composer
     try_files
+    try_motd
   end
 
   def init
@@ -58,11 +62,7 @@ class Phalcon
   end
 
   def show_banner
-    config.vm.provision :shell do |s|
-      s.privileged = false
-      s.keep_color = true
-      s.path = "#{application_root}/provision/banner.sh"
-    end
+    config.vm.provision :shell, inline: 'echo Phalcon Box provisioned!'
   end
 
   private
@@ -154,6 +154,12 @@ class Phalcon
     variables.configure
   end
 
+  # Configure Blackfire.io
+  def try_blackfire
+    blackfire = Blackfire.new(application_root, config, settings)
+    blackfire.configure
+  end
+
   # Configure user sites
   def try_sites
     sites = Sites.new(application_root, config, settings)
@@ -164,5 +170,11 @@ class Phalcon
   def try_composer
     composer = Composer.new(config)
     composer.configure
+  end
+
+  # Configure Message of the Day
+  def try_motd
+    motd = Motd.new(application_root, config, settings)
+    motd.configure
   end
 end

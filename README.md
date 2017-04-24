@@ -63,8 +63,10 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 
 * Ansible
 * Beanstalkd
+* Blackfire
 * Composer
 * Git
+* goreplace
 * Mailhog
 * Memcached
 * MongoDB
@@ -115,7 +117,7 @@ You can find the latest stable version on the [Github Release Page](https://gith
 
 ```bash
 # Clone the desired release...
-git checkout v2.0.0
+git checkout v2.0.2
 ```
 
 Once you have cloned the Phalcon Box repository, run the install command from the Phalcon Box root directory to

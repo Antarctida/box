@@ -24,15 +24,16 @@ class Folders
   private
 
   def user_folder(folder)
-    opts = mount_opts(folder)
+    mount_options = { mount_options: prepare_option(folder) }
+    options = (folder['options'] || {}).merge(mount_options)
 
-    # For b/w compatibility keep separate 'mount_opts', but merge with options
-    options = (folder['options'] || {}).merge mount_options: opts
-
-    # Double-splat (**) operator only works with symbol keys, so convert
+    # Double-splat (**) operator only works with symbol keys
     options.keys.each { |k| options[k.to_sym] = options.delete(k) }
 
-    config.vm.synced_folder folder['map'], folder['to'], type: folder['type'] ||= nil, **options
+    config.vm.synced_folder folder['map'],
+                            folder['to'],
+                            type: folder['type'] ||= nil,
+                            **options
 
     # Bindfs support to fix shared folder (NFS) permission issue on macOS
     return unless Vagrant.has_plugin?('vagrant-bindfs')
@@ -49,11 +50,11 @@ class Folders
     end
   end
 
-  def mount_opts(folder)
+  def prepare_option(folder)
     if folder['type'] == 'nfs'
-      folder['mount_options'] || %w[actimeo=1 nolock]
+      folder['options'] || %w[actimeo=1 nolock]
     elsif folder['type'] == 'smb'
-      folder['mount_options'] || %w[vers=3.02 mfsymlinks]
+      folder['options'] || %w[vers=3.02 mfsymlinks]
     else
       []
     end

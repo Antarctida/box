@@ -9,34 +9,49 @@ class Variables
   end
 
   def configure
-    clear
+    clear_variables
 
-    if settings.key?('variables')
-      settings['variables'].each do |var|
-        env_var(var)
-        fpm_var(var)
-      end
+    return unless settings['variables']
+
+    profile_vars = settings['variables'].map do |v|
+      profile_var(v['key'], v['value'])
     end
+
+    inject_variables(profile_vars, '/home/vagrant/.profile')
+
+    fpm_vars = settings['variables'].map do |v|
+      fpm_var(v['key'], v['value'])
+    end
+
+    inject_variables(fpm_vars, '/etc/php/7.1/fpm/php-fpm.conf')
   end
 
-  def env_var(var)
+  private
+
+  def inject_variables(vars, path)
     config.vm.provision :shell do |s|
-      s.inline = "echo \"\n; Phalcon Box environment variable\nenv[$1]='$2'\" >> /etc/php/7.1/fpm/php-fpm.conf"
-      s.args = [var['key'], var['value']]
+      s.inline = <<-EOF
+          printf "%s" "$1" >> $2
+      EOF
+      s.args = [vars.join("\n"), path]
     end
   end
 
-  def fpm_var(var)
-    config.vm.provision :shell do |s|
-      s.inline = "echo \"\n# Phalcon Box environment variable\nexport $1=$2\" >> /home/vagrant/.profile"
-      s.args = [var['key'], var['value']]
-    end
-  end
-
-  def clear
+  def clear_variables
     config.vm.provision :shell do |s|
       s.name = 'Clear environment variables'
-      s.path = "#{application_root}/provision/variables.sh"
+      s.inline = <<-EOF
+        sed -i '/# Phalcon Box environment variable/,+1d' /home/vagrant/.profile
+        sed -i '/; Phalcon Box environment variable/,+1d' /etc/php/7.1/fpm/php-fpm.conf
+      EOF
     end
+  end
+
+  def profile_var(key, value)
+    "# Phalcon Box environment variable\nexport #{key}=\"#{value}\""
+  end
+
+  def fpm_var(key, value)
+    "; Phalcon Box environment variable\nenv[#{key}]=\"#{value}\""
   end
 end

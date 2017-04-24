@@ -39,11 +39,10 @@ class Database
   def mongo(db)
     config.vm.provision :shell do |s|
       s.name = "Creating Mongo Database: #{db}"
-      s.path = "#{application_root}/provision/mongo.sh"
+      s.inline = 'mongo $1 --quiet --eval "$2"'
       s.args = [
         db,
-        File.read("#{application_root}/templates/mongo_create_db.js"),
-        File.read("#{application_root}/templates/mongo_create_user.js")
+        File.read("#{application_root}/templates/mongo_create_db.js")
       ]
     end
   end

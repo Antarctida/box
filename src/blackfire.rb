@@ -9,25 +9,14 @@ class Blackfire
   end
 
   def configure
-    clean_blackfire
+    if settings['blackfire'] && settings['blackfire'][0]
+      configure_blackfire settings['blackfire'][0]
 
-    return unless settings['blackfire'] || settings['blackfire'][0]
-
-    configure_blackfire settings['blackfire'][0]
-    restart_blackfire
+      restart_blackfire
+    end
   end
 
   private
-
-  def clean_blackfire
-    config.vm.provision :shell do |s|
-      s.name = 'Clean old Blackfire.io config'
-      s.inline = <<-EOF
-          rm -f /home/vagrant/.blackfire.ini
-          rm -f /etc/blackfire/agent
-      EOF
-    end
-  end
 
   def configure_blackfire(bf)
     config.vm.provision :shell do |s|
@@ -54,7 +43,7 @@ class Blackfire
   def restart_blackfire
     config.vm.provision :shell do |s|
       s.name = 'Restart Blackfire agent'
-      s.inline = 'blackfire-agent restart'
+      s.inline = 'service blackfire-agent restart'
     end
   end
 end

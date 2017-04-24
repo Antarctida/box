@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Added ability to create databases at MongoDB 
+- Added `.mongorc.js` dotfile
 
 ### Fixed
 - Fixed `Authorize::configure` to correctly configure the public key for SSH access

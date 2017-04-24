@@ -14,6 +14,7 @@ class Dotfiles
     try_copy('.grcat')
     try_copy('.my.cnf')
     try_copy('.pgpass')
+    try_copy('.mongorc.js')
   end
 
   private

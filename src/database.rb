@@ -14,17 +14,14 @@ class Database
     settings['databases'].each do |db|
       mysql(db)
       postgres(db)
-
-      if settings.key?('mongodb') && settings['mongodb']
-        mongo(db)
-      end
+      mongo(db)
     end
   end
 
   private
 
   def mysql(db)
-    config.vm.provision 'shell' do |s|
+    config.vm.provision :shell do |s|
       s.name = "Creating MySQL Database: #{db}"
       s.path = "#{application_root}/provision/mysql.sh"
       s.args = [db]
@@ -32,7 +29,7 @@ class Database
   end
 
   def postgres(db)
-    config.vm.provision 'shell' do |s|
+    config.vm.provision :shell do |s|
       s.name = "Creating Postgres Database: #{db}"
       s.path = "#{application_root}/provision/postgres.sh"
       s.args = [db]
@@ -40,10 +37,13 @@ class Database
   end
 
   def mongo(db)
-    config.vm.provision 'shell' do |s|
+    config.vm.provision :shell do |s|
       s.name = "Creating Mongo Database: #{db}"
-      s.path = "#{application_root}/provision/mongo.sh"
-      s.args = [db]
+      s.inline = 'mongo $1 --quiet --eval "$2"'
+      s.args = [
+        db,
+        File.read("#{application_root}/templates/mongo_create_db.js")
+      ]
     end
   end
 end

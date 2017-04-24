@@ -7,11 +7,13 @@ class Composer
   end
 
   def configure
-    config.vm.provision 'shell' do |s|
+    config.vm.provision :shell do |s|
       s.name = 'Update Composer'
-      s.inline = '/usr/local/bin/composer self-update -q && ' \
-                 'mkdir -p /home/vagrant/.composer && ' \
-                 'chown -R vagrant:vagrant /home/vagrant/.composer'
+      s.inline = <<-EOF
+        /usr/local/bin/composer self-update -q
+        mkdir -p /home/vagrant/.composer
+        chown -R vagrant:vagrant /home/vagrant/.composer
+      EOF
     end
   end
 end

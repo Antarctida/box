@@ -8,13 +8,16 @@ class Authorize
   end
 
   def configure
-    return unless settings.include? 'authorize'
+    return unless settings['authorize']
+    return unless File.exist?(File.expand_path(settings['authorize']))
 
-    if File.exist? File.expand_path(settings['authorize'])
-      config.vm.provision 'shell' do |s|
-        s.inline = 'echo $1 | grep -xq "$1" /home/vagrant/.ssh/authorized_keys || echo "\n$1" | tee -a /home/vagrant/.ssh/authorized_keys'
-        s.args = [File.read(File.expand_path(settings['authorize']))]
-      end
+    config.vm.provision :shell do |s|
+      s.name   = 'Configure the public key for SSH access'
+      s.inline = "echo $1 | grep -xq \"$1\" $2 || echo \"\n$1\" | tee -ia $2"
+      s.args   = [
+        File.read(File.expand_path(settings['authorize'])),
+        '/home/vagrant/.ssh/authorized_keys'
+      ]
     end
   end
 end

@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.1] - 2017-04-24
+### Changed
+- Make `Phalcon::init` and `Phalcon::show_banner` public
+- Improved reporting of problems with mounting host folder
+- Improved creating SSL certificate
+- Code cleanup
+
+### Added
+- Added ability to create databases at MongoDB 
+- Added `.mongorc.js` dotfile
+
+### Fixed
+- Fixed `Authorize::configure` to correctly configure the public key for SSH access
+
 ## [2.0.0] - 2017-04-24
 ### Changed
 - Fully refactored project in Ruby
@@ -17,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Virtual Machine now use Nginx
 
 ### Added
+- Added [Ansible](https://www.ansible.com)
 - Added [Mailhog](https://github.com/mailhog/MailHog)
 - Added [MongoDB](https://www.mongodb.com)
 - Added [Ngrok](https://ngrok.com)
@@ -46,6 +61,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/box/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/phalcon/box/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/phalcon/box/compare/v2.0.1...v2.0.0
 [2.0.0]: https://github.com/phalcon/box/compare/v2.0.0...v1.2.0
 [1.2.0]: https://github.com/phalcon/box/compare/v1.2.0...v1.0.0

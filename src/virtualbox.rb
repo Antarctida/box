@@ -10,13 +10,23 @@ class Virtualbox
   def configure
     config.vm.provider :virtualbox do |vb|
       vb.name = settings['name']
-      vb.customize ['modifyvm', :id, '--memory', settings['memory']]
-      vb.customize ['modifyvm', :id, '--cpus', settings['cpus']]
-      vb.customize ['modifyvm', :id, '--ioapic', 'on']
-      vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
-      vb.customize ['modifyvm', :id, '--natdnshostresolver1', settings['natdnshostresolver']]
-      vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
       vb.gui = true if settings['gui']
+
+      customize vb
     end
+  end
+
+  private
+
+  def customize(vb)
+    vb.customize [
+      'modifyvm', :id,
+      '--memory', settings['memory'],
+      '--cpus', settings['cpus'],
+      '--ioapic', 'on',
+      '--natdnsproxy1', 'on',
+      '--natdnshostresolver1', settings['natdnshostresolver'],
+      '--ostype', 'Ubuntu_64'
+    ]
   end
 end

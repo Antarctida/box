@@ -11,11 +11,11 @@ class Variables
   def configure
     clear
 
-    if settings.key?('variables')
-      settings['variables'].each do |var|
-        env_var(var)
-        fpm_var(var)
-      end
+    return unless settings['variables']
+
+    settings['variables'].each do |var|
+      env_var(var)
+      fpm_var(var)
     end
   end
 

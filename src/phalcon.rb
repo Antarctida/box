@@ -13,6 +13,7 @@ require_relative 'sites'
 require_relative 'composer'
 require_relative 'dotfiles'
 require_relative 'files'
+require_relative 'motd'
 
 # The main Phalcon Box class
 class Phalcon
@@ -46,6 +47,7 @@ class Phalcon
     try_sites
     try_composer
     try_files
+    try_motd
   end
 
   def init
@@ -58,11 +60,7 @@ class Phalcon
   end
 
   def show_banner
-    config.vm.provision :shell do |s|
-      s.privileged = false
-      s.keep_color = true
-      s.path = "#{application_root}/provision/banner.sh"
-    end
+    config.vm.provision :shell, inline: 'echo Phalcon Box provisioned!'
   end
 
   private
@@ -164,5 +162,11 @@ class Phalcon
   def try_composer
     composer = Composer.new(config)
     composer.configure
+  end
+
+  # Configure Message of the Day
+  def try_motd
+    motd = Motd.new(application_root, config, settings)
+    motd.configure
   end
 end

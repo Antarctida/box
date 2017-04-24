@@ -5,3 +5,4 @@ Vagrantfile      linguist-language=ruby
 .my.cnf          linguist-language=INI
 ssl.cnf          linguist-language=INI
 .bash_aliases    linguist-language=Shell
+00-header        linguist-language=Shell

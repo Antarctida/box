@@ -22,8 +22,10 @@ class Blackfire
     config.vm.provision :shell do |s|
       s.name = 'Configure Blackfire.io'
       s.inline = <<-EOF
-          go-replace --mode=template /vagrant/src/templates/.blackfire.ini:/home/vagrant/.blackfire.ini
-          go-replace --mode=template /vagrant/src/templates/bf_agent:/etc/blackfire/agent
+          go-replace --mode=template \
+            /vagrant/src/templates/.blackfire.ini:/home/vagrant/.blackfire.ini \
+            /vagrant/src/templates/bf_agent:/etc/blackfire/agent
+
           chown vagrant:vagrant /home/vagrant/.blackfire.ini
       EOF
       s.env = blackfire_env(bf)

@@ -12,12 +12,11 @@ class Motd
     config.vm.provision :shell do |s|
       s.name = 'Configure Message of the Day'
       s.inline = <<-EOF
-        rm -f /etc/update-motd.d/00-header
-        rm -f /etc/update-motd.d/10-help-text
-        echo "$1" | tee /etc/update-motd.d/00-header > /dev/null 2>&1
+        rm -f /etc/update-motd.d/00-header /etc/update-motd.d/10-help-text
+        cp -f /vagrant/src/templates/00-header /etc/update-motd.d/00-header
+
         chmod +x /etc/update-motd.d/00-header
       EOF
-      s.args = [File.read("#{application_root}/templates/00-header")]
     end
   end
 end

@@ -35,6 +35,28 @@ folders:
     - map: ~/workspace/phalcon
       to: /home/vagrant/workspace/phalcon
 
+# Sites configuration.
+#
+# You can use the "type" parameter to specify the type
+# of Nginx configuration for the site. For example:
+#
+# - map:  landing.local
+#   to:   /home/vagrant/workspace/landing/public
+#   type: spa
+#
+# The default type is "phalcon".
+#
+# If the desired type is not allowed "phalcon" will be used as fallback.
+#
+# Available types:
+#   - phalcon
+#   - slayer
+#   - proxy
+#   - spa
+#   - silverstripe
+#   - symfony2
+#   - statamic
+#   - laravel
 sites:
     - map: phalcon.local
       to:  /home/vagrant/workspace/phalcon/public

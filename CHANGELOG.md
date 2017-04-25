@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.1.0] - 2017-04-25
+### Added
+- Added ability to specify the type of Nginx configuration for the site
+
 ## [2.0.2] - 2017-04-25
 ### Added
 - Configure Message of the Day
@@ -64,16 +68,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed permissions issues [#55](https://github.com/phalcon/box/issues/55), [#60](https://github.com/phalcon/box/issues/60)
 
 ## [1.2.0] - 2017-03-22
-
 ### Changed
 - Updated Phalcon & Zephir
 
 ## 1.0.0 - 2016-10-08
-
 ### Added
 - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/box/compare/v2.0.2...HEAD
+[Unreleased]: https://github.com/phalcon/box/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/phalcon/box/compare/v2.1.0...v2.0.2
 [2.0.2]: https://github.com/phalcon/box/compare/v2.0.2...v2.0.1
 [2.0.1]: https://github.com/phalcon/box/compare/v2.0.1...v2.0.0
 [2.0.0]: https://github.com/phalcon/box/compare/v2.0.0...v1.2.0

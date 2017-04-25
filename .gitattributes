@@ -1,10 +1,11 @@
 # Automatically normalize line endings for all text-based files
 * text eol=lf
 
-Vagrantfile      linguist-language=ruby
-.my.cnf          linguist-language=INI
-ssl.cnf          linguist-language=INI
-bf_agent         linguist-language=INI
-.blackfire.ini   linguist-language=INI
-.bash_aliases    linguist-language=Shell
-00-header        linguist-language=Shell
+Vagrantfile              linguist-language=ruby
+.my.cnf                  linguist-language=INI
+ssl.cnf                  linguist-language=INI
+bf_agent                 linguist-language=INI
+.blackfire.ini           linguist-language=INI
+.bash_aliases            linguist-language=Shell
+00-header                linguist-language=Shell
+src/templates/nginx/*    linguist-language=Nginx

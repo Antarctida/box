@@ -18,7 +18,7 @@ require_relative 'motd'
 
 # The main Phalcon Box class
 class Phalcon
-  VERSION = '2.0.3'.freeze
+  VERSION = '2.1.0'.freeze
   DEFAULT_PROVIDER = 'virtualbox'.freeze
 
   attr_accessor :config, :settings

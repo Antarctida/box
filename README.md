@@ -117,7 +117,7 @@ You can find the latest stable version on the [Github Release Page](https://gith
 
 ```bash
 # Clone the desired release...
-git checkout v2.0.2
+git checkout v2.1.0
 ```
 
 Once you have cloned the Phalcon Box repository, run the install command from the Phalcon Box root directory to
@@ -208,9 +208,35 @@ sites:
       to:  /home/vagrant/workspace/phalcon/public
 ```
 
+You can use the `type` parameter to specify the type of Nginx configuration for the site. For example:
+
+```yaml
+sites:
+    - map:  landing.local
+      to:   /home/vagrant/workspace/landing/public
+      type: spa
+```
+
+The default type is `phalcon`.
+
+If the desired type is not allowed `phalcon` will be used as fallback.
+
+Available types:
+
+* `phalcon`
+* `slayer`
+* `proxy`
+* `spa`
+* `silverstripe`
+* `symfony2`
+* `statamic`
+* `laravel`
+
+Feel free to suggest a new type of Nginx configuration
+[through opening a New Feature Request](https://github.com/phalcon/box/issues/new).
+
 If you change the `sites` property after provisioning the Phalcon Box, you should re-run `vagrant reload --provision`
 to update the Nginx configuration on the virtual machine.
-
 
 #### Configuring the `hosts` file
 

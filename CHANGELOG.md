@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 - Fixed the `slayer` Nginx configuration
+- Fixed Message of the Day
 
 ## [2.1.0] - 2017-04-25
 ### Added

@@ -56,7 +56,7 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 ### Requirements
 
 * Operating System: Windows, Linux, or OSX
-* [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.1
+* [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.0
 * [Vagrant](https://www.vagrantup.com/downloads.html) >= 1.9
 
 ### Packages Included

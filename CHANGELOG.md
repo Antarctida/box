@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.1.0] - 2017-04-25
 ### Added
-- Added ability to specify the type of Nginx configuration for the site
+- Added ability to specify the type of Nginx configuration for the site [#67](https://github.com/phalcon/box/issues/67)
 
 ## [2.0.2] - 2017-04-25
 ### Added

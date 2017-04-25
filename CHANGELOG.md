@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added ability to import custom database by using `myimport $FILE $DBNAME`
+
 ### Fixed
 - Fixed the `slayer` Nginx configuration
 - Fixed Message of the Day

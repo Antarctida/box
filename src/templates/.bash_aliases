@@ -28,7 +28,7 @@ function myexport()
 	FILE=${1:-/vagrant/mysqldump.sql.gz}
 	echo "Exporting databases to '$FILE'"
 
-	mysqldump -uphalcon --skip-lock-tables 2>/dev/null | gzip > "$FILE"
+	mysqldump --all-databases --skip-lock-tables 2>/dev/null | gzip > "$FILE"
 
 	echo "Done."
 }
@@ -38,7 +38,7 @@ function myimport()
 	FILE=${1:-/vagrant/mysqldump.sql.gz}
 	echo "Importing databases from '$FILE'"
 
-	cat "$FILE" | zcat | mysql 2>/dev/null
+	cat "$FILE" | zcat | mysql ${2:-} 2>/dev/null
 
 	echo "Done."
 }

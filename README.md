@@ -125,7 +125,7 @@ create the `settings.yml` configuration file. The `settings.yml` file will be pl
 
 ```bash
 # macOS || Linux
-bash install
+./install
 ```
 
 ```cmd
@@ -469,7 +469,7 @@ The new version of Phalcon Box will contain updated or amended configuration fil
 * `.bash_aliases`
 * `after_provision.sh`
 
-When you run the command `bash install` (or `install.bat`) the Phalcon Box creates these files in the root directory.
+When you run the command `./install` (or `install.bat`) the Phalcon Box creates these files in the root directory.
 However, if the files already exist, they will not be overwritten.
 
 We recommend that you always take backups of those files, and remove them from the project so that the new updated ones

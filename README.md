@@ -225,6 +225,7 @@ Available types:
 
 * `phalcon`
 * `slayer`
+* `phanbook`
 * `proxy`
 * `spa`
 * `silverstripe`

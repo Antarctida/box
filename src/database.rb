@@ -23,7 +23,10 @@ class Database
   def mysql(db)
     config.vm.provision :shell do |s|
       s.name = "Creating MySQL Database: #{db}"
-      s.path = "#{application_root}/provision/mysql.sh"
+      s.inline = <<-EOF
+        cp -f /vagrant/src/templates/.my.cnf /root/.my.cnf
+        mysql -e "CREATE DATABASE IF NOT EXISTS $1 DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci"
+      EOF
       s.args = [db]
     end
   end

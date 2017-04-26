@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added ability to import custom database by using `myimport $FILE $DBNAME`
 - Added `phanbook` Nginx configuration
 
+### Changed
+- Refactor MySQL provision
+
 ### Fixed
 - Fixed the `slayer` Nginx configuration
 - Fixed Message of the Day

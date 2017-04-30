@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Refactor MySQL provision
 - Improved MySQL configuration (`.my.cnf`)
+- Changed default VM name from `box` to `pbox`
 
 ### Fixed
 - Fixed the `slayer` Nginx configuration

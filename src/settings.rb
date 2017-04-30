@@ -19,7 +19,7 @@ class Settings
   private
 
   def defaults
-    settings['name']               ||= 'box'
+    settings['name']               ||= 'pbox'
     settings['box']                ||= 'phalconphp/xenial64'
     settings['version']            ||= ">= #{BOX_VERSION}"
     settings['hostname']           ||= 'phalcon.local'

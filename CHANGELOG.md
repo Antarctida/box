@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed the `slayer` Nginx configuration
 - Fixed Message of the Day
 - Fixed shebag line for scripts
+- Fixed dotfiles ownership
 
 ## [2.1.0] - 2017-04-25
 ### Added

@@ -41,6 +41,7 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
   - [Updating Phalcon Box](#updating-phalcon-box)
   - [Provider specific settings](#provider-specific-settings)
     - [VirtualBox](#virtualBox)
+  - [Mail catcher](#mail-catcher)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 
@@ -56,7 +57,7 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 ### Requirements
 
 * Operating System: Windows, Linux, or OSX
-* [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.1
+* [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.0
 * [Vagrant](https://www.vagrantup.com/downloads.html) >= 1.9
 
 ### Packages Included
@@ -117,7 +118,7 @@ You can find the latest stable version on the [Github Release Page](https://gith
 
 ```bash
 # Clone the desired release...
-git checkout v2.1.0
+git checkout v2.2.0
 ```
 
 Once you have cloned the Phalcon Box repository, run the install command from the Phalcon Box root directory to
@@ -125,7 +126,7 @@ create the `settings.yml` configuration file. The `settings.yml` file will be pl
 
 ```bash
 # macOS || Linux
-bash install
+./install
 ```
 
 ```cmd
@@ -225,6 +226,7 @@ Available types:
 
 * `phalcon`
 * `slayer`
+* `phanbook`
 * `proxy`
 * `spa`
 * `silverstripe`
@@ -469,7 +471,7 @@ The new version of Phalcon Box will contain updated or amended configuration fil
 * `.bash_aliases`
 * `after_provision.sh`
 
-When you run the command `bash install` (or `install.bat`) the Phalcon Box creates these files in the root directory.
+When you run the command `./install` (or `install.bat`) the Phalcon Box creates these files in the root directory.
 However, if the files already exist, they will not be overwritten.
 
 We recommend that you always take backups of those files, and remove them from the project so that the new updated ones
@@ -487,6 +489,12 @@ operating system's DNS settings. If you would like to override this behavior, ad
 ```yaml
 natdnshostresolver: off
 ```
+
+### Mail catcher
+
+By default, Phalcon Box redirects all PHP emails to [MailHog](https://github.com/mailhog/MailHog) (instead of sending
+them to the outside world). You can access the MailHog UI at http://localhost:8025/ (or whatever domain you have
+configured in `settings.yml`).
 
 ## Troubleshooting
 

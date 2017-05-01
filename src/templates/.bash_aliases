@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Phalcon Box
 #
@@ -14,7 +14,7 @@
 
 alias cls=clear
 
-function psgrep
+function psgrep()
 {
 	if [ -z $1 ]; then
 		echo -e "Usage: psgrep <appname> | awk '{print \$2}' | xargs kill"
@@ -28,7 +28,7 @@ function myexport()
 	FILE=${1:-/vagrant/mysqldump.sql.gz}
 	echo "Exporting databases to '$FILE'"
 
-	mysqldump -uphalcon --skip-lock-tables 2>/dev/null | gzip > "$FILE"
+	mysqldump --all-databases --skip-lock-tables 2>/dev/null | gzip > "$FILE"
 
 	echo "Done."
 }
@@ -38,7 +38,7 @@ function myimport()
 	FILE=${1:-/vagrant/mysqldump.sql.gz}
 	echo "Importing databases from '$FILE'"
 
-	cat "$FILE" | zcat | mysql 2>/dev/null
+	cat "$FILE" | zcat | mysql ${2:-} 2>/dev/null
 
 	echo "Done."
 }
@@ -54,4 +54,9 @@ function share()
 		echo "Invocation with extra params passed directly to ngrok"
 		echo "  share domain -region=eu -subdomain=test1234"
 	fi
+}
+
+function clear_logs()
+{
+	sudo find /var/log -type f | while read f; do echo -ne '' | sudo tee ${f} > /dev/null 2>&1; done
 }

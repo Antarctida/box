@@ -27,5 +27,6 @@ class Dotfiles
 
     config.vm.provision :shell, inline: "rm -f #{dest}"
     config.vm.provision :file, source: src, destination: dest
+    config.vm.provision :shell, inline: "chmod 0600 #{dest}"
   end
 end

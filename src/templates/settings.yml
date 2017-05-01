@@ -5,7 +5,7 @@
 #
 
 # Name of VM
-name: box
+name: pbox
 
 # Enable GUI mode (show screen of VM)
 gui: false
@@ -14,7 +14,7 @@ ip: "192.168.50.4"
 
 # memory (in MB):
 #   auto -> 1/4 of system RAM
-#   1500 -> 1.5 GB RAM
+#   1536 -> 1.5 GB RAM
 memory: 2048
 
 # cpu:
@@ -51,6 +51,7 @@ folders:
 # Available types:
 #   - phalcon
 #   - slayer
+#   - phanbook
 #   - proxy
 #   - spa
 #   - silverstripe

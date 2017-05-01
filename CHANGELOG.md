@@ -6,9 +6,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.2.0] - 2017-01-01
+### Added
+- Added ability to import custom database by using `myimport $FILE $DBNAME`
+- Added `phanbook` Nginx configuration
+- Added `clear_logs` bash alias to cleanup **all** log files from `/var/log`
+
+### Changed
+- Refactor MySQL provision
+- Improved MySQL configuration (`.my.cnf`)
+- Changed default VM name from `box` to `pbox`
+- Bump minimal Vagrant Box version
+
+### Fixed
+- Fixed the `slayer` Nginx configuration
+- Fixed Message of the Day
+- Fixed shebag line for scripts
+- Fixed dotfiles ownership
+
 ## [2.1.0] - 2017-04-25
 ### Added
-- Added ability to specify the type of Nginx configuration for the site
+- Added ability to specify the type of Nginx configuration for the site [#67](https://github.com/phalcon/box/issues/67)
 
 ## [2.0.2] - 2017-04-25
 ### Added
@@ -75,7 +93,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/box/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/phalcon/box/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/phalcon/box/compare/v2.2.0...v2.1.0
 [2.1.0]: https://github.com/phalcon/box/compare/v2.1.0...v2.0.2
 [2.0.2]: https://github.com/phalcon/box/compare/v2.0.2...v2.0.1
 [2.0.1]: https://github.com/phalcon/box/compare/v2.0.1...v2.0.0

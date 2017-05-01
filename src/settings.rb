@@ -3,7 +3,7 @@ require_relative 'prober'
 # Initialize user settings
 class Settings
   DEFAULT_IP = '192.168.50.4'.freeze
-  BOX_VERSION = '1.1.4'.freeze
+  BOX_VERSION = '2.0.0'.freeze
   DEFAULT_CPUS = 2
   DEFAULT_MEMORY = 2048
 
@@ -19,7 +19,7 @@ class Settings
   private
 
   def defaults
-    settings['name']               ||= 'box'
+    settings['name']               ||= 'pbox'
     settings['box']                ||= 'phalconphp/xenial64'
     settings['version']            ||= ">= #{BOX_VERSION}"
     settings['hostname']           ||= 'phalcon.local'

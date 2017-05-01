@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Added ability to import custom database by using `myimport $FILE $DBNAME`
 - Added `phanbook` Nginx configuration
+- Added `clear_logs` bash alias to cleanup **all** log files from /var/log
 
 ### Changed
 - Refactor MySQL provision

@@ -14,7 +14,7 @@
 
 alias cls=clear
 
-function psgrep
+function psgrep()
 {
 	if [ -z $1 ]; then
 		echo -e "Usage: psgrep <appname> | awk '{print \$2}' | xargs kill"
@@ -54,4 +54,9 @@ function share()
 		echo "Invocation with extra params passed directly to ngrok"
 		echo "  share domain -region=eu -subdomain=test1234"
 	fi
+}
+
+function clear_logs()
+{
+	sudo find /var/log -type f | while read f; do echo -ne '' | sudo tee ${f} > /dev/null 2>&1; done
 }

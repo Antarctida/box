@@ -41,6 +41,7 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
   - [Updating Phalcon Box](#updating-phalcon-box)
   - [Provider specific settings](#provider-specific-settings)
     - [VirtualBox](#virtualBox)
+  - [Mail catcher](#mail-catcher)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 
@@ -488,6 +489,12 @@ operating system's DNS settings. If you would like to override this behavior, ad
 ```yaml
 natdnshostresolver: off
 ```
+
+### Mail catcher
+
+By default, Phalcon Box redirects all PHP emails to [MailHog](https://github.com/mailhog/MailHog) (instead of sending
+them to the outside world). You can access the MailHog UI at http://localhost:8025/ (or whatever domain you have
+configured in `settings.yml`).
 
 ## Troubleshooting
 

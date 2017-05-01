@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Refactor MySQL provision
 - Improved MySQL configuration (`.my.cnf`)
 - Changed default VM name from `box` to `pbox`
+- Bump minimal Vagrant Box version
 
 ### Fixed
 - Fixed the `slayer` Nginx configuration

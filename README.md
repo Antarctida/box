@@ -117,7 +117,7 @@ You can find the latest stable version on the [Github Release Page](https://gith
 
 ```bash
 # Clone the desired release...
-git checkout v2.1.0
+git checkout v2.2.0
 ```
 
 Once you have cloned the Phalcon Box repository, run the install command from the Phalcon Box root directory to

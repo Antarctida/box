@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added ability to export custom databases by using `myexport $FILE "db1 db2 db3"`
 
 ## [2.2.0] - 2017-01-01
 ### Added

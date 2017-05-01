@@ -28,7 +28,13 @@ function myexport()
 	FILE=${1:-/vagrant/mysqldump.sql.gz}
 	echo "Exporting databases to '$FILE'"
 
-	mysqldump --all-databases --skip-lock-tables 2>/dev/null | gzip > "$FILE"
+	rm -f "$FILE"
+
+	if [[ "$2" ]]; then
+		mysqldump --databases $2 --skip-lock-tables 2>/dev/null | gzip > "$FILE"
+	else
+		mysqldump --all-databases --skip-lock-tables 2>/dev/null | gzip > "$FILE"
+	fi
 
 	echo "Done."
 }

@@ -27,19 +27,20 @@ cache:
 
 before_install:
     - sudo apt-get -qq update
-    - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
-    - gem install rubocop
-    - sudo pip install ansible
+    - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y -qq docker-engine
+    - gem install --quiet rubocop
+
+install:
+    - pip install --quiet ansible
+    - pip install --quiet molecule
 
 before_script:
     - docker --version
     - ansible --version
-
-install:
-    - pip install molecule
+    - rubocop --version
+    - molecule --version
 
 script:
-    # --except LineLength,BlockLength,Eval,MutableConstant
     - rubocop Vagrantfile
 
 notifications:

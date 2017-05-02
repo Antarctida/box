@@ -1,0 +1,50 @@
+language: python
+
+dist: trusty
+sudo: required
+
+services:
+    - docker
+
+rvm:
+    - 2.2
+
+python:
+    - 2.7
+
+addons:
+    apt:
+        packages:
+            - python-pip
+
+git:
+  depth: 1
+
+cache:
+    pip: true
+    apt: true
+    timeout: 691200
+
+before_install:
+    - sudo apt-get -qq update
+    - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
+    - gem install rubocop
+    - sudo pip install ansible
+
+before_script:
+    - docker --version
+    - ansible --version
+
+install:
+    - pip install molecule
+
+script:
+    # --except LineLength,BlockLength,Eval,MutableConstant
+    - rubocop Vagrantfile
+
+notifications:
+    email:
+        recipients:
+            - build@phalconphp.com
+        on_success: change
+        on_failure: always

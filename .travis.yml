@@ -1,7 +1,7 @@
 language: python
 
 dist: trusty
-sudo: required
+sudo: false
 
 services:
     - docker
@@ -25,12 +25,8 @@ cache:
     apt: true
     timeout: 691200
 
-before_install:
-    - sudo apt-get -qq update
-    - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y -qq docker-engine
-    - gem install --quiet rubocop
-
 install:
+    - gem install --quiet rubocop
     - pip install --quiet ansible
     - pip install --quiet molecule
 

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.2.2] - 2017-01-02
+### Changed
+- Bump minimal Vagrant Box version. See [Maker changes](https://github.com/phalcon/maker/releases/tag/v2.0.2)
+
 ## [2.2.1] - 2017-01-02
 ### Changed
 - Bump minimal Vagrant Box version. See [Maker changes](https://github.com/phalcon/maker/releases/tag/v2.0.1) 
@@ -100,7 +104,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/box/compare/v2.2.1...HEAD
+[Unreleased]: https://github.com/phalcon/box/compare/v2.2.2...HEAD
+[2.2.2]: https://github.com/phalcon/box/compare/v2.2.2...v2.2.1
 [2.2.1]: https://github.com/phalcon/box/compare/v2.2.1...v2.2.0
 [2.2.0]: https://github.com/phalcon/box/compare/v2.2.0...v2.1.0
 [2.1.0]: https://github.com/phalcon/box/compare/v2.1.0...v2.0.2

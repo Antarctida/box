@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.2.1] - 2017-01-02
+### Changed
+- Bump minimal Vagrant Box version. See [Maker changes](https://github.com/phalcon/maker/releases/tag/v2.0.1) 
+
+### Added
+- Added ability to export custom databases by using `myexport $FILE "db1 db2 db3"`
+
 ## [2.2.0] - 2017-01-01
 ### Added
 - Added ability to import custom database by using `myimport $FILE $DBNAME`
@@ -93,7 +100,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/box/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/phalcon/box/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/phalcon/box/compare/v2.2.1...v2.2.0
 [2.2.0]: https://github.com/phalcon/box/compare/v2.2.0...v2.1.0
 [2.1.0]: https://github.com/phalcon/box/compare/v2.1.0...v2.0.2
 [2.0.2]: https://github.com/phalcon/box/compare/v2.0.2...v2.0.1

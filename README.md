@@ -118,7 +118,7 @@ You can find the latest stable version on the [Github Release Page](https://gith
 
 ```bash
 # Clone the desired release...
-git checkout v2.2.0
+git checkout v2.2.1
 ```
 
 Once you have cloned the Phalcon Box repository, run the install command from the Phalcon Box root directory to
@@ -382,7 +382,7 @@ By default, the following ports are forwarded to your Phalcon Box environment:
 | **HTTPS** | `443` | `44300` |
 | **MySQL** | `3306` | `33060` |
 | **Postgres** | `5432` | `54320` |
-| **Mailhog** | `8025` | `8025` |
+| **MailHog** | `8025` | `8025` |
 
 #### Forwarding additional ports
 

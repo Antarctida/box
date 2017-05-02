@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure VirtualBox
 class Virtualbox
   attr_accessor :config, :settings

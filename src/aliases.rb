@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure BASH aliases
 class Aliases
   attr_accessor :application_root, :config

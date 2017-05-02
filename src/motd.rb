@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure Message of the Day
 class Motd
   attr_accessor :application_root, :config, :settings

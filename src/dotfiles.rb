@@ -1,6 +1,9 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Donfigure dotfiles
 class Dotfiles
-  HOME_PATH = '/home/vagrant'.freeze
+  HOME_PATH = '/home/vagrant'
 
   attr_accessor :application_root, :config
 

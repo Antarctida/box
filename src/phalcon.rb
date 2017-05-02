@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 require_relative 'settings'
 require_relative 'authorize'
 require_relative 'ports'
@@ -18,8 +21,8 @@ require_relative 'motd'
 
 # The main Phalcon Box class
 class Phalcon
-  VERSION = '2.2.2'.freeze
-  DEFAULT_PROVIDER = 'virtualbox'.freeze
+  VERSION = '2.2.2'
+  DEFAULT_PROVIDER = 'virtualbox'
 
   attr_accessor :config, :settings
 

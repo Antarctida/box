@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure networks
 class Networks
   attr_accessor :config, :settings

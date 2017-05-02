@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Copy user files over to VM
 class Files
   attr_accessor :config, :settings

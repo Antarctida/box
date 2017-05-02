@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure all of the configured databases
 class Database
   attr_accessor :application_root, :config, :settings

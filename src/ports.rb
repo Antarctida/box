@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure custom ports
 class Ports
   # Default port forwarding
@@ -8,7 +11,7 @@ class Ports
     { guest: 5432,   host: 54_320 },
     { guest: 8025,   host: 8025 },
     { guest: 27_017, host: 27_017 }
-  ].freeze
+  ]
 
   attr_accessor :config, :settings
 

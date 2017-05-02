@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure user sites
 class Sites
   attr_accessor :application_root, :config, :settings

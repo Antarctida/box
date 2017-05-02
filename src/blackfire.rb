@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure Blackfire.io
 class Blackfire
   attr_accessor :application_root, :config, :settings

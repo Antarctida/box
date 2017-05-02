@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure the public key for SSH access
 class Authorize
   attr_accessor :config, :settings

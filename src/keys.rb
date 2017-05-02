@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Copy the SSH private keys to the box
 class Keys
   attr_accessor :config, :settings

@@ -1,5 +1,5 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# frozen_string_literal: true
 
 require 'json'
 require 'yaml'

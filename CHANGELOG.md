@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.2.1] - 2017-01-02
+### Changed
+- Bump minimal Vagrant Box version. See [Maker changes](https://github.com/phalcon/maker/releases/tag/v2.0.1) 
+
 ### Added
 - Added ability to export custom databases by using `myexport $FILE "db1 db2 db3"`
 

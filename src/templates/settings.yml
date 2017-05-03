@@ -77,3 +77,13 @@ databases:
 #    - send: 7777
 #      to: 777
 #      protocol: udp
+
+# verbose:
+#   Set provision verbosity to obtain detailed logging.
+#   Default value is false (minimal verbosity). Examples:
+#
+#   false -> minimal verbosity
+#    true -> equivalent to v
+#    -vvv -> equivalent to vvv
+#    vvvv -> maximal verbosity
+verbose: false

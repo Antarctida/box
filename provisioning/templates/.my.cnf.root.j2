@@ -1,12 +1,14 @@
+; {{ ansible_managed }}
+
 [client]
-user = phalcon
+user = root
 password = secret
 host = 127.0.0.1
 port = 3306
 default-character-set = utf8
 
 [mysql]
-user = phalcon
+user = root
 password = secret
 host = 127.0.0.1
 port = 3306
@@ -23,7 +25,7 @@ collation-server = utf8_general_ci
 init-connect = 'SET NAMES utf8'
 
 [mysqldump]
-user = phalcon
+user = root
 password = secret
 host = 127.0.0.1
 port = 3306

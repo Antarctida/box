@@ -16,7 +16,6 @@ class Sites
 
     if settings['sites']
       settings['sites'].each do |site|
-        create_certificate(site)
         create_site(site)
       end
 
@@ -56,18 +55,6 @@ class Sites
   def update_host
     if Vagrant.has_plugin?('vagrant-hostsupdater')
       config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
-    end
-  end
-
-  # Create SSL certificate
-  def create_certificate(site)
-    config.vm.provision :shell do |s|
-      s.name = "Creating certificate for: #{site['map']}"
-      s.path = "#{application_root}/provision/certificate.sh"
-      s.args = [
-        site['map'],
-        File.read("#{application_root}/templates/ssl.cnf")
-      ]
     end
   end
 

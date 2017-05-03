@@ -1,0 +1,49 @@
+---
+- name: Ensure pyopenssl is present
+  pip:
+    name: pyopenssl
+    state: present
+
+- name: Obtain the stats of site certificate config
+  stat:
+    path: "/etc/nginx/ssl/{{ item.map | default('default') }}.cnf"
+  register: cnf_ssl_config
+  with_items: "{{ settings.sites | default([]) }}"
+
+- name: Obtain the stats of site certificate key
+  stat:
+    path: "/etc/nginx/ssl/{{ item.map | default('default') }}.key"
+  register: key_ssl_config
+  with_items: "{{ settings.sites | default([]) }}"
+
+- name: Obtain the stats of site certificate
+  stat:
+    path: "/etc/nginx/ssl/{{ item.map | default('default') }}.crt"
+  register: crt_ssl_config
+  with_items: "{{ settings.sites | default([]) }}"
+
+- name: Create per site certificate config
+  template:
+    src: "ssl.cnf.j2"
+    dest: "/etc/nginx/ssl/{{ item.item.map | default('default') }}.cnf"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  vars:
+    site_name: "{{ item.item.map | default('default') }}"
+  with_items: "{{ cnf_ssl_config.results }}"
+  when: not item.stat.exists
+
+- name: Generate per site OpenSSL private key
+  openssl_privatekey:
+    path: "/etc/nginx/ssl/{{ item.item.map | default('default') }}.key"
+    size: 4096
+    type: RSA
+  with_items: "{{ key_ssl_config.results }}"
+  when: not item.stat.exists
+
+- name: Generate per site OpenSSL Certificate
+  shell: |
+    openssl req -new -x509 -config "/etc/nginx/ssl/{{ item.item.map | default('default') }}.cnf" -out "/etc/nginx/ssl/{{ item.item.map | default('default') }}.crt" -days 365 2>/dev/null
+  with_items: "{{ crt_ssl_config.results }}"
+  when: not item.stat.exists

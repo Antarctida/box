@@ -1,0 +1,16 @@
+---
+- name: Remove unneeded MOD files
+  file:
+    path: "/etc/update-motd.d/{{ item }}"
+    state: absent
+  with_items:
+    - 00-header
+    - 10-help-text
+
+- name: Create Welcome MOD
+  template:
+    src: 00-header.j2
+    dest: /etc/update-motd.d/00-header
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"

@@ -1,0 +1,13 @@
+---
+#- name: Clear the old Nginx sites
+#  file:
+#    path: "/etc/nginx/{{ item }}/"
+#    state: absent
+#  with_items:
+#    - sites-enabled
+#    - sites-available
+
+- name: Clear the old Nginx sites
+  debug:
+    msg: "Map: {{ item.map }} To: {{ item.port }} Port: {{ item.port }} SSL: {{ item.ssl }} Type: {{ item.type | default('phalcon') }}"
+  with_items: "{{ settings.sites }}"

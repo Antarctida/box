@@ -5,6 +5,9 @@
 
   tasks:
     - include: include/certificates.yml
+    - include: include/blackfire.yml
+    - include: include/php-fpm.yml
+    - include: include/nginx.yml
     - include: include/aliases.yml
     - include: include/dotfiles.yml
     - include: include/mysql.yml

@@ -4,25 +4,25 @@
     name: pyopenssl
     state: present
 
-- name: Obtain the stats of site certificate config
+- name: Obtain the stats of site OpenSSL configuration
   stat:
     path: "/etc/nginx/ssl/{{ item.map | default('default') }}.cnf"
   register: cnf_ssl_config
   with_items: "{{ settings.sites | default([]) }}"
 
-- name: Obtain the stats of site certificate key
+- name: Obtain the stats of site OpenSSL private key
   stat:
     path: "/etc/nginx/ssl/{{ item.map | default('default') }}.key"
   register: key_ssl_config
   with_items: "{{ settings.sites | default([]) }}"
 
-- name: Obtain the stats of site certificate
+- name: Obtain the stats of site OpenSSL Certificate
   stat:
     path: "/etc/nginx/ssl/{{ item.map | default('default') }}.crt"
   register: crt_ssl_config
   with_items: "{{ settings.sites | default([]) }}"
 
-- name: Create per site certificate config
+- name: Create per site OpenSSL configuration
   template:
     src: "ssl.cnf.j2"
     dest: "/etc/nginx/ssl/{{ item.item.map | default('default') }}.cnf"

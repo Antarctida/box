@@ -68,8 +68,8 @@ databases:
 #blackfire:
 #    - id: foo
 #      token: bar
-#      client-id: foo
-#      client-token: bar
+#      client_id: foo
+#      client_token: bar
 
 #ports:
 #    - send: 50000

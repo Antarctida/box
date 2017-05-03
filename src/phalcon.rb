@@ -10,8 +10,6 @@ require_relative 'vbguest'
 require_relative 'networks'
 require_relative 'virtualbox'
 require_relative 'variables'
-require_relative 'blackfire'
-require_relative 'sites'
 require_relative 'files'
 
 # The main Phalcon Box class
@@ -42,8 +40,6 @@ class Phalcon
     try_keys
     try_folders
     try_variables
-    try_blackfire
-    try_sites
     try_files
   end
 
@@ -55,10 +51,10 @@ class Phalcon
       ansible.extra_vars = { settings: settings }
       ansible.verbose = settings['verbose']
     end
-  end
 
-  def welcome
-    config.vm.provision :shell, inline: 'echo Phalcon Box provisioned!'
+    return unless Vagrant.has_plugin? 'vagrant-hostsupdater'
+
+    config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
   end
 
   private
@@ -139,17 +135,5 @@ class Phalcon
   def try_variables
     variables = Variables.new(application_root, config, settings)
     variables.configure
-  end
-
-  # Configure Blackfire.io
-  def try_blackfire
-    blackfire = Blackfire.new(application_root, config, settings)
-    blackfire.configure
-  end
-
-  # Configure user sites
-  def try_sites
-    sites = Sites.new(application_root, config, settings)
-    sites.configure
   end
 end

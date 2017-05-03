@@ -13,5 +13,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   phalcon.configure
   phalcon.provision
-  phalcon.welcome
+
+  config.vm.provision :shell, inline: 'echo Phalcon Box provisioned!'
 end

@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Reactored `blackfire` configuration (`client-id` => `client_id` `client-token` => `client_token`) to follow pure YAML
+- Moved `resources` to the common place
+- Updated installers
+
+### Added
+- Introducing provisioning by Ansible
+- Introduced testing on Travis CI
 
 ## [2.2.2] - 2017-01-02
 ### Changed

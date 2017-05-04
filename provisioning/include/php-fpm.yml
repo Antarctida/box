@@ -1,4 +1,14 @@
 ---
+- name: Ensure the correct php-fpm configuration
+  lineinfile:
+    dest: /etc/php/7.1/fpm/pool.d/www.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: "^listen.?=.+$"
+      line: "listen = /var/run/php/php7.1-fpm.sock"
+
 - name: Restart php7.1-fpm service
   service:
     name: php7.1-fpm

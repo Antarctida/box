@@ -37,7 +37,7 @@ server {
     location ~ ^/(app_dev|app_test|config)\.php(/|$) {
         # regex to split $uri to $fastcgi_script_name and $fastcgi_path
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+        fastcgi_pass php;
 
         include fastcgi_params;
 
@@ -51,7 +51,7 @@ server {
     location ~ ^/app\.php(/|$) {
         # regex to split $uri to $fastcgi_script_name and $fastcgi_path
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+        fastcgi_pass php;
 
         include fastcgi_params;
 

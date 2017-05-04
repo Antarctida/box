@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Reactored `blackfire` configuration (`client-id` => `client_id` `client-token` => `client_token`) to follow pure YAML
 - Moved `resources` to the common place
-- Updated installers
+- Code cleanup
 
 ### Added
 - Introducing provisioning by Ansible

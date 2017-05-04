@@ -23,3 +23,13 @@
     - my.cnf
     - pgpass
     - mongorc.js
+
+- name: Ensure the required direcories does exist
+  file:
+    path: "/home/vagrant/{{ item }}"
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: "u=rwx,g=rx,o=rx"
+  with_items:
+    - bin

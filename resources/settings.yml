@@ -1,0 +1,89 @@
+---
+# ------------------------------------------------------------
+# Phalcon Box Configurations
+# ------------------------------------------------------------
+#
+
+# Name of VM
+name: pbox
+
+# Enable GUI mode (show screen of VM)
+gui: false
+
+ip: "192.168.50.4"
+
+# memory (in MB):
+#   auto -> 1/4 of system RAM
+#   1536 -> 1.5 GB RAM
+memory: 2048
+
+# cpu:
+#   auto -> max number of CPU cores
+#      2 -> 2 CPU cores
+cpus: 2
+
+# vram (in MB):
+#   video memory (currently vbox only)
+vram: 100
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: ~/workspace/phalcon
+      to: /home/vagrant/workspace/phalcon
+
+# Sites configuration.
+#
+# You can use the "type" parameter to specify the type
+# of Nginx configuration for the site. For example:
+#
+# - map:  landing.local
+#   to:   /home/vagrant/workspace/landing/public
+#   type: spa
+#
+# The default type is "phalcon".
+#
+# If the desired type is not allowed "phalcon" will be used as fallback.
+#
+# Available types:
+#   - phalcon
+#   - slayer
+#   - phanbook
+#   - proxy
+#   - spa
+#   - silverstripe
+#   - symfony2
+#   - statamic
+#   - laravel
+sites:
+    - map: phalcon.local
+      to:  /home/vagrant/workspace/phalcon/public
+
+databases:
+    - phalcondb
+
+#blackfire:
+#    - id: foo
+#      token: bar
+#      client_id: foo
+#      client_token: bar
+
+#ports:
+#    - send: 50000
+#      to: 5000
+#    - send: 7777
+#      to: 777
+#      protocol: udp
+
+# verbose:
+#   Set provision verbosity to obtain detailed logging.
+#   Default value is false (minimal verbosity). Examples:
+#
+#   false -> minimal verbosity
+#    true -> equivalent to v
+#    -vvv -> equivalent to vvv
+#    vvvv -> maximal verbosity
+verbose: false

@@ -13,16 +13,16 @@ rem so that we can send you a copy immediately.
 rem
 cls
 
-If Exist %cd%\src\templates\settings.yml (
-	copy /-y %cd%\src\templates\settings.yml %cd%\settings.yml
+If Exist %cd%\resources\settings.yml (
+	copy /-y %cd%\resources\settings.yml %cd%\settings.yml
 )
 
-If Exist %cd%\src\templates\after_provision.sh (
-	copy /-y %cd%\src\templates\after_provision.sh %cd%\after_provision.sh
+If Exist %cd%\resources\after_provision.sh (
+	copy /-y %cd%\resources\after_provision.sh %cd%\after_provision.sh
 )
 
-If Exist %cd%\src\templates\.bash_aliases (
-	copy /-y %cd%\src\templates\.bash_aliases %cd%\.bash_aliases
+If Exist %cd%\resources\.bash_aliases (
+	copy /-y %cd%\resources\.bash_aliases %cd%\.bash_aliases
 )
 
 echo

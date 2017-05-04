@@ -1,0 +1,40 @@
+# {{ ansible_managed }}
+
+server {
+    listen {{ http_port }};
+    listen {{ ssl_port }} ssl;
+
+    server_name {{ server_name }};
+
+    root "{{ document_root }}";
+
+    index index.html index.htm;
+    charset utf-8;
+
+    sendfile off;
+    client_max_body_size 100m;
+
+    access_log off;
+    error_log  "/var/log/nginx/{{ server_name }}-error.log" error;
+
+    ssl_certificate     "/etc/nginx/ssl/{{ server_name }}.crt";
+    ssl_certificate_key "/etc/nginx/ssl/{{ server_name }}.key";
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location = /favicon.ico {
+        access_log off;
+        log_not_found off;
+    }
+
+    location = /robots.txt  {
+        access_log off;
+        log_not_found off;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}

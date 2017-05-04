@@ -1,0 +1,25 @@
+---
+- name: Ensure old "dotfiles" does not exist
+  file:
+    path: "/home/vagrant/.{{ item }}"
+    state: absent
+  with_items:
+    - inputrc
+    - grcat
+    - my.cnf
+    - pgpass
+    - mongorc.js
+
+- name: Re-created new "dotfiles"
+  template:
+    src: ".{{ item }}.j2"
+    dest: "/home/vagrant/.{{ item }}"
+    owner: vagrant
+    group: vagrant
+    mode: "u=rw,g=r,o=r"
+  with_items:
+    - inputrc
+    - grcat
+    - my.cnf
+    - pgpass
+    - mongorc.js

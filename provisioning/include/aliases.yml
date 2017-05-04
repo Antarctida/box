@@ -1,0 +1,19 @@
+---
+- name: Check '.bash_aliases' stat
+  stat: path="/vagrant/.bash_aliases"
+  register: bash_aliases_check
+
+- name: Ensure old '.bash_aliases' does not exist
+  file:
+    path: /home/vagrant/.bash_aliases
+    state: absent
+  when: bash_aliases_check.stat.exists
+
+- name: Re-create new '.bash_aliases'
+  copy:
+    src: /vagrant/.bash_aliases
+    dest: /home/vagrant/.bash_aliases
+    owner: vagrant
+    group: vagrant
+    mode: "u=rw,g=r,o=r"
+  when: bash_aliases_check.stat.exists

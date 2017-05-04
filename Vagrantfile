@@ -11,7 +11,8 @@ Vagrant.require_version '>= 1.9.0'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   phalcon = Phalcon.new(config)
 
-  phalcon.init
   phalcon.configure
-  phalcon.show_banner
+  phalcon.provision
+
+  config.vm.provision :shell, inline: 'echo Phalcon Box provisioned!'
 end

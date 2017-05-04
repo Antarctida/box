@@ -1,0 +1,20 @@
+---
+- name: Update Composer to latest version
+  shell: |
+    /usr/local/bin/composer self-update -q
+  register: composer_update
+  changed_when: "'Updating to version' in composer_update.stdout"
+
+- name: Ensure composer home directory exists
+  file:
+    path: /home/vagrant/.composer
+    owner: vagrant
+    group: vagrant
+    state: directory
+
+- name: Ensure correct ownrer was assigned to the composer home
+  file:
+    path: /home/vagrant/.composer
+    owner: vagrant
+    group: vagrant
+    recurse: yes

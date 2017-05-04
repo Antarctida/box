@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - include: include/certificates.yml
+    - include: include/blackfire.yml
+    - include: include/php-fpm.yml
+    - include: include/nginx.yml
+    - include: include/aliases.yml
+    - include: include/dotfiles.yml
+    - include: include/mysql.yml
+    - include: include/postgresql.yml
+    - include: include/mongo.yml
+    - include: include/composer.yml
+    - include: include/motd.yml

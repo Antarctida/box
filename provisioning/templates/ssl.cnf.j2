@@ -1,0 +1,28 @@
+# {{ ansible_managed }}
+
+[ req ]
+prompt             = no
+default_bits       = 4096
+default_keyfile    = /etc/nginx/ssl/{{ site_name }}.key
+encrypt_key        = no
+default_md         = sha256
+distinguished_name = req_distinguished_name
+x509_extensions    = v3_ca
+
+[ req_distinguished_name ]
+O  = Vagrant
+C  = UN
+CN = {{ site_name }}
+
+[ v3_ca ]
+basicConstraints       = CA:FALSE
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid, issuer
+keyUsage               = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName         = @alternate_names
+
+[ alternate_names ]
+DNS.1 = www.{{ site_name }}
+DNS.2 = {{ site_name }}
+DNS.3 = *.{{ site_name }}
+DNS.4 = *.*.{{ site_name }}

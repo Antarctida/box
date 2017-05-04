@@ -1,0 +1,13 @@
+; {{ ansible_managed }}
+
+[blackfire]
+ca-cert      =
+collector    = https://blackfire.io
+http-proxy   =
+https-proxy  =
+log-file     = stderr
+log-level    = 1
+server-id    = {{ server_id }}
+server-token = {{ server_token }}
+socket       = unix:///var/run/blackfire/agent.sock
+spec         =

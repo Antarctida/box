@@ -29,6 +29,7 @@ class Settings
     settings['ip']                 ||= DEFAULT_IP.to_s
     settings['natdnshostresolver'] ||= 'on'
     settings['vram']               ||= 100
+    settings['verbose']            ||= false
 
     # at least 1 GB
     memory = setup_memory

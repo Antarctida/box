@@ -1,0 +1,45 @@
+---
+- name: Ensure the nginx' php config present
+  template:
+    src: nginx/conf.d/10-php.conf.j2
+    dest: /etc/nginx/conf.d/10-php.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Remove the old nginx sites configuration
+  file:
+    path: "/etc/nginx/{{ item }}/*"
+    state: absent
+  with_items:
+    - sites-enabled
+    - sites-available
+
+- name: Create per site nginx configuration
+  template:
+    src: "nginx/{{ item.type | default('phalcon') }}.conf.j2"
+    dest: "/etc/nginx/sites-available/{{ item.map }}.conf"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  vars:
+    server_name: "{{ item.map }}"
+    http_port: "{{ item.port | default('80') }}"
+    ssl_port: "{{ item.ssl | default('443') }}"
+    document_root: "{{ item.to }}"
+  with_items: "{{ settings.sites | default([]) }}"
+
+- name: Enable site
+  file:
+    src: "/etc/nginx/sites-available/{{ item.map }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ item.map }}.conf"
+    owner: root
+    group: root
+    state: link
+    mode: "u=rw,g=r,o=r"
+  with_items: "{{ settings.sites | default([]) }}"
+
+- name: Restart nginx service
+  service:
+    name: nginx
+    state: restarted

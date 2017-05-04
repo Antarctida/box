@@ -6,7 +6,7 @@ require_relative 'prober'
 # Initialize user settings
 class Settings
   DEFAULT_IP = '192.168.50.4'
-  BOX_VERSION = '2.0.2'
+  BOX_VERSION = '2.0.3'
   DEFAULT_CPUS = 2
   DEFAULT_MEMORY = 2048
 

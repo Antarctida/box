@@ -30,6 +30,7 @@ class Settings
     settings['natdnshostresolver'] ||= 'on'
     settings['vram']               ||= 100
     settings['verbose']            ||= false
+    settings['provider']           ||= :virtualbox
 
     # at least 1 GB
     memory = setup_memory

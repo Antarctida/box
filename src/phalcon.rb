@@ -28,19 +28,22 @@ class Phalcon
     s = Settings.new(application_root)
     @settings = s.settings
 
-    init
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = settings['provider']
+
+    configure_ssh
+    configure_box
   end
 
   def configure
-    try_vbguest
-    try_networks
-    try_vms
-    try_ports
-    try_authorize
-    try_keys
-    try_folders
-    try_variables
-    try_files
+    configure_vbguest
+    configure_networks
+    configure_vms
+    configure_ports
+    configure_authorize
+    configure_keys
+    configure_folders
+    configure_variables
+    configure_files
   end
 
   # Start provisioning
@@ -66,21 +69,14 @@ class Phalcon
 
   private
 
-  def init
-    ENV['VAGRANT_DEFAULT_PROVIDER'] = settings['provider'] ||= :virtualbox
-
-    init_ssh
-    init_box
-  end
-
   # Configure SSH
-  def init_ssh
+  def configure_ssh
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
     config.ssh.forward_agent = true
   end
 
   # Configure The Box
-  def init_box
+  def configure_box
     config.vm.define settings['name']
     config.vm.box = settings['box']
     config.vm.box_version = settings['version']
@@ -89,19 +85,19 @@ class Phalcon
   end
 
   # Configure Virtualbox Guest Additions
-  def try_vbguest
+  def configure_vbguest
     vbguest = Vbguest.new(config, settings)
     vbguest.configure
   end
 
   # Configure networks
-  def try_networks
+  def configure_networks
     networks = Networks.new(config, settings)
     networks.configure
   end
 
   # Configure VMs
-  def try_vms
+  def configure_vms
     virtualbox = Virtualbox.new(config, settings)
     virtualbox.configure
 
@@ -110,37 +106,37 @@ class Phalcon
   end
 
   # Configure custom ports
-  def try_ports
+  def configure_ports
     ports = Ports.new(config, settings)
     ports.configure
   end
 
   # Configure the public key for SSH access
-  def try_authorize
+  def configure_authorize
     authorize = Authorize.new(config, settings)
     authorize.configure
   end
 
   # Copy the SSH private keys to the box
-  def try_keys
+  def configure_keys
     aliases = Keys.new(config, settings)
     aliases.configure
   end
 
   # Copy user files over to VM
-  def try_files
+  def configure_files
     files = Files.new(config, settings)
     files.configure
   end
 
   # Register all of the configured shared folders
-  def try_folders
+  def configure_folders
     folders = Folders.new(application_root, config, settings)
     folders.configure
   end
 
   # Configure environment variables
-  def try_variables
+  def configure_variables
     variables = Variables.new(application_root, config, settings)
     variables.configure
   end

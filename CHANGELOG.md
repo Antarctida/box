@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial support of VMWare
 - Introducing provisioning by Ansible
 - Introducing testing on Travis CI
+- Added ability to use custom provision by playing with `after_provision.sh` file
 
 ### Changed
 - Reactored `blackfire` configuration (`client-id` => `client_id` `client-token` => `client_token`) to follow pure YAML

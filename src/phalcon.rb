@@ -57,6 +57,13 @@ class Phalcon
     config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
   end
 
+  def after_provision
+    user_provision = File.join File.dirname(application_root), 'after_provision.sh'
+    return until File.exist? user_provision
+
+    config.vm.provision :shell, path: user_provision, privileged: false
+  end
+
   private
 
   def init

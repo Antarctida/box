@@ -10,27 +10,32 @@ class Settings
   DEFAULT_CPUS = 2
   DEFAULT_MEMORY = 2048
 
+  DEFAULT_SETTINGS = {
+    name: 'pbox',
+    box:  'phalconphp/xenial64',
+    version: ">= #{BOX_VERSION}",
+    hostname: 'phalcon.local',
+    ip: DEFAULT_IP.to_s,
+    natdnshostresolver: 'on',
+    vram: 100,
+    verbose: false,
+    provider: :virtualbox,
+    check_update: true
+  }.freeze
+
   attr_accessor :application_root, :settings
 
   def initialize(application_root)
     @application_root = application_root
 
     load_file
-    defaults
+    initialize_defaults
   end
 
   private
 
-  def defaults
-    settings['name']               ||= 'pbox'
-    settings['box']                ||= 'phalconphp/xenial64'
-    settings['version']            ||= ">= #{BOX_VERSION}"
-    settings['hostname']           ||= 'phalcon.local'
-    settings['ip']                 ||= DEFAULT_IP.to_s
-    settings['natdnshostresolver'] ||= 'on'
-    settings['vram']               ||= 100
-    settings['verbose']            ||= false
-    settings['provider']           ||= :virtualbox
+  def initialize_defaults
+    opts = DEFAULT_SETTINGS.merge(@settings)
 
     # at least 1 GB
     memory = setup_memory
@@ -38,19 +43,17 @@ class Settings
       memory = 1024
     end
 
-    settings['memory'] = memory
-    settings['cpus'] = setup_cpu
-    settings['check_update'] = true
+    opts['memory'] = memory
+    opts['cpus'] = setup_cpu
+
+    @settings = opts
   end
 
   def load_file
-    settings = {}
     file = application_root + '/../settings.yml'
+    return {} until File.exist? file
 
-    if File.exist?(file)
-      settings = YAML.safe_load(File.read(file))
-    end
-
+    settings = YAML.safe_load(File.read(file))
     settings ||= {}
 
     @settings = settings

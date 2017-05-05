@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Reactored `blackfire` configuration (`client-id` => `client_id` `client-token` => `client_token`) to follow pure YAML
 - Moved `resources` to the common place
-- Code cleanup
+- CS fixes nad cleanup
 - Bump minimal Vagrant Box version. See [Maker changes](https://github.com/phalcon/maker/releases/tag/v2.0.3)
 
 ## [2.2.2] - 2017-05-02

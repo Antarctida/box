@@ -12,13 +12,17 @@ class VMWare
 
   def configure
     [:vmware_fusion, :vmware_workstation].each do |vmware|
-      config.vm.provider vmware do |v|
-        v.vmx['displayName'] = settings['name']
-        v.vmx['memsize'] = settings['memory']
-        v.vmx['numvcpus'] = settings['cpus']
-        v.vmx['guestOS'] = 'ubuntu-64'
-        v.gui = true if settings['gui']
-      end
+      customize vmware
+    end
+  end
+
+  def customize(vmware)
+    config.vm.provider vmware do |v|
+      v.vmx['displayName'] = settings['name']
+      v.vmx['memsize'] = settings['memory']
+      v.vmx['numvcpus'] = settings['cpus']
+      v.vmx['guestOS'] = 'ubuntu-64'
+      v.gui = true if settings['gui']
     end
   end
 end

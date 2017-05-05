@@ -23,12 +23,12 @@ class Phalcon
 
   def initialize(config)
     @config = config
-    @application_root = File.dirname(__FILE__).to_s
+    @application_root = File.dirname(File.dirname(__FILE__)).to_s
 
     s = Settings.new(application_root)
     @settings = s.settings
 
-    ENV['VAGRANT_DEFAULT_PROVIDER'] = settings['provider']
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = settings[:provider].to_s
 
     configure_ssh
     configure_box
@@ -52,19 +52,19 @@ class Phalcon
       ansible.playbook = 'provisioning/main.yml'
       ansible.limit = :all
       ansible.extra_vars = { settings: settings }
-      ansible.verbose = settings['verbose']
+      ansible.verbose = settings[:verbose]
     end
 
     return unless Vagrant.has_plugin? 'vagrant-hostsupdater'
 
-    config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
+    config.hostsupdater.aliases = settings[:sites].map { |site| site[:map] }
   end
 
   def after_provision
-    user_provision = File.join File.dirname(application_root), 'after_provision.sh'
-    return until File.exist? user_provision
+    provision = File.join application_root, 'after_provision.sh'
+    return until File.exist? provision
 
-    config.vm.provision :shell, path: user_provision, privileged: false
+    config.vm.provision :shell, path: provision, privileged: false
   end
 
   private
@@ -75,13 +75,14 @@ class Phalcon
     config.ssh.forward_agent = true
   end
 
-  # Configure The Box
+  # Configure the Box
   def configure_box
-    config.vm.define settings['name']
-    config.vm.box = settings['box']
-    config.vm.box_version = settings['version']
-    config.vm.hostname = settings['hostname']
-    config.vm.box_check_update = settings['check_update']
+    config.vm.define settings[:name], primary: true do |c|
+      c.vm.box = settings[:box]
+      c.vm.box_version = settings[:version]
+      c.vm.hostname = settings[:hostname]
+      c.vm.box_check_update = settings[:check_update]
+    end
   end
 
   # Configure Virtualbox Guest Additions
@@ -131,13 +132,13 @@ class Phalcon
 
   # Register all of the configured shared folders
   def configure_folders
-    folders = Folders.new(application_root, config, settings)
+    folders = Folders.new(config, settings)
     folders.configure
   end
 
   # Configure environment variables
   def configure_variables
-    variables = Variables.new(application_root, config, settings)
+    variables = Variables.new(config, settings)
     variables.configure
   end
 end

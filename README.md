@@ -95,8 +95,8 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 
 ### Installing the Vagrant Box
 
-Before launching your Homestead environment, you must install VirtualBox, or VMWare as well as Vagrant. All of these
-software packages provide easy-to-use visual installers for all popular operating systems.
+Before launching your Phalcon Box environment, you must install VirtualBox, or VMWare as well as Vagrant. All of
+these software packages provide easy-to-use visual installers for all popular operating systems.
 
 Once VirtualBox/VMWare and Vagrant have been installed, you should add the `phalconphp/xenial64` box to your Vagrant
 installation using the following command in your terminal. It will take a few minutes to download the box, depending

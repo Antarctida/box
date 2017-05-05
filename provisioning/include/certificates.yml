@@ -1,9 +1,4 @@
 ---
-- name: Ensure pyopenssl is present
-  pip:
-    name: pyopenssl
-    state: present
-
 - name: Obtain the stats of site OpenSSL configuration
   stat:
     path: "/etc/nginx/ssl/{{ item.map | default('default') }}.cnf"

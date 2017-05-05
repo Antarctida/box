@@ -253,6 +253,7 @@ Available types:
 * `symfony2`
 * `statamic`
 * `laravel`
+* `zend`
 
 Feel free to suggest a new type of Nginx configuration
 [through opening a New Feature Request](https://github.com/phalcon/box/issues/new).

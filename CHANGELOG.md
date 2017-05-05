@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.3.0] - 2017-05-05
 ### Added
+- Added `zend` Nginx configuration
 - Initial support of VMWare
 - Introducing provisioning by Ansible
 - Introducing testing on Travis CI

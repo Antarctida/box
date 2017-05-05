@@ -66,6 +66,7 @@ folders:
 #   - symfony2
 #   - statamic
 #   - laravel
+#   - zend
 sites:
     - map: phalcon.local
       to:  /home/vagrant/workspace/phalcon/public

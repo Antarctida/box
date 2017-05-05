@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure Virtualbox Guest Additions
 class Vbguest
   attr_accessor :config, :settings

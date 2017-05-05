@@ -1,0 +1,47 @@
+language: python
+
+dist: trusty
+sudo: false
+
+services:
+    - docker
+
+rvm:
+    - 2.2
+
+python:
+    - 2.7
+
+addons:
+    apt:
+        packages:
+            - python-pip
+
+git:
+  depth: 1
+
+cache:
+    pip: true
+    apt: true
+    timeout: 691200
+
+install:
+    - gem install --quiet rubocop
+    - pip install --quiet ansible
+    - pip install --quiet molecule
+
+before_script:
+    - docker --version
+    - ansible --version
+    - rubocop --version
+    - molecule --version
+
+script:
+    - rubocop Vagrantfile
+
+notifications:
+    email:
+        recipients:
+            - build@phalconphp.com
+        on_success: change
+        on_failure: always

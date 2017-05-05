@@ -1,0 +1,117 @@
+# {{ ansible_managed }}
+
+server {
+    listen {{ http_port }};
+    listen {{ ssl_port }} ssl http2;
+
+    server_name {{ server_name }};
+
+    root "{{ document_root }}";
+
+    charset utf-8;
+
+    error_page 404 /assets/error-404.html;
+    error_page 500 /assets/error-500.html;
+
+    access_log off;
+    error_log  "/var/log/nginx/{{ server_name }}-error.log" error;
+
+    ssl_certificate     "/etc/nginx/ssl/{{ server_name }}.crt";
+    ssl_certificate_key "/etc/nginx/ssl/{{ server_name }}.key";
+
+    if ($http_x_forwarded_host) {
+        return 400;
+    }
+
+    location / {
+        try_files $uri /framework/main.php?url=$uri&$query_string;
+    }
+
+    location = /favicon.ico {
+        access_log off;
+        log_not_found off;
+    }
+
+    location = /robots.txt  {
+        access_log off;
+        log_not_found off;
+    }
+
+    location ^~ /assets/ {
+        location ~ /\. {
+            deny all;
+        }
+        sendfile on;
+        try_files $uri /framework/main.php?url=$uri&$query_string;
+    }
+
+    location ~ /framework/.*(main|rpc|tiny_mce_gzip)\.php$ {
+        fastcgi_keep_conn on;
+        fastcgi_pass   php;
+        fastcgi_index  index.php;
+
+        include        fastcgi_params;
+
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+
+        fastcgi_intercept_errors off;
+
+        fastcgi_buffer_size 16k;
+        fastcgi_buffers 4 16k;
+
+        fastcgi_connect_timeout 300;
+        fastcgi_send_timeout 300;
+        fastcgi_read_timeout 300;
+    }
+
+    location ~ /(mysite|framework|cms)/.*\.(php|php3|php4|php5|phtml|inc)$ {
+        deny all;
+    }
+
+    location ~ /\.. {
+        deny all;
+    }
+
+    location ~ \.ss$ {
+        satisfy any;
+        allow 127.0.0.1;
+        deny all;
+    }
+
+    location ~ web\.config$ {
+        deny all;
+    }
+
+    location ~ \.ya?ml$ {
+        deny all;
+    }
+
+    location ^~ /vendor/ {
+        deny all;
+    }
+
+    location ~* /silverstripe-cache/ {
+        deny all;
+    }
+
+    location ~* composer\.(json|lock)$ {
+        deny all;
+    }
+
+    location ~* /(cms|framework)/silverstripe_version$ {
+        deny all;
+    }
+
+    location ~ \.php$ {
+        fastcgi_keep_conn on;
+        fastcgi_pass   php;
+
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+
+        fastcgi_buffer_size 32k;
+        fastcgi_busy_buffers_size 64k;
+        fastcgi_buffers 4 32k;
+    }
+}

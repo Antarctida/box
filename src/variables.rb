@@ -1,9 +1,11 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Configure environment variables
 class Variables
-  attr_accessor :application_root, :config, :settings
+  attr_accessor :config, :settings
 
-  def initialize(application_root, config, settings)
-    @application_root = application_root
+  def initialize(config, settings)
     @config = config
     @settings = settings
   end
@@ -11,16 +13,16 @@ class Variables
   def configure
     clear_variables
 
-    return unless settings['variables']
+    return unless settings[:variables]
 
-    profile_vars = settings['variables'].map do |v|
-      profile_var(v['key'], v['value'])
+    profile_vars = settings[:variables].map do |v|
+      profile_var(v[:key], v[:value])
     end
 
     inject_variables(profile_vars, '/home/vagrant/.profile')
 
-    fpm_vars = settings['variables'].map do |v|
-      fpm_var(v['key'], v['value'])
+    fpm_vars = settings[:variables].map do |v|
+      fpm_var(v[:key], v[:value])
     end
 
     inject_variables(fpm_vars, '/etc/php/7.1/fpm/php-fpm.conf')

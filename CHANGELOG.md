@@ -6,18 +6,32 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [2.2.2] - 2017-01-02
+## [2.3.0] - 2017-05-05
+### Added
+- Added `zend` Nginx configuration
+- Initial support of VMWare
+- Introducing provisioning by Ansible
+- Introducing testing on Travis CI
+- Added ability to use custom provision by playing with `after_provision.sh` file
+
+### Changed
+- Reactored `blackfire` configuration (`client-id` => `client_id` `client-token` => `client_token`) to follow pure YAML
+- Moved `resources` to the common place
+- CS fixes nad cleanup
+- Bump minimal Vagrant Box version. See [Maker changes](https://github.com/phalcon/maker/releases/tag/v2.0.3)
+
+## [2.2.2] - 2017-05-02
 ### Changed
 - Bump minimal Vagrant Box version. See [Maker changes](https://github.com/phalcon/maker/releases/tag/v2.0.2)
 
-## [2.2.1] - 2017-01-02
+## [2.2.1] - 2017-05-02
 ### Changed
 - Bump minimal Vagrant Box version. See [Maker changes](https://github.com/phalcon/maker/releases/tag/v2.0.1) 
 
 ### Added
 - Added ability to export custom databases by using `myexport $FILE "db1 db2 db3"`
 
-## [2.2.0] - 2017-01-01
+## [2.2.0] - 2017-05-01
 ### Added
 - Added ability to import custom database by using `myimport $FILE $DBNAME`
 - Added `phanbook` Nginx configuration
@@ -104,12 +118,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/box/compare/v2.2.2...HEAD
-[2.2.2]: https://github.com/phalcon/box/compare/v2.2.2...v2.2.1
-[2.2.1]: https://github.com/phalcon/box/compare/v2.2.1...v2.2.0
-[2.2.0]: https://github.com/phalcon/box/compare/v2.2.0...v2.1.0
-[2.1.0]: https://github.com/phalcon/box/compare/v2.1.0...v2.0.2
-[2.0.2]: https://github.com/phalcon/box/compare/v2.0.2...v2.0.1
-[2.0.1]: https://github.com/phalcon/box/compare/v2.0.1...v2.0.0
-[2.0.0]: https://github.com/phalcon/box/compare/v2.0.0...v1.2.0
-[1.2.0]: https://github.com/phalcon/box/compare/v1.2.0...v1.0.0
+[Unreleased]: https://github.com/phalcon/box/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/phalcon/box/compare/v2.2.2...v2.3.0
+[2.2.2]: https://github.com/phalcon/box/compare/v2.2.1...v2.2.2
+[2.2.1]: https://github.com/phalcon/box/compare/v2.2.0...v2.2.1
+[2.2.0]: https://github.com/phalcon/box/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/phalcon/box/compare/v2.0.2...v2.1.0
+[2.0.2]: https://github.com/phalcon/box/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/phalcon/box/compare/v2.0.0...v2.0.1
+[2.0.0]: https://github.com/phalcon/box/compare/v1.2.0...v2.0.0
+[1.2.0]: https://github.com/phalcon/box/compare/v1.0.0...v1.2.0

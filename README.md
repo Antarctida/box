@@ -1,5 +1,7 @@
 # Phalcon Box
 
+[![Build Status](https://travis-ci.org/phalcon/box.svg?branch=master)](https://travis-ci.org/phalcon/box)
+
 Phalcon strives to get closer to developers, providing flexible, powerful and simple tools.
 We would like a Phalcon development process to be effortless and pleasant from deployment of the development environment
 to the programming in [Zephir](https://github.com/phalcon/zephir) language.
@@ -24,6 +26,7 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
   - [Installing the Vagrant Box](#installing-the-vagrant-box)
   - [Installing the Phalcon Box](#installing-the-phalcon-box)
   - [Configuring](#configuring)
+    - [Setting your provider](#setting-your-provider)
     - [Memory and CPU](#memory-and-cpu)
     - [Shared folders](#shared-folders)
     - [Nginx sites](#nginx-sites)
@@ -56,8 +59,9 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 
 ### Requirements
 
-* Operating System: Windows, Linux, or OSX
-* [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.0
+* Operating System: Windows, Linux, or macOS
+* [Virtualbox](https://www.virtualbox.org/wiki/Downloads) >= 5.1 (if you want to build the VirtualBox box)
+* [VMware Fusion](http://www.vmware.com/products/fusion) (or Workstation - if you want to build the VMware box)
 * [Vagrant](https://www.vagrantup.com/downloads.html) >= 1.9
 
 ### Packages Included
@@ -91,7 +95,10 @@ the entire Linux OS if you've never used Vagrant or the `phalconphp/xenial64` Bo
 
 ### Installing the Vagrant Box
 
-Once VirtualBox and Vagrant have been installed, you should add the `phalconphp/xenial64` box to your Vagrant
+Before launching your Homestead environment, you must install VirtualBox, or VMWare as well as Vagrant. All of these
+software packages provide easy-to-use visual installers for all popular operating systems.
+
+Once VirtualBox/VMWare and Vagrant have been installed, you should add the `phalconphp/xenial64` box to your Vagrant
 installation using the following command in your terminal. It will take a few minutes to download the box, depending
 on your Internet connection speed:
 
@@ -100,6 +107,10 @@ vagrant box add phalconphp/xenial64
 ```
 
 If this command fails, make sure your Vagrant installation is up to date.
+
+**NOTE:** To use the VMware provider, you will need to purchase both VMware Fusion / Workstation and the
+[VMware Vagrant plug-in](https://www.vagrantup.com/vmware). Though it is not free, VMware can provide faster shared folder
+performance out of the box.
 
 ### Installing the Phalcon Box
 
@@ -141,6 +152,15 @@ vagrant up
 ```
 
 ### Configuring
+
+#### Setting your provider
+
+The provider key in your `settings.yml` file indicates which Vagrant provider should be used: `virtualbox`, `vmware_fusion`
+or `vmware_workstation`. You may set this to the provider you prefer:
+
+```yaml
+provider: virtualbox
+```
 
 #### Memory and CPU
 
@@ -233,6 +253,7 @@ Available types:
 * `symfony2`
 * `statamic`
 * `laravel`
+* `zend`
 
 Feel free to suggest a new type of Nginx configuration
 [through opening a New Feature Request](https://github.com/phalcon/box/issues/new).

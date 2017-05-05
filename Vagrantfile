@@ -1,5 +1,5 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# frozen_string_literal: true
 
 require 'json'
 require 'yaml'
@@ -11,7 +11,9 @@ Vagrant.require_version '>= 1.9.0'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   phalcon = Phalcon.new(config)
 
-  phalcon.init
   phalcon.configure
-  phalcon.show_banner
+  phalcon.provision
+  phalcon.after_provision
+
+  config.vm.provision :shell, inline: 'echo Phalcon Box provisioned!'
 end

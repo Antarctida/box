@@ -1,18 +1,20 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Register all of the configured shared folders
 class Folders
-  attr_accessor :application_root, :config, :settings
+  attr_accessor :config, :settings
 
-  def initialize(application_root, config, settings)
-    @application_root = application_root
+  def initialize(config, settings)
     @config = config
     @settings = settings
   end
 
   def configure
-    return unless settings['folders']
+    return unless settings[:folders]
 
-    settings['folders'].each do |folder|
-      from = File.expand_path(folder['map'])
+    settings[:folders].each do |folder|
+      from = File.expand_path(folder[:map])
       if File.exist? from
         user_folder(folder)
       else
@@ -24,20 +26,15 @@ class Folders
   private
 
   def user_folder(folder)
-    mount_options = { mount_options: prepare_option(folder) }
-    options = (folder['options'] || {}).merge(mount_options)
+    options = merge_and_symbolize(folder)
 
-    # Double-splat (**) operator only works with symbol keys
-    options.keys.each { |k| options[k.to_sym] = options.delete(k) }
-
-    config.vm.synced_folder folder['map'],
-                            folder['to'],
-                            type: folder['type'] ||= nil,
+    config.vm.synced_folder folder[:map],
+                            folder[:to],
+                            type: folder[:type] ||= nil,
                             **options
 
-    # Bindfs support to fix shared folder (NFS) permission issue on macOS
-    return unless Vagrant.has_plugin?('vagrant-bindfs')
-    config.bindfs.bind_folder folder['to'], folder['to']
+    return unless Vagrant.has_plugin? 'vagrant-bindfs'
+    config.bindfs.bind_folder folder[:to], folder[:to]
   end
 
   def notify(from)
@@ -50,11 +47,20 @@ class Folders
     end
   end
 
+  def merge_and_symbolize(folder)
+    mount_options = { mount_options: prepare_option(folder) }
+    options = (folder[:options] || {}).merge(mount_options)
+
+    options.keys.each { |k| options[k.to_sym] = options.delete(k) }
+
+    options
+  end
+
   def prepare_option(folder)
-    if folder['type'] == 'nfs'
-      folder['options'] || %w[actimeo=1 nolock]
-    elsif folder['type'] == 'smb'
-      folder['options'] || %w[vers=3.02 mfsymlinks]
+    if folder[:type] == 'nfs'
+      folder[:options] || %w[actimeo=1 nolock]
+    elsif folder[:type] == 'smb'
+      folder[:options] || %w[vers=3.02 mfsymlinks]
     else
       []
     end

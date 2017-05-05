@@ -1,0 +1,68 @@
+---
+- name: Ensure the blackfire client configuration does not exist
+  file:
+    path: /home/vagrant/.blackfire.ini
+    state: absent
+
+- name: Create the blackfire client configuration
+  template:
+    src: blackfire/client.j2
+    dest: /home/vagrant/.blackfire.ini
+    owner: vagrant
+    group: vagrant
+    mode: "u=rw,g=r,o=r"
+  vars:
+    client_id: "{{ item.client_id | default('') }}"
+    client_token: "{{ item.client_token | default('') }}"
+  with_items: "{{ settings.blackfire }}"
+  when: not ((settings.blackfire is undefined) or (settings.blackfire[0] is undefined))
+
+- name: Ensure the blackfire agent configuration does not exist
+  file:
+    path: /etc/blackfire/agent
+    state: absent
+
+- name: Create the blackfire agent configuration
+  template:
+    src: blackfire/agent.j2
+    dest: /etc/blackfire/agent
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  vars:
+    server_id: "{{ item.id | default('') }}"
+    server_token: "{{ item.token | default('') }}"
+  with_items: "{{ settings.blackfire }}"
+  when: not ((settings.blackfire is undefined) or (settings.blackfire[0] is undefined))
+
+- name: Ensure the blackfire-agent is started
+  service:
+    name: blackfire-agent
+    state: restarted
+  ignore_errors: yes
+  when: not ((settings.blackfire is undefined) or (settings.blackfire[0] is undefined))
+
+- name: Check if blackfire-agent is running
+  command: systemctl status blackfire-agent
+  ignore_errors: yes
+  changed_when: false
+  register: blackfire_test
+  when: not ((settings.blackfire is undefined) or (settings.blackfire[0] is undefined))
+
+- name: Obtain the stats of /etc/blackfire/agent
+  stat:
+    path: /etc/blackfire/agent
+  register: blackfire_st
+
+- name: Disable blackfire-agent if /etc/blackfire/agent does not exists or invalid
+  service:
+    name: blackfire-agent
+    enabled: no
+    state: stopped
+  when: (settings.blackfire is undefined) or (settings.blackfire[0] is undefined) or (blackfire_st.stat.exists == False) or (blackfire_test.rc != 0)
+
+- name: Enable blackfire-agent if /etc/blackfire/agent exists or invalid
+  service:
+    name: blackfire-agent
+    enabled: yes
+  when: not ((settings.blackfire is undefined) or (settings.blackfire[0] is undefined)) and (blackfire_st.stat.exists == True) and (blackfire_test.rc == 0)

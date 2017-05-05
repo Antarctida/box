@@ -1,0 +1,5 @@
+---
+- name: Create Mongo databases
+  shell: |
+    mongo "{{ item }}" --quiet --eval 'db.test.insert({ name: "db creation" });'
+  with_items: "{{ settings.databases | default([]) }}"

@@ -1,0 +1,27 @@
+---
+- name: Ensure old root "dotfiles" does not exist
+  file:
+    path: "/root/.{{ item }}"
+    state: absent
+  with_items:
+    - my.cnf
+    - grcat
+
+- name: Re-created new root "dotfiles"
+  template:
+    src: ".{{ item }}.root.j2"
+    dest: "/root/.{{ item }}"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  with_items:
+    - grcat
+    - my.cnf
+
+- name: Create MySQL databases
+  mysql_db:
+    name: "{{ item }}"
+    state: present
+    collation: utf8_general_ci
+    encoding: utf8
+  with_items: "{{ settings.databases | default([]) }}"

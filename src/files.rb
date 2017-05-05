@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 # Copy user files over to VM
 class Files
   attr_accessor :config, :settings
@@ -8,12 +11,12 @@ class Files
   end
 
   def configure
-    return unless settings['copy']
+    return unless settings[:copy]
 
-    settings['copy'].each do |file|
+    settings[:copy].each do |file|
       config.vm.provision :file do |f|
-        f.source = File.expand_path(file['from'])
-        f.destination = File.join file['to'], File.basename(file['from'])
+        f.source = File.expand_path(file[:from])
+        f.destination = File.join file[:to], File.basename(file[:from])
       end
     end
   end

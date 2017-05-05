@@ -9,13 +9,13 @@ require_relative 'folders'
 require_relative 'vbguest'
 require_relative 'networks'
 require_relative 'virtualbox'
+require_relative 'vmware'
 require_relative 'variables'
 require_relative 'files'
 
 # The main Phalcon Box class
 class Phalcon
   VERSION = '2.3.0'
-  DEFAULT_PROVIDER = 'virtualbox'
 
   attr_accessor :config, :settings
 
@@ -34,7 +34,7 @@ class Phalcon
   def configure
     try_vbguest
     try_networks
-    try_virtualbox
+    try_vms
     try_ports
     try_authorize
     try_keys
@@ -60,9 +60,7 @@ class Phalcon
   private
 
   def init
-    # Set The VM Provider
-    # @todo
-    ENV['VAGRANT_DEFAULT_PROVIDER'] = DEFAULT_PROVIDER.to_s
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = settings['provider'] ||= :virtualbox
 
     init_ssh
     init_box
@@ -95,10 +93,13 @@ class Phalcon
     networks.configure
   end
 
-  # Configure VirtualBox
-  def try_virtualbox
+  # Configure VMs
+  def try_vms
     virtualbox = Virtualbox.new(config, settings)
     virtualbox.configure
+
+    vmware = VMWare.new(config, settings)
+    vmware.configure
   end
 
   # Configure custom ports

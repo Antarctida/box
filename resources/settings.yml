@@ -7,6 +7,14 @@
 # Name of VM
 name: pbox
 
+# VM provider
+#
+# Available providers:
+#   - virtualbox
+#   - vmware_fusion
+#   - vmware_workstation
+provider: virtualbox
+
 # Enable GUI mode (show screen of VM)
 gui: false
 

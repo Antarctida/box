@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
+# Configure VMWare
+class VMWare
+  attr_accessor :config, :settings
+
+  def initialize(config, settings)
+    @config = config
+    @settings = settings
+  end
+
+  def configure
+    [:vmware_fusion, :vmware_workstation].each do |vmware|
+      config.vm.provider vmware do |v|
+        v.vmx['displayName'] = settings['name']
+        v.vmx['memsize'] = settings['memory']
+        v.vmx['numvcpus'] = settings['cpus']
+        v.vmx['guestOS'] = 'ubuntu-64'
+        v.gui = true if settings['gui']
+      end
+    end
+  end
+end

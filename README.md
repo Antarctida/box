@@ -129,7 +129,7 @@ You can find the latest stable version on the [Github Release Page](https://gith
 
 ```bash
 # Clone the desired release...
-git checkout v2.2.2
+git checkout v2.3.0
 ```
 
 Once you have cloned the Phalcon Box repository, run the install command from the Phalcon Box root directory to
@@ -477,7 +477,7 @@ networks:
 
 You can update Phalcon Box in two simple steps.
 
-1. First, you should update the Vagrant box using the `vagrant box update` command:
+1. First, you will need to update the Vagrant box using the `vagrant box update` command:
   ```bash
   vagrant box update
   ```
@@ -522,11 +522,11 @@ configured in `settings.yml`).
 **Problem:**
 
 > An error occurred in the underlying SSH library that Vagrant uses.
-> The error message is shown below. In many cases, errors from this
-> library are caused by ssh-agent issues. Try disabling your SSH
-> agent or removing some keys and try again.
-> If the problem persists, please report a bug to the net-ssh project.
-> timeout during server version negotiating
+  The error message is shown below. In many cases, errors from this
+  library are caused by ssh-agent issues. Try disabling your SSH
+  agent or removing some keys and try again.
+  If the problem persists, please report a bug to the net-ssh project.
+  timeout during server version negotiating
 
 **Solution:**
 
@@ -550,6 +550,26 @@ vagrant plugin install vagrant-vbguest
 ```bash
 vagrant plugin install vagrant-vbguest
 ```
+
+**Problem:**
+
+> There was an error while executing `VBoxManage`, a CLI used by Vagrant
+  for controlling VirtualBox. The command and stderr is shown below.
+>
+> Command: `["startvm", "9d2b95e1-0fdd-40f4-ad65-4b56eb4315f8", "--type", "headless"]`
+>
+> Stderr: VBoxManage.exe: error: VT-x is not available (VERR_VMX_NO_VMX)
+  VBoxManage.exe: error: Details: code E_FAIL (0x80004005), component ConsoleWrap, interface IConsole
+
+**Solution:**
+
+```bash
+vagrant plugin install vagrant-vbguest
+```
+
+You need to update your BIOS to enable
+[virtualization](https://en.wikipedia.org/wiki/X86_virtualization) with
+`Intel VT-x`.
 
 ## License
 

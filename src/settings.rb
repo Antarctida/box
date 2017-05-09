@@ -38,8 +38,9 @@ class Settings
     @settings = DEFAULT_SETTINGS.merge(load_file)
 
     memory = setup_memory
+    memory = 1024 if memory.to_i < 1024
 
-    settings[:memory] = 1024 if memory.to_i < 1024
+    settings[:memory] = memory
     settings[:cpus] = setup_cpu
   end
 

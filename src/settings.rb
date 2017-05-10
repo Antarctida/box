@@ -21,7 +21,11 @@ class Settings
     vram: 100,
     verbose: false,
     provider: :virtualbox,
-    check_update: true
+    check_update: true,
+    provision: {
+      update: true,
+      apt: {}
+    }
   }.freeze
 
   attr_accessor :application_root, :settings
@@ -36,6 +40,11 @@ class Settings
 
   def initialize_defaults
     @settings = DEFAULT_SETTINGS.merge(load_file)
+
+    setup_provision
+
+    # puts settings[:provision].inspect
+    # abort
 
     memory = setup_memory
     memory = 1024 if memory.to_i < 1024
@@ -74,6 +83,11 @@ class Settings
     else
       default
     end
+  end
+
+  def setup_provision
+    settings[:provision] ||= {}
+    settings[:provision][:apt] ||= {}
   end
 
   def setup_cpu

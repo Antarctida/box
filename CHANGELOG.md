@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added ability to install custom packages through provisioning [#77](https://github.com/phalcon/box/issues/77)
+
 ### Fixed
 - Fixed `memory` setting on `auto` mode
 

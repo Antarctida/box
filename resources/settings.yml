@@ -34,6 +34,14 @@ cpus: 2
 #   video memory (currently vbox only)
 vram: 100
 
+# Provisioning features
+provision:
+  # do full system update for each full provisoning
+  update: true
+
+  # apt packages
+  apt: []
+
 authorize: ~/.ssh/id_rsa.pub
 
 keys:

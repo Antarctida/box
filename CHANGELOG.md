@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.4.0] - 2017-05-10
+### Added
+- Added ability to install custom packages through provisioning [#77](https://github.com/phalcon/box/issues/77)
+
+### Fixed
+- Fixed `memory` setting on `auto` mode
+
 ## [2.3.0] - 2017-05-05
 ### Added
 - Added `zend` Nginx configuration
@@ -118,7 +125,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/box/compare/v2.3.0...HEAD
+[Unreleased]: https://github.com/phalcon/box/compare/v2.4.0...HEAD
+[2.4.0]: https://github.com/phalcon/box/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/phalcon/box/compare/v2.2.2...v2.3.0
 [2.2.2]: https://github.com/phalcon/box/compare/v2.2.1...v2.2.2
 [2.2.1]: https://github.com/phalcon/box/compare/v2.2.0...v2.2.1

@@ -263,11 +263,11 @@ Feel free to suggest a new type of Nginx configuration
 If you change the `sites` property after provisioning the Phalcon Box, you should re-run `vagrant reload --provision`
 to update the Nginx configuration on the virtual machine.
 
+##### Custom Nginx configuration
+
 You can also create your own type. To do this take any template from the `provisioning/templates/nginx` folder as a
 basis and make the necessary changes. You need to place this file into the same folder. After that, you will be able
 to use your own custom type:
-
-##### Custom Nginx configuration
 
 ```yaml
 sites:

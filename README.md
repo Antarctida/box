@@ -332,13 +332,13 @@ To install the necessary packages add their names in the `apt` section:
 ```yaml
 # Provisioning features
 provision:
-  # do full system update for each full provisoning
-  update: true
-
-  # Install wkhtmltopdf and libffi-dev packages
-  apt:
-    - wkhtmltopdf
-    - libffi-dev
+    # do full system update for each full provisoning
+    update: true
+    
+    # Install wkhtmltopdf and libffi-dev packages
+    apt:
+        - wkhtmltopdf
+        - libffi-dev
 ```
 
 ### Launching the Phalcon Box

@@ -30,7 +30,9 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
     - [Memory and CPU](#memory-and-cpu)
     - [Shared folders](#shared-folders)
     - [Nginx sites](#nginx-sites)
+      - [Custom Nginx configuration](#custom-nginx-configuration)
     - [Configuring the `hosts` file](#configuring-the-hosts-file)
+  - [Install aditional packages](#install-aditional-packages)
   - [Launching the Phalcon Box](#launching-the-phalcon-box)
 - [Daily usage](#daily-usage)
   - [Accessing Phalcon Box globally](#accessing-phalcon-box-globally)
@@ -140,7 +142,7 @@ create the `settings.yml` configuration file. The `settings.yml` file will be pl
 ./install
 ```
 
-```cmd
+```
 rem Windows
 install.bat
 ```
@@ -261,6 +263,38 @@ Feel free to suggest a new type of Nginx configuration
 If you change the `sites` property after provisioning the Phalcon Box, you should re-run `vagrant reload --provision`
 to update the Nginx configuration on the virtual machine.
 
+You can also create your own type. To do this take any template from the `provisioning/templates/nginx` folder as a
+basis and make the necessary changes. You need to place this file into the same folder. After that, you will be able
+to use your own custom type:
+
+##### Custom Nginx configuration
+
+```yaml
+sites:
+    - map:  my-site.local
+      to:   /home/vagrant/workspace/my-site/public
+      # provisioning/templates/nginx/phalcon-advanced.conf.j2
+      type: phalcon-advanced
+```
+
+Do you need a custom _global_ Nginx configuration? Yes, this is possible. Fox example, let's create the autoindex
+configuration.
+
+File `/home/user/nginx.d/00-autoindex.conf`:
+
+```nginx
+# Processes requests ending with the slash character (‘/’) and produces a directory listing
+autoindex on;
+```
+
+Add the desired settings to your file and then add it to the `copy` section:
+
+```yaml
+copy:
+    - from: /home/user/nginx.d/00-autoindex.conf
+      to: /etc/nginx/conf.d/
+```
+
 #### Configuring the `hosts` file
 
 You must add the "domains" for your Nginx sites to the hosts file on your machine. The hosts file will redirect requests
@@ -283,6 +317,28 @@ http://phalcon.local
 
 ```bash
 vagrant plugin install vagrant-hostsupdater
+```
+
+### Install aditional packages
+
+We did our best to provide Phalcon Box with all necessary programs and libraries. However, it should be understood
+that the typical user does not need all possible packages which can be installed. Phalcon Box must be of reasonable
+size so that it could be used by even those people who are experiencing difficulties with bandwidth of the Internet
+channel.
+
+Because of these considerations, we allow users to specify which custom packages they need by every provision.
+To install the necessary packages add their names in the `apt` section:
+
+```yaml
+# Provisioning features
+provision:
+  # do full system update for each full provisoning
+  update: true
+
+  # Install wkhtmltopdf and libffi-dev packages
+  apt:
+    - wkhtmltopdf
+    - libffi-dev
 ```
 
 ### Launching the Phalcon Box
@@ -320,7 +376,7 @@ system.
 
 Create a `box.bat` batch file anywhere on your machine with the following contents:
 
-```cmd
+```
 @echo off
 
 set cwd=%cd%

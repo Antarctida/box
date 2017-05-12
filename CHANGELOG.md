@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Added ability to use per site environment variables by introducing `variables` section
+
 ## [2.4.0] - 2017-05-10
 ### Added
 - Added ability to install custom packages through provisioning [#77](https://github.com/phalcon/box/issues/77)

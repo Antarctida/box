@@ -1,0 +1,11 @@
+---
+- set_fact:
+    site: "{{ item }}"
+
+- lineinfile:
+    path: "/etc/nginx/variables/{{ site.map }}.conf"
+    line: "fastcgi_param {{ site_vars.key }} {{ site_vars.value }};"
+  with_items: "{{ site.variables }}"
+  loop_control:
+    loop_var: site_vars
+  when: (site.variables is defined) and site.variables

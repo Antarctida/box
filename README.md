@@ -39,6 +39,9 @@ _recommended_ Vagrant setup to get loaded with core development tools to build a
   - [Connecting via SSH](#connecting-via-ssh)
   - [Connecting to databases](#connecting-to-databases)
   - [Adding additional sites](#adding-additional-sites)
+  - [Environment variables](#environment-variables)
+    - [Global variables](#global-variables)
+    - [Site variables](#site-variables)
   - [Ports](#ports)
     - [Forwarding additional ports](#forwarding-additional-ports)
   - [Sharing your environment](#sharing-your-environment)
@@ -131,7 +134,7 @@ You can find the latest stable version on the [Github Release Page](https://gith
 
 ```bash
 # Clone the desired release...
-git checkout v2.4.0
+git checkout v2.5.0
 ```
 
 Once you have cloned the Phalcon Box repository, run the install command from the Phalcon Box root directory to
@@ -332,13 +335,13 @@ To install the necessary packages add their names in the `apt` section:
 ```yaml
 # Provisioning features
 provision:
-  # do full system update for each full provisoning
-  update: true
-
-  # Install wkhtmltopdf and libffi-dev packages
-  apt:
-    - wkhtmltopdf
-    - libffi-dev
+    # do full system update for each full provisoning
+    update: true
+    
+    # Install wkhtmltopdf and libffi-dev packages
+    apt:
+        - wkhtmltopdf
+        - libffi-dev
 ```
 
 ### Launching the Phalcon Box
@@ -447,6 +450,70 @@ vagrant plugin install vagrant-hostsupdater
 ```
 
 Once the site has been added, run the `vagrant reload --provision` command from your Phalcon Box directory.
+
+### Environment variables
+
+#### Global variables
+
+You can easily register global environment variables. Just add variable and its value to the `variables` section:
+
+```yaml
+variables:
+    - key: TEST_DB_MYSQL_USER
+      value: phalcon
+
+    - key: TEST_DB_MYSQL_PASSWD
+      value: secret
+
+    - key: TEST_DB_MYSQL_DSN
+      value: "mysql:host=127.0.0.1;dbname=phalcon_test"
+```
+
+This way you will be able to use these variables in your applications or scripts.
+For example when configuring [Codeception](http://codeception.com) in such way:
+
+```yaml
+# File codeception.yml
+params:
+    # Get params from environment
+    - env
+```
+
+you will able to configure Unit suite as follows:
+```yaml
+# File tests/unit.suite.yml
+class_name: UnitTester
+modules:
+    enabled:
+        - Db
+    config:
+        Db:
+            dsn: %TEST_DB_MYSQL_DSN%
+            user: %TEST_DB_MYSQL_USER%
+            password: %TEST_DB_MYSQL_PASSWD%
+            populate: true
+            cleanup: false
+            dump: tests/_data/schemas/mysql/mysql.dump.sql
+```
+
+#### Site variables
+
+Site variables are how you can easily add `fastcgi_param` values to your site host configuration within Phalcon Box.
+For example, we may add a `APP_ENV` variable with the value `development`:
+
+```yaml
+sites:
+    - map: phalconbox.local
+      to: /var/www/phalconbox/public
+      variables:
+          - key: APP_ENV
+            value: development
+          # Yet another example
+          - key: AMQP_DEBUG
+            value: true
+```
+
+**NOTE:** Per site variables will be available only for webserver.
 
 ### Ports
 

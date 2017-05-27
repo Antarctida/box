@@ -40,6 +40,7 @@ server {
         fastcgi_pass php;
 
         include fastcgi_params;
+        include "/etc/nginx/variables/{{ server_name }}.conf";
 
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 

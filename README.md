@@ -475,7 +475,7 @@ For example when configuring [Codeception](http://codeception.com) in such way:
 ```yaml
 # File codeception.yml
 params:
-    # get params from environment vars
+    # Get params from environment
     - env
 ```
 
@@ -508,8 +508,9 @@ sites:
       variables:
           - key: APP_ENV
             value: development
-          - key: YET_ANOTHER_VAR
-            value: SOME_VALUE
+          # Yet another example
+          - key: AMQP_DEBUG
+            value: true
 ```
 
 **NOTE:** Per site variables will be available only for webserver.

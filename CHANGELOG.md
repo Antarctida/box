@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.5.1] - 2017-08-30
+### Changed
+- Phalcon Box now require Vagrant >= 1.9.8 [#87](https://github.com/phalcon/box/issues/87)
+- Update message of the day
+
 ## [2.5.0] - 2017-05-27
 ### Added
 - Added ability to use per site environment variables by introducing `variables` section
@@ -129,7 +134,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/box/compare/v2.5.0...HEAD
+[Unreleased]: https://github.com/phalcon/box/compare/v2.5.1...development
+[2.5.1]: https://github.com/phalcon/box/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/phalcon/box/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/phalcon/box/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/phalcon/box/compare/v2.2.2...v2.3.0

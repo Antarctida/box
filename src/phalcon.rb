@@ -15,7 +15,7 @@ require_relative 'files'
 
 # The main Phalcon Box class
 class Phalcon
-  VERSION = '2.5.0'
+  VERSION = '2.5.1'
 
   attr_accessor :config, :settings
 

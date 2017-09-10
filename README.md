@@ -13,7 +13,7 @@ environment without requiring you to install PHP, a web server, and any other se
 
 ## Documentation
 
-* https://docs.phalconphp.com/en/latest/environments-vagrant
+The current version can be seen at [docs.phalconphp.com](https://docs.phalconphp.com/en/latest/environments-vagrant).
 
 ## License
 

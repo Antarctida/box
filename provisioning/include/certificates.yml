@@ -29,6 +29,12 @@
   with_items: "{{ cnf_ssl_config.results }}"
   when: not item.stat.exists
 
+- name: Ensure valid pyOpenSSL module version is installed
+  pip:
+    name:
+      - "pyopenssl>=17.3"
+    state: present
+
 - name: Generate per site OpenSSL private key
   openssl_privatekey:
     path: "/etc/nginx/ssl/{{ item.item.map | default('default') }}.key"

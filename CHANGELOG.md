@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [2.6.0] - 2017-09-16
+### Added
+- Ensure latest pip is installed
+
+### Changed
+- Bump minimal Vagrant Box version. See Maker changes:
+  - [maker#2.1.0](https://github.com/phalcon/maker/releases/tag/v2.1.0)
+  - [maker#2.1.1](https://github.com/phalcon/maker/releases/tag/v2.1.1)
 
 ## [2.5.2] - 2017-09-16
 ### Fixed

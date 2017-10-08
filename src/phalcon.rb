@@ -15,7 +15,7 @@ require_relative 'files'
 
 # The main Phalcon Box class
 class Phalcon
-  VERSION = '2.5.3'.freeze
+  VERSION = '2.6.0'.freeze
 
   attr_accessor :config, :settings
 

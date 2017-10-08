@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ## [2.6.0] - 2017-09-16
 ### Added
-- Ensure latest pip is installed
+- Ensure latest `pip` is installed
 - Added support for `vmware_desktop` provider
 
 ### Changed

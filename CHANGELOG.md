@@ -146,7 +146,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/box/compare/v2.5.2...development
+[Unreleased]: https://github.com/phalcon/box/compare/v2.6.0...development
+[2.6.0]: https://github.com/phalcon/box/compare/v2.5.2...v2.6.0
 [2.5.2]: https://github.com/phalcon/box/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/phalcon/box/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/phalcon/box/compare/v2.4.0...v2.5.0

@@ -8,11 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.6.0] - 2017-09-16
 ### Added
 - Ensure latest pip is installed
+- Added support for `vmware_desktop` provider
 
 ### Changed
 - Bump minimal Vagrant Box version. See Maker changes:
   - [maker#2.1.0](https://github.com/phalcon/maker/releases/tag/v2.1.0)
   - [maker#2.1.1](https://github.com/phalcon/maker/releases/tag/v2.1.1)
+
+### Fixeds
+- Making compatible boxes. See [VMX Whitelisting](https://www.vagrantup.com/docs/vmware/boxes.html#vmx-whitelisting)
 
 ## [2.5.2] - 2017-09-16
 ### Fixed

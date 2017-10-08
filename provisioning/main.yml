@@ -4,6 +4,7 @@
   gather_facts: yes
 
   tasks:
+    - include: include/initial.yml
     - include: include/certificates.yml
     - include: include/apt.yml
     - include: include/blackfire.yml

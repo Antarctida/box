@@ -5,9 +5,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-## Changed
-- Set the minimal version of Ansible to be supported to `2.0`
-- Fixed ansible deprecation warnings
 
 ## [2.6.0] - 2017-09-16
 ### Added
@@ -15,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added support for `vmware_desktop` provider
 
 ### Changed
+- Set the minimal version of Ansible to be supported to `2.0`
+- Fixed ansible deprecation warnings
 - Bump minimal Vagrant Box version. See Maker changes:
   - [maker#2.1.0](https://github.com/phalcon/maker/releases/tag/v2.1.0)
   - [maker#2.1.1](https://github.com/phalcon/maker/releases/tag/v2.1.1)

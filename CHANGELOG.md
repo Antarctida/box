@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - [maker#2.1.0](https://github.com/phalcon/maker/releases/tag/v2.1.0)
   - [maker#2.1.1](https://github.com/phalcon/maker/releases/tag/v2.1.1)
 
-### Fixeds
+### Fixed
 - Making compatible boxes. See [VMX Whitelisting](https://www.vagrantup.com/docs/vmware/boxes.html#vmx-whitelisting)
 
 ## [2.5.2] - 2017-09-16

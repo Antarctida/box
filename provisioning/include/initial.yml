@@ -1,3 +1,3 @@
 ---
 - name: Ensure latest pip is installed
-    raw: pip install --upgrade pip
+  raw: pip install --upgrade pip

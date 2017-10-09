@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.6.0] - 2017-09-16
+### Added
+- Ensure latest `pip` is installed
+- Added support for `vmware_desktop` provider
+
+### Changed
+- Set the minimal version of Ansible to be supported to `2.0`
+- Fixed ansible deprecation warnings
+- Bump minimal Vagrant Box version. See Maker changes:
+  - [maker#2.1.0](https://github.com/phalcon/maker/releases/tag/v2.1.0)
+  - [maker#2.1.1](https://github.com/phalcon/maker/releases/tag/v2.1.1)
+
+### Fixed
+- Making compatible boxes. See [VMX Whitelisting](https://www.vagrantup.com/docs/vmware/boxes.html#vmx-whitelisting)
+
 ## [2.5.2] - 2017-09-16
 ### Fixed
 - Ensure valid `pyOpenSSL` module version is installed [#83](https://github.com/phalcon/box/issues/83)
@@ -138,7 +153,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial stable release
 
-[Unreleased]: https://github.com/phalcon/box/compare/v2.5.2...development
+[Unreleased]: https://github.com/phalcon/box/compare/v2.6.0...development
+[2.6.0]: https://github.com/phalcon/box/compare/v2.5.2...v2.6.0
 [2.5.2]: https://github.com/phalcon/box/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/phalcon/box/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/phalcon/box/compare/v2.4.0...v2.5.0

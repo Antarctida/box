@@ -4,15 +4,16 @@
   gather_facts: yes
 
   tasks:
-    - include: include/certificates.yml
-    - include: include/apt.yml
-    - include: include/blackfire.yml
-    - include: include/php-fpm.yml
-    - include: include/nginx.yml
-    - include: include/aliases.yml
-    - include: include/dotfiles.yml
-    - include: include/mysql.yml
-    - include: include/postgresql.yml
-    - include: include/mongo.yml
-    - include: include/composer.yml
-    - include: include/motd.yml
+    - import_tasks: include/initial.yml
+    - import_tasks: include/certificates.yml
+    - import_tasks: include/apt.yml
+    - import_tasks: include/blackfire.yml
+    - import_tasks: include/php-fpm.yml
+    - import_tasks: include/nginx.yml
+    - import_tasks: include/aliases.yml
+    - import_tasks: include/dotfiles.yml
+    - import_tasks: include/mysql.yml
+    - import_tasks: include/postgresql.yml
+    - import_tasks: include/mongo.yml
+    - import_tasks: include/composer.yml
+    - import_tasks: include/motd.yml

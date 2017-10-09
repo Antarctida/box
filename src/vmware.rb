@@ -11,7 +11,7 @@ class VMWare
   end
 
   def configure
-    %i(vmware_fusion vmware_workstation).each do |vmware|
+    %i(vmware_desktop vmware_fusion vmware_workstation).each do |vmware|
       customize vmware
     end
   end
@@ -22,6 +22,7 @@ class VMWare
       v.vmx['memsize'] = settings[:memory]
       v.vmx['numvcpus'] = settings[:cpus]
       v.vmx['guestOS'] = 'ubuntu-64'
+      v.whitelist_verified = true
       v.gui = true if settings[:gui]
     end
   end

@@ -15,7 +15,7 @@ require_relative 'files'
 
 # The main Phalcon Box class
 class Phalcon
-  VERSION = '2.5.2'.freeze
+  VERSION = '2.6.0'.freeze
 
   attr_accessor :config, :settings
 
@@ -53,6 +53,7 @@ class Phalcon
       ansible.limit = :all
       ansible.extra_vars = { settings: settings }
       ansible.verbose = settings[:verbose]
+      ansible.compatibility_mode = '2.0'
     end
 
     return unless Vagrant.has_plugin? 'vagrant-hostsupdater'

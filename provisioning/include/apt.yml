@@ -1,5 +1,5 @@
 ---
-  # See: https://github.com/ansible/ansible-modules-core/issues/3523
+# Workaround for ansible/ansible-modules-core#3523
 - name: Ensure aptitude is installed
   raw: apt-get install aptitude -y
   when: (settings.provision is defined) and (settings.provision.update is defined) and settings.provision.update

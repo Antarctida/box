@@ -7,7 +7,7 @@ require_relative 'prober'
 # Initialize user settings
 class Settings
   DEFAULT_IP = '192.168.50.4'
-  BOX_VERSION = '2.0.3'
+  BOX_VERSION = '2.1.1'
   DEFAULT_CPUS = 2
   DEFAULT_MEMORY = 2048
 
@@ -42,9 +42,6 @@ class Settings
     @settings = DEFAULT_SETTINGS.merge(load_file)
 
     setup_provision
-
-    # puts settings[:provision].inspect
-    # abort
 
     memory = setup_memory
     memory = 1024 if memory.to_i < 1024

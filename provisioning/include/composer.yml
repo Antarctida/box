@@ -12,7 +12,7 @@
     group: vagrant
     state: directory
 
-- name: Ensure correct ownrer was assigned to the composer home
+- name: Ensure correct owner was assigned to the composer home
   file:
     path: /home/vagrant/.composer
     owner: vagrant
